@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, Award, Globe, ShieldCheck, Package,
@@ -7,6 +7,13 @@ import {
 } from 'lucide-react';
 import { useMotionValue, useSpring, useTransform } from 'framer-motion';
 import heroBg from '../assets/hero-bg.png';
+import slide1 from '../assets/photos/img740.jpg';
+import slide2 from '../assets/photos/img752.jpg';
+import slide3 from '../assets/photos/img306.jpg';
+import slide4 from '../assets/photos/img502.jpg';
+import slide5 from '../assets/photos/img674.jpg';
+import slide6 from '../assets/photos/img536.jpg';
+
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -114,11 +121,21 @@ const EXPORTS = [
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slides = [slide1, slide2, slide3, slide4, slide5, slide6];
+
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', fn);
     return () => window.removeEventListener('scroll', fn);
   }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
 
   return (
     <div>
@@ -197,9 +214,35 @@ export default function Home() {
             whileHover={{ rotateY: 5, rotateX: -2, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 150, damping: 20 }}
           >
-            <img src={heroBg} alt="Nikan Premium Writing Instruments" style={{ width: '100%', height: '480px', objectFit: 'cover' }} />
-            <div style={{ position: 'absolute', bottom: '20px', left: '20px', background: 'var(--gold)', color: '#000', padding: '8px 16px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: '800' }}>
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={currentSlide}
+                src={slides[currentSlide]}
+                alt={`Nikan Pen slide ${currentSlide + 1}`}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+                style={{ width: '100%', height: '480px', objectFit: 'contain', padding: '1.5rem' }}
+              />
+            </AnimatePresence>
+            <div style={{ position: 'absolute', bottom: '20px', left: '20px', background: 'var(--gold)', color: '#000', padding: '8px 16px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: '800', zIndex: 10 }}>
               MADE IN INDIA
+            </div>
+            
+            <div style={{ position: 'absolute', bottom: '20px', right: '20px', display: 'flex', gap: '6px', zIndex: 10 }}>
+              {slides.map((_, i) => (
+                <div 
+                  key={i} 
+                  style={{ 
+                    width: i === currentSlide ? '20px' : '6px', 
+                    height: '6px', 
+                    borderRadius: '3px', 
+                    background: i === currentSlide ? 'var(--gold)' : 'rgba(0,0,0,0.2)',
+                    transition: 'all 0.3s ease'
+                  }} 
+                />
+              ))}
             </div>
           </motion.div>
         </motion.div>

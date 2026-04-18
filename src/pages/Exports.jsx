@@ -45,7 +45,6 @@ const REGIONS = [
 const CREDENTIALS = [
   { icon: <ShieldCheck size={24}/>, label: 'ISO 9001:2015', sub: 'Quality Management System' },
   { icon: <Award size={24}/>, label: 'One Star Export House', sub: 'DGFT — Govt. of India' },
-  { icon: <FileText size={24}/>, label: 'IEC: 0211007544', sub: 'Import Export Code' },
   { icon: <Package size={24}/>, label: 'ROHS Certified', sub: 'Environmental Compliance' },
   { icon: <Globe size={24}/>, label: '20+ Countries', sub: 'Active export footprint' },
   { icon: <Award size={24}/>, label: 'FTP 2023', sub: 'Foreign Trade Policy Compliant' },

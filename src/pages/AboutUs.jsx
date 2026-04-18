@@ -308,7 +308,7 @@ export default function AboutUs() {
                 <div className="cert-issuer">Govt. of India — Ministry of Commerce &amp; Industry</div>
                 <p className="cert-desc">
                   Recognised by the Directorate General of Foreign Trade under the Foreign Trade Policy 2023, 
-                  in accordance with the Book of Procedures. IEC: 0211007544.
+                  in accordance with the Book of Procedures.
                 </p>
               </div>
             </Reveal>
