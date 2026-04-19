@@ -93,7 +93,7 @@ function CountUp({ target, suffix = '' }) {
 const TICKER_ITEMS = [
   'Ball Point Pens', 'Sketch Pens', 'Washable Markers', 'Fine Tip Writers',
   'Gel Pens', 'Highlighters', 'Fibre Tip Pens', 'Refillable Pens',
-  'Gift Sets', 'OEM Manufacturing', 'ISO 9001:2015 Certified', 'One Star Export House',
+  'Gift Sets', 'ISO 9001:2015 Certified', 'One Star Export House',
 ];
 
 const BRANDS = [
@@ -109,7 +109,6 @@ const CREDS = [
   { icon: <ShieldCheck size={18} />, title: 'ISO 9001:2015 Certified', desc: 'QMS verified by ROHS Certification Pvt. Ltd. for fibre tip pens, markers, and ball point pens.' },
   { icon: <Award size={18} />, title: 'One Star Export House', desc: 'DGFT-recognised under FTP 2023 — Ministry of Commerce & Industry, Govt. of India.' },
   { icon: <Globe size={18} />, title: 'Global Distribution', desc: 'Products exported to 20+ countries across the Middle East, Africa, Asia, and Europe.' },
-  { icon: <Package size={18} />, title: 'OEM & Private Label', desc: 'Full OEM and white-label services for distributors seeking custom-branded stationery.' },
 ];
 
 const EXPORTS = [

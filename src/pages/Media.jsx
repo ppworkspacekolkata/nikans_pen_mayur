@@ -51,7 +51,6 @@ const DOWNLOADS = [
   { icon: <FileText size={22}/>, title: 'ISO 9001:2015 Certificate', desc: 'Official QMS certification document issued by ROHS Certification Pvt. Ltd.', type: 'PDF', tag: 'Certification' },
   { icon: <FileText size={22}/>, title: 'One Star Export House Certificate', desc: 'DGFT recognition certificate under Foreign Trade Policy 2023.', type: 'PDF', tag: 'Certification' },
   { icon: <Image size={22}/>, title: 'Nikan Brand Logo Pack', desc: 'High-resolution logo files in PNG, SVG, and AI formats for media use.', type: 'ZIP', tag: 'Brand Assets' },
-  { icon: <FileText size={22}/>, title: 'OEM Capability Statement', desc: 'Overview of our private label and OEM manufacturing capabilities for distributors.', type: 'PDF', tag: 'B2B' },
   { icon: <FileText size={22}/>, title: 'Export Terms & Conditions', desc: 'Standard export terms, payment conditions, and minimum order quantities.', type: 'PDF', tag: 'Trade' },
 ];
 

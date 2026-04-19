@@ -6,8 +6,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const fadeUp = {
-  hidden:  { opacity: 0, y: 32 },
-  visible: (d = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.7, delay: d, ease: [0.22,1,0.36,1] } }),
+  hidden: { opacity: 0, y: 32 },
+  visible: (d = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.7, delay: d, ease: [0.22, 1, 0.36, 1] } }),
 };
 
 function Reveal({ children, delay = 0 }) {
@@ -58,7 +58,7 @@ const BRANDS = [
     name: 'Auram',
     tagline: 'Premium Ball Pen',
     tag: 'Premium',
-    icon: <Pen size={32}/>,
+    icon: <Pen size={32} />,
     accent: '#c9a84c',
     specs: ['0.7mm Fine Tip', 'Nickel Silver Tip', 'Smooth Ink Flow', '10 PCS / Box'],
     desc: 'The Auram is Nikan\'s flagship premium writing instrument. Designed for the discerning professional, it features a gold-accented cap, precision-machined nickel silver tip, and ultra-smooth ink distribution. Available in blue and black ink.',
@@ -68,7 +68,7 @@ const BRANDS = [
     name: 'Aventus',
     tagline: 'Signature Ball Pen',
     tag: 'Signature',
-    icon: <Award size={32}/>,
+    icon: <Award size={32} />,
     accent: '#6b8cba',
     specs: ['1.0mm Broad Tip', 'Nickel Silver Tip', 'Bold Stroke', '10 Units'],
     desc: 'Aventus is engineered for bold, confident writing. The 1.0mm tip creates a rich, full stroke preferred by executives and presenters. The sleek body with technical-blue finish and gold accents commands attention on any desk.',
@@ -78,7 +78,7 @@ const BRANDS = [
     name: 'Chisel',
     tagline: 'Washable Marker',
     tag: 'Markers',
-    icon: <Palette size={32}/>,
+    icon: <Palette size={32} />,
     accent: '#4a9e6e',
     specs: ['Chisel Tip', 'Washable Formula', '10 Bold Colours', 'Non-Toxic'],
     desc: 'Chisel markers combine vivid colour output with a water-washable formula — safe for children and ideal for classrooms, art projects, and presentations. 10 bold shades per pack, in durable packaging.',
@@ -88,7 +88,7 @@ const BRANDS = [
     name: 'Pentastic',
     tagline: 'Everyday Ball Pen',
     tag: 'Everyday',
-    icon: <Pen size={32}/>,
+    icon: <Pen size={32} />,
     accent: '#a070c0',
     specs: ['0.7mm Fine Tip', 'Transparent Body', 'Multicolour Pack', 'Smooth Flow'],
     desc: 'Pentastic offers professional-grade smooth writing at an accessible price. Its clear barrel lets users track ink levels at a glance, and the 0.7mm fine tip suits everything from note-taking to exam use.',
@@ -98,7 +98,7 @@ const BRANDS = [
     name: 'Neo',
     tagline: 'Super Smooth Ball Pen',
     tag: 'Smooth Write',
-    icon: <Highlighter size={32}/>,
+    icon: <Highlighter size={32} />,
     accent: '#4aaebd',
     specs: ['Ball Pen', 'Pastel Body', 'Super Smooth', '12 Units'],
     desc: 'Neo\'s distinctive pastel body makes it a favourite display item for retailers. Underneath the aesthetic is an engineered ball-point mechanism delivering consistently smooth flow, perfect for sustained writing sessions.',
@@ -108,7 +108,7 @@ const BRANDS = [
     name: 'Kiddo',
     tagline: 'Student Ball Pen',
     tag: 'Student',
-    icon: <Package size={32}/>,
+    icon: <Package size={32} />,
     accent: '#e07850',
     specs: ['Ball Pen', 'Fun Design', 'Ergonomic Grip', '20 PCS / Box'],
     desc: 'Designed specifically for young writers, Kiddo pens feature an ergonomic body, friendly character artwork, and a smooth-flow ink mechanism that\'s easy for children to control. Sold in 20-unit consumer packs.',
@@ -118,7 +118,7 @@ const BRANDS = [
     name: 'Aviator',
     tagline: 'Ball Point Pen',
     tag: 'Bold',
-    icon: <Star size={32}/>,
+    icon: <Star size={32} />,
     accent: '#e06040',
     specs: ['Ball Point', 'Metal Tip', 'Multi-Colour', '10 PCS'],
     desc: 'The Aviator line takes its cues from precision engineering. A bold aviation-inspired identity, metallic body finish, and a reliable ball-point mechanism make it one of the most recognisable Nikan lines in the market.',
@@ -144,7 +144,7 @@ export default function Brands() {
             Seven Brands.<br /><em>One Standard</em> of Quality.
           </motion.h1>
           <motion.p className="page-hero-desc" variants={fadeUp} custom={0.2} initial="hidden" animate="visible" style={{ fontSize: '1.2rem' }}>
-            The Nikan portfolio spans every market segment — from premium gifting to school stationery — 
+            The Nikan portfolio spans every market segment — from premium gifting to school stationery —
             each sub-brand engineered to own its category.
           </motion.p>
         </div>
