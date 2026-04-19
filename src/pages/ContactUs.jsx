@@ -69,7 +69,7 @@ export default function ContactUs() {
         <div className="contact-layout">
 
           {/* Left: Info */}
-          <div className="contact-info-col glass-card-pro" style={{ padding: '4rem', background: '#fff' }}>
+          <div className="contact-info-col glass-card-pro">
             <Reveal>
               <div className="section-header" style={{ marginBottom: '3rem' }}>
                 <span className="label-gold">Our Details</span>
@@ -119,7 +119,7 @@ export default function ContactUs() {
           </div>
 
           {/* Right: Form */}
-          <div className="contact-form-col glass-card-pro" style={{ padding: '4rem', background: 'var(--bg-dark-pro)', color: '#fff', border: 'none' }}>
+          <div className="contact-form-col glass-card-pro">
             <Reveal delay={0.1}>
               {sent ? (
                 <div className="contact-success" style={{ textAlign: 'center', padding: '4rem 0' }}>
@@ -131,7 +131,7 @@ export default function ContactUs() {
                 </div>
               ) : (
                 <form className="contact-form" onSubmit={handleSubmit} noValidate>
-                  <div className="form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
+                  <div className="form-row">
                     <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                       <label htmlFor="name" className="label-gold" style={{ fontSize: '0.65rem', marginBottom: 0 }}>Full Name *</label>
                       <input id="name" name="name" type="text" required placeholder="Your full name" value={form.name} onChange={handleChange} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '15px', color: '#fff', borderRadius: '4px' }} />
@@ -141,7 +141,7 @@ export default function ContactUs() {
                       <input id="company" name="company" type="text" placeholder="Your organisation" value={form.company} onChange={handleChange} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '15px', color: '#fff', borderRadius: '4px' }} />
                     </div>
                   </div>
-                  <div className="form-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
+                  <div className="form-row">
                     <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                       <label htmlFor="email" className="label-gold" style={{ fontSize: '0.65rem', marginBottom: 0 }}>Email Address *</label>
                       <input id="email" name="email" type="email" required placeholder="you@company.com" value={form.email} onChange={handleChange} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '15px', color: '#fff', borderRadius: '4px' }} />

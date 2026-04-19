@@ -93,7 +93,7 @@ export default function AboutUs() {
           <h2 className="legacy-header-title">About the Company</h2>
         </div>
 
-        <div className="legacy-content" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'start' }}>
+        <div className="legacy-content legacy-grid-container">
           <div className="leadership-portrait-wrap">
             <Reveal>
               <div style={{ position: 'relative', padding: '10px', background: '#fff', border: '1px solid var(--border)', boxShadow: '15px 15px 0px var(--gold-dim)', borderRadius: 'var(--radius-sm)' }}>
@@ -105,42 +105,31 @@ export default function AboutUs() {
               </div>
             </Reveal>
           </div>
-          <div className="legacy-text-col" style={{ fontSize: '1.05rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
+          <div className="legacy-text-col" style={{ fontSize: '1rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
             <p style={{ marginBottom: '1.5rem' }}>
-              <span className="legacy-highlight" style={{ fontWeight: '700', color: 'var(--text-primary)' }}>Tirupati Colour Pens Pvt. Ltd.</span> was 
-              established in 2008, bringing a decade of excellence to the world of writing instruments.
+              <span className="legacy-highlight" style={{ fontWeight: '700', color: 'var(--text-primary)' }}>Tirupati Colour Pens Pvt. Ltd.</span>, established in 2008, is a manufacturer of writing and coloring instruments with a strong foundation in precision engineering and process-driven production.
             </p>
             <p style={{ marginBottom: '1.5rem' }}>
-              Renowned under the brand name 'BALAJI' and now 'Nikan', we provide precision-engineered 
-              tools that suit celebrations and corporate requirements alike.
+              The company operates through its established domestic brand BALAJI and its global-facing brand NIKAN, designed to serve the evolving requirements of international importers and bulk distributors.
             </p>
             <p>
-              Under the leadership of Mr. Sunil Kumar Kanodia, we have eliminated middlemen, 
-              streamlined manufacturing, and reached global summits in Stationery excellence.
+              Under the leadership of Mr. Sunil Kumar Kanodia, the organization has developed an integrated manufacturing ecosystem focused on efficiency, consistency, and scalability. With direct control over production processes and a streamlined operational structure, the company ensures uniform quality across large volumes.
             </p>
           </div>
         </div>
 
-        <div className="legacy-content" style={{ display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) 1fr', gap: '4rem', alignItems: 'start', marginTop: '4rem' }}>
-          <div className="legacy-text-col" style={{ fontSize: '1.05rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
+        <div className="legacy-content legacy-grid-container" style={{ marginTop: '0' }}>
+          <div className="legacy-text-col" style={{ fontSize: '1rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
             <Reveal>
               <div>
                 <p style={{ marginBottom: '1.5rem' }}>
-                  Located in the City of Joy, the facility has manufacturing of Ink 
-                  Reservoirs, fibre tips and all water-based inks. Our raw materials 
-                  are obtained from the largest companies of India and thus have the 
-                  consistency over time.
+                  The manufacturing facility, based in Kolkata, India, is equipped for in-house production of key components and this level of vertical integration, supported by sourcing from leading suppliers, enables tight control over product performance and long-term consistency.
                 </p>
                 <p style={{ marginBottom: '1.5rem' }}>
-                  With the guarantee of a longer shelf-life, our products have been 
-                  winning hearts across the Indian market. We distribute through our 
-                  own marketing setup that includes super stockists, distributors, 
-                  direct dealers, salespersons and more, keeping the selling price 
-                  affordable for all.
+                  Production is driven through automated assembly lines, ensuring precision, repeatability, and reliability across every batch.
                 </p>
                 <p>
-                  Our domestic presence has inspired us more to step towards 
-                  international markets as soon as possible.
+                  The company follows ISO 9001:2015 certified processes, and its key product categories comply with EN71 and BIS standards, reinforcing its commitment to quality, safety, and compliance for global markets.
                 </p>
               </div>
             </Reveal>

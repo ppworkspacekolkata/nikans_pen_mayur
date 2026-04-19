@@ -80,7 +80,7 @@ export default function Products() {
       </section>
 
       {/* ── FILTER BAR ─────────────────────── */}
-      <div className="products-filter-bar glass-card-pro" style={{ margin: '2rem 6rem', padding: '1.5rem 2rem', borderBottom: 'none', background: 'rgba(255,255,255,0.8)' }}>
+      <div className="products-filter-bar glass-card-pro">
         <div className="products-search" style={{ border: '1px solid var(--border)', background: '#fff' }}>
           <Search size={18} style={{ color: 'var(--gold)' }} />
           <input

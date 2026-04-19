@@ -74,21 +74,21 @@ const TEAM = [
   {
     name: 'Sunil Kumar Kanodia',
     role: 'Chairman & Managing Director',
-    bio: 'The visionary leader behind Tirupati Colour Pens Pvt. Ltd., bringing over two decades of manufacturing and strategic expertise to the Nikan brand.',
+    bio: 'A first-generation entrepreneur whose vision established a robust and disciplined manufacturing foundation for Tirupati Colour Pens Pvt. Ltd. His commitment to precision and process has built the company\'s core systems and long-term reliability.',
     image: sunilPhoto,
     socials: { linkedin: '#', mail: 'mailto:info@nikan.com' }
   },
   {
     name: 'Nitin Kanodia',
     role: 'Director – Strategy & Exports',
-    bio: 'An SRCC alumnus and Chartered Accountant driving Nikan\'s expansion into 20+ global territories and leading international joint ventures.',
+    bio: 'Driving the next phase of growth with a focus on automation and expanding the company’s global footprint through NIKAN. He ensures the organization delivers operational reliability and strong value for international partners.',
     image: nitinPhoto,
     socials: { linkedin: '#', twitter: '#' }
   },
   {
     name: 'Nishant Kanodia',
     role: 'Director – Operations & Growth',
-    bio: 'Chartered Accountant overseeing the modernization of manufacturing and revamping domestic business structures for exponential growth.',
+    bio: 'Leading the Charge in manufacturing scalability and process optimization. His focus on progressive manufacturing thinking enables NIKAN to deliver consistent quality across global markets.',
     image: nishantPhoto,
     socials: { linkedin: '#', mail: '#' }
   }
@@ -108,26 +108,38 @@ export default function Team() {
           <motion.h1 className="page-hero-title" variants={fadeUp} custom={0.1} initial="hidden" animate="visible">
             The Visionaries Behind<br />Every <em>Precision Stroke</em>
           </motion.h1>
-          <motion.p className="page-hero-desc" variants={fadeUp} custom={0.2} initial="hidden" animate="visible">
-            Nikan's leadership is anchored by decades of manufacturing heritage and a 
-            forward-looking commitment to Indian engineering excellence.
+          <motion.p className="page-hero-desc" variants={fadeUp} custom={0.2} initial="hidden" animate="visible" style={{ maxWidth: '800px', marginInline: 'auto' }}>
+            The company is guided by the leadership of Mr. Sunil Kumar Kanodia, whose vision established a robust and disciplined manufacturing foundation. Mr. Nitin Kanodia and Mr. Nishant Kanodia are driving the next phase of growth, with a focus on automation, scalability, and expanding the company’s global footprint through NIKAN. This combination of experience and progressive thinking enables the organization to deliver consistent quality, operational reliability, and strong long-term value for its international partners.
           </motion.p>
         </div>
       </section>
 
       {/* ── CHAIRMAN'S MESSAGE ──────────────── */}
-      <section className="section chairman-message-section" style={{ background: '#fff', borderBottom: '1px solid var(--border-dim)', padding: '6rem 0' }}>
+      <section className="section chairman-message-section" style={{ background: '#fff', borderBottom: '1px solid var(--border-dim)', padding: '8rem 0' }}>
         <Reveal>
-          <div className="quote-container" style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center', position: 'relative', padding: '0 2rem' }}>
-             <div style={{ fontSize: '6rem', color: 'var(--gold)', opacity: 0.2, position: 'absolute', top: '-3rem', left: '0', fontFamily: 'serif' }}>“</div>
-             <p className="chairman-quote serif" style={{ fontSize: '2rem', lineHeight: '1.4', color: 'var(--text-primary)', marginBottom: '2.5rem' }}>
-                At Nikan, our mission transcends manufacturing. We are crafting the tools that 
-                empower minds to learn, professionals to sign, and creators to dream.
-             </p>
-             <div className="chairman-signature flex-center-col">
-                <div style={{ fontStyle: 'italic', fontSize: '1.6rem', color: 'var(--gold)', marginBottom: '0.2rem' }}>Sunil Kumar Kanodia</div>
-                <div className="label" style={{ fontSize: '0.65rem' }}>Founder & Chairman</div>
-             </div>
+          <div className="founder-message-container">
+            <div style={{ textAlign: 'center' }}>
+              <img src={sunilPhoto} alt="Founder" style={{ width: '100%', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-md)' }} />
+              <div style={{ marginTop: '1.5rem' }}>
+                <div style={{ fontStyle: 'italic', fontSize: '1.2rem', color: 'var(--gold)' }}>Sunil Kumar Kanodia</div>
+                <div className="label" style={{ fontSize: '0.6rem' }}>Founder & Chairman</div>
+              </div>
+            </div>
+            <div className="message-text" style={{ borderLeft: '4px solid var(--gold)', paddingLeft: '3rem' }}>
+              <span className="label-gold" style={{ marginBottom: '1.5rem', display: 'block' }}>Founder’s Message</span>
+              <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: 'var(--text-secondary)', marginBottom: '1.5rem', fontStyle: 'italic' }}>
+                "When I began this journey, the objective was simple—to build a manufacturing organization driven by precision, discipline, and long-term reliability."
+              </p>
+              <p style={{ fontSize: '0.95rem', lineHeight: '1.8', color: 'var(--text-secondary)', marginBottom: '1.2rem' }}>
+                Over the years, we have focused on strengthening our processes, investing in manufacturing capabilities, and building a system that delivers consistent quality. What started as a modest operation has evolved into an integrated manufacturing setup, supported by automation and a commitment to continuous improvement.
+              </p>
+              <p style={{ fontSize: '0.95rem', lineHeight: '1.8', color: 'var(--text-secondary)', marginBottom: '1.2rem' }}>
+                At NIKAN, our approach is straightforward. We believe that in global business, trust is built through consistency—product after product, shipment after shipment. Our focus remains on delivering dependable quality, maintaining strong process control, and supporting our partners with solutions that scale.
+              </p>
+              <p style={{ fontSize: '0.95rem', lineHeight: '1.8', color: 'var(--text-secondary)' }}>
+                As we expand our presence in international markets, we remain committed to the values that have guided us from the beginning: precision in manufacturing, transparency in relationships, and a long-term perspective in every partnership we build.
+              </p>
+            </div>
           </div>
         </Reveal>
       </section>

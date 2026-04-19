@@ -75,6 +75,28 @@ export default function Media() {
         </div>
       </section>
 
+      {/* ── CORPORATE VIDEO ───────────────── */}
+      <section className="section media-video-section" style={{ background: '#fff', padding: '8rem 0' }}>
+        <Reveal>
+          <div className="section-header" style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <span className="label">Corporate Video</span>
+            <h2 className="section-title">Nikan <em>Facilities</em> In Action</h2>
+          </div>
+          <div className="video-container glass-card-pro" style={{ maxWidth: '1000px', margin: '0 auto', overflow: 'hidden', position: 'relative', aspectRatio: '16/9', background: '#000' }}>
+            <video 
+              controls 
+              width="100%" 
+              height="100%" 
+              style={{ objectFit: 'cover' }}
+              poster="/team/sunil_chairman.png"
+            >
+              <source src="/team_media/video.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </Reveal>
+      </section>
+
       {/* ── PRESS RELEASES ─────────────── */}
       <section className="section media-press-section">
         <Reveal>
@@ -83,7 +105,7 @@ export default function Media() {
               <h2 className="section-title">Latest <em>Press</em> Releases</h2>
            </div>
         </Reveal>
-        <div className="press-list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2.5rem' }}>
+        <div className="press-list">
           {PRESS.map((item, i) => (
             <Reveal key={item.title} delay={i * 0.1}>
               <div className="glass-card-pro" style={{ padding: '3rem', height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -110,7 +132,7 @@ export default function Media() {
               <h2 className="section-title">Brand &amp; <em>Trade</em> Assets</h2>
            </div>
         </Reveal>
-        <div className="downloads-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
+        <div className="downloads-grid">
           {DOWNLOADS.map((d, i) => (
             <Reveal key={d.title} delay={i * 0.07}>
               <div className="glass-card-pro" style={{ padding: '2.5rem', height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -133,6 +155,7 @@ export default function Media() {
           ))}
         </div>
       </section>
+
 
       {/* ── MEDIA CONTACT ─────────────── */}
       <section className="section media-contact-section" style={{ background: 'var(--bg-secondary)', padding: '8rem 0' }}>

@@ -120,7 +120,7 @@ export default function Careers() {
           {OPENINGS.map((job, i) => (
             <Reveal key={job.title} delay={i * 0.1}>
               <div className="glass-card-pro" style={{ padding: '3rem' }}>
-                <div className="opening-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '2rem' }}>
+                <div className="opening-card-header">
                   <div>
                     <h3 className="serif" style={{ fontSize: '1.8rem', color: 'var(--text-primary)', marginBottom: '0.8rem' }}>{job.title}</h3>
                     <div className="opening-meta" style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
@@ -134,7 +134,7 @@ export default function Careers() {
                 <p className="opening-desc" style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '2rem' }}>{job.desc}</p>
                 <div className="opening-requirements">
                   <div className="label-gold" style={{ fontSize: '0.65rem', marginBottom: '0.8rem' }}>Key Requirements:</div>
-                  <ul className="opening-req-list" style={{ listStyle: 'none', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '10px' }}>
+                  <ul className="opening-req-list">
                     {job.reqs.map(r => <li key={r} style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '10px' }}><Zap size={12} style={{ color: 'var(--gold)' }}/> {r}</li>)}
                   </ul>
                 </div>

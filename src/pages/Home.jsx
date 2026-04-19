@@ -91,9 +91,8 @@ function CountUp({ target, suffix = '' }) {
 }
 
 const TICKER_ITEMS = [
-  'Ball Point Pens', 'Sketch Pens', 'Washable Markers', 'Fine Tip Writers',
-  'Gel Pens', 'Highlighters', 'Fibre Tip Pens', 'Refillable Pens',
-  'Gift Sets', 'ISO 9001:2015 Certified', 'One Star Export House',
+  'ISO 9001:2015 Certified', 'BIS Certified Categories', 'Automated Manufacturing', 
+  'In-House Production', 'Custom Solutions', 'Built for Global Bulk Supply'
 ];
 
 const BRANDS = [
@@ -161,9 +160,8 @@ export default function Home() {
             Mastering the Art of<br />
             <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Precision Writing</em>
           </motion.h1>
-          <motion.p className="hero-desc" style={{ fontSize: '1.1rem', color: 'var(--text-muted)', maxWidth: '480px', marginBottom: '2rem' }} variants={fadeUp} custom={0.2} initial="hidden" animate="visible">
-            Nikan delivers world-class writing instruments engineered for performance. 
-            Trusted by professionals and students across 20+ countries.
+          <motion.p className="hero-desc" style={{ fontSize: '0.95rem', color: 'var(--text-muted)', maxWidth: '600px', marginBottom: '2.5rem', lineHeight: '1.8' }} variants={fadeUp} custom={0.2} initial="hidden" animate="visible">
+            NIKAN, a global-facing brand of Tirupati Colour Pens Pvt. Ltd. (est. 2008), specializes in the manufacturing of writing and coloring instruments for international importers and bulk distributors. Backed by ISO 9001:2015 certified processes, BIS-certified product categories, and automated assembly line production, we deliver consistent quality at scale. With integrated manufacturing of key components and a strong focus on precision and reliability, NIKAN is built to be a dependable partner for global supply.
           </motion.p>
           <motion.div className="hero-actions" variants={fadeUp} custom={0.3} initial="hidden" animate="visible">
             <Link to="/products" className="btn-primary" style={{ boxShadow: 'var(--shadow-gold)', padding: '14px 32px' }}>Explore Products <ArrowRight size={18} /></Link>
@@ -172,18 +170,7 @@ export default function Home() {
             </Link>
           </motion.div>
           
-          <motion.div className="hero-stats" variants={fadeIn} custom={0.5} initial="hidden" animate="visible" 
-            style={{ 
-              background: 'rgba(255,255,255,0.7)', 
-              backdropFilter: 'blur(10px)',
-              padding: '1.5rem 2rem', 
-              borderRadius: 'var(--radius-md)', 
-              border: '1px solid var(--border-dim)', 
-              boxShadow: 'var(--shadow-md)', 
-              marginTop: '3rem',
-              maxWidth: '500px',
-              gap: '2rem'
-            }}>
+          <motion.div className="hero-stats" variants={fadeIn} custom={0.5} initial="hidden" animate="visible">
             <div style={{ flex: 1 }}>
               <div className="hero-stat-number" style={{ color: 'var(--gold)', fontSize: '2.2rem' }}><CountUp target={20} suffix="+" /></div>
               <div className="hero-stat-label" style={{ fontSize: '0.65rem' }}>Global Markets</div>
@@ -247,11 +234,14 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ── TICKER ─────────────────────── */}
-      <div className="ticker-wrapper" aria-hidden="true">
-        <div className="ticker-track">
-          {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
-            <div key={i} className="ticker-item">{item}<span className="ticker-dot" /></div>
+      {/* ── TRUST STRIP ─────────────────────── */}
+      <div className="ticker-wrapper" aria-hidden="true" style={{ background: 'var(--bg-dark-pro)', border: 'none', padding: '1.2rem 0' }}>
+        <div className="ticker-track" style={{ animationDuration: '40s' }}>
+          {[...TICKER_ITEMS, ...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
+            <div key={i} className="ticker-item" style={{ color: 'var(--gold)', fontSize: '0.8rem', fontWeight: '700' }}>
+              {item}
+              <span className="ticker-dot" style={{ background: 'var(--gold)', opacity: 0.3 }} />
+            </div>
           ))}
         </div>
       </div>
@@ -296,8 +286,8 @@ export default function Home() {
       {/* ── CREDENTIALS ───────────────── */}
       <section className="section creds-section" id="credentials" style={{ background: '#fff' }}>
         <AnimatedSection>
-          <div className="creds-layout" style={{ gap: '4rem' }}>
-            <div style={{ paddingRight: '2rem' }}>
+          <div className="creds-layout">
+            <div className="creds-text-col">
               <span className="label" style={{ color: 'var(--gold)', fontWeight: '800' }}>WHY PARTNER WITH US</span>
               <h2 className="section-title" style={{ marginTop: '1rem', fontSize: '2.8rem' }}>Certified Quality,<br /><em>Global Trust</em></h2>
               <p className="section-desc" style={{ marginTop: '1.2rem', color: 'var(--text-muted)' }}>
