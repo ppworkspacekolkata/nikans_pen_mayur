@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Phone, ArrowRight, Globe, Share2 } from 'lucide-react';
+import logo from '../assets/logo.png';
 
 const PRODUCTS_LINKS = ['Ball Point Pens','Washable Markers','Gel Pens','Sketch Pens','Gift Sets'];
 const COMPANY_LINKS  = [
@@ -21,11 +22,10 @@ export default function Footer() {
     <footer className="footer" style={{ background: 'var(--bg-dark-pro)', color: '#fff', paddingTop: '5rem', borderTop: '4px solid var(--gold)' }}>
       <div className="footer-top" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '3rem' }}>
         <div className="footer-brand-col" style={{ maxWidth: '300px' }}>
-          <Link to="/" className="footer-brand-name" style={{ fontSize: '1.8rem', fontWeight: '800', color: '#fff', textTransform: 'uppercase' }}>
-            ni<span style={{ color: 'var(--gold)' }}>k</span>an ®
+          <Link to="/" className="footer-brand-name" style={{ display: 'inline-block', marginBottom: '1rem' }}>
+            <img src={logo} alt="Nikan Logo" style={{ height: '45px', width: 'auto', objectFit: 'contain' }} />
           </Link>
-          <div className="footer-brand-tagline" style={{ fontSize: '0.6rem', letterSpacing: '0.2em', fontWeight: '700', color: 'var(--gold)', marginTop: '0.2rem' }}>PRECISION CRAFTED</div>
-          <p className="footer-brand-desc" style={{ marginTop: '1.5rem', fontSize: '0.85rem', color: 'rgba(255,255,255,0.5)', lineHeight: '1.6' }}>
+          <p className="footer-brand-desc" style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: 'rgba(255,255,255,0.5)', lineHeight: '1.6' }}>
             Transforming the world of writing with Indian engineering excellence. 
             ISO 9001:2015 Certified Manufacturing.
           </p>

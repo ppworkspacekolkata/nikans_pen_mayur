@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 
+import logo from '../assets/logo.png';
+
 const NAV_LINKS = [
   { label: 'About Us',   to: '/about'   },
   { label: 'Our Team',   to: '/team'    },
@@ -31,11 +33,8 @@ export default function Navbar() {
           background: scrolled ? 'rgba(255, 255, 255, 0.92)' : 'rgba(255, 255, 255, 0.4)',
           borderBottom: scrolled ? '1px solid var(--border-dim)' : 'none'
         }}>
-        <Link to="/" className="nav-logo-wrap" style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-          <div className="nav-logo" style={{ fontSize: '1.6rem', fontWeight: '800', letterSpacing: '-0.02em', color: '#000', textTransform: 'uppercase' }}>
-            ni<span style={{ color: 'var(--gold)' }}>k</span>an{pathname === '/' && ' india'}<span style={{ fontSize: '0.8rem', verticalAlign: 'top', marginLeft: '2px' }}>®</span>
-          </div>
-          <div className="nav-tagline" style={{ fontSize: '0.55rem', letterSpacing: '0.3em', fontWeight: '800', opacity: '0.6', marginTop: '-4px' }}>PRECISION WRITING</div>
+        <Link to="/" className="nav-logo-wrap" style={{ display: 'flex', alignItems: 'center' }}>
+          <img src={logo} alt="Nikan Logo" style={{ height: '40px', width: 'auto', objectFit: 'contain' }} />
         </Link>
 
         <ul className="nav-links">
