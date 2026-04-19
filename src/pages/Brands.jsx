@@ -192,25 +192,6 @@ export default function Brands() {
         </div>
       </section>
 
-      {/* ── OEM SECTION ─────────────────────── */}
-      <section className="section brands-oem-section">
-        <Reveal>
-          <div className="oem-card">
-            <div className="oem-card-text">
-              <span className="label" style={{ color: 'var(--gold)' }}>For Distributors & Retailers</span>
-              <h2 className="oem-title">Private Label & <br />OEM Manufacturing</h2>
-              <p className="oem-desc">
-                We offer full OEM and white-label manufacturing for any of our product lines. 
-                Custom branding, packaging design, MOQ flexibility, and export-ready fulfilment 
-                — all under one roof.
-              </p>
-            </div>
-            <a href="/contact" className="btn-primary" style={{ boxShadow: 'var(--shadow-gold)' }}>
-              Request OEM Information <ArrowRight size={18}/>
-            </a>
-          </div>
-        </Reveal>
-      </section>
 
       <Footer />
     </div>
