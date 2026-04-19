@@ -7,12 +7,7 @@ import {
 } from 'lucide-react';
 import { useMotionValue, useSpring, useTransform } from 'framer-motion';
 import heroBg from '../assets/hero-bg.png';
-import slide1 from '../assets/photos/img740.jpg';
-import slide2 from '../assets/photos/img752.jpg';
-import slide3 from '../assets/photos/img306.jpg';
-import slide4 from '../assets/photos/img502.jpg';
-import slide5 from '../assets/photos/img674.jpg';
-import slide6 from '../assets/photos/img536.jpg';
+// Old slide imports removed
 
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -120,7 +115,16 @@ const EXPORTS = [
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const slides = [slide1, slide2, slide3, slide4, slide5, slide6];
+  const slides = [
+    '/product/auram 1.png',
+    '/product/aventus 2.png',
+    '/product/aviator 1.png',
+    '/product/bold mark 1.png',
+    '/product/chisel marker 1.png',
+    '/product/grip 1.png',
+    '/product/pentastic 1.png',
+    '/product/trikon 1.png'
+  ];
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 20);
