@@ -189,18 +189,9 @@ export default function Home() {
             </div>
           </motion.div>
         </div>
-        <motion.div className="hero-image" variants={fadeIn} custom={0.4} initial="hidden" animate="visible" style={{ perspective: '1000px', display: 'flex', justifyContent: 'center' }}>
+        <motion.div className="hero-slider-container" variants={fadeIn} custom={0.4} initial="hidden" animate="visible">
           <motion.div
-            style={{
-              width: '100%',
-              maxWidth: '500px',
-              borderRadius: 'var(--radius-lg)',
-              border: '8px solid #fff',
-              boxShadow: 'var(--shadow-lg)',
-              overflow: 'hidden',
-              background: '#fff',
-              position: 'relative'
-            }}
+            className="slider-content-wrap"
             whileHover={{ rotateY: 5, rotateX: -2, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 150, damping: 20 }}
           >
@@ -213,24 +204,18 @@ export default function Home() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
-                style={{ width: '100%', height: '480px', objectFit: 'contain', padding: '1.5rem' }}
+                className="slider-main-img"
               />
             </AnimatePresence>
-            <div style={{ position: 'absolute', bottom: '20px', left: '20px', background: 'var(--gold)', color: '#000', padding: '8px 16px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: '800', zIndex: 10 }}>
+            <div className="slider-badge">
               MADE IN INDIA
             </div>
             
-            <div style={{ position: 'absolute', bottom: '20px', right: '20px', display: 'flex', gap: '6px', zIndex: 10 }}>
+            <div className="slider-dots-wrap">
               {slides.map((_, i) => (
                 <div 
                   key={i} 
-                  style={{ 
-                    width: i === currentSlide ? '20px' : '6px', 
-                    height: '6px', 
-                    borderRadius: '3px', 
-                    background: i === currentSlide ? 'var(--gold)' : 'rgba(0,0,0,0.2)',
-                    transition: 'all 0.3s ease'
-                  }} 
+                  className={`slider-dot ${i === currentSlide ? 'active' : ''}`}
                 />
               ))}
             </div>
