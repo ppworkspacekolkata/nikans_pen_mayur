@@ -1019,7 +1019,7 @@
 /* ── PRODUCT DETAIL PAGE ───────────── */
 .product-detail-container { maxWidth: 1300px; margin: 0 auto; padding: 0 2rem; }
 .product-hero { padding-top: calc(var(--nav-h) + 4rem); background: linear-gradient(180deg, #f8f9fa 0%, #fff 100%); }
-.product-main-grid { display: grid; grid_template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+.product-main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
 .main-image-wrap { position: relative; border-radius: var(--radius-lg); overflow: hidden; background: #fff; border: 1px solid var(--border-dim); aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; }
 .product-main-img-display { width: 90%; height: 90%; object-fit: contain; }
 .lightbox-trigger { position: absolute; bottom: 20px; right: 20px; background: var(--bg-dark-pro); color: #fff; border: none; padding: 10px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); transition: transform 0.3s ease; }
