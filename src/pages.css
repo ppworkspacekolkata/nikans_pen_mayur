@@ -1139,12 +1139,18 @@
     .slider-dots-wrap { bottom: 10px; right: 10px; }
 
     /* Product Detail Tablet */
-    .product-main-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .product-detail-title { font-size: 2.5rem !important; }
-    .brochure-layout { grid-template-columns: 1fr; gap: 4rem; }
-    .brochure-visual { order: -1; max-width: 500px; margin: 0 auto; }
+    .product-main-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .product-detail-title { font-size: 2.2rem !important; margin: 0.5rem 0 !important; }
+    .product-detail-description { margin-bottom: 1.5rem !important; }
+    .brochure-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .brochure-visual { order: -1; max-width: 100%; margin: 0 auto; }
+    .brochure-features-list { gap: 1.5rem !important; }
+    .brochure-feature { gap: 1rem !important; }
+    .feature-icon { width: 24px !important; height: 24px !important; }
     .lightbox-close { top: 20px; right: 20px; }
     .lightbox-img { max-height: 80vh; }
+    .product-hero { padding-top: calc(var(--nav-h) + 2rem) !important; }
+    .back-link { margin-bottom: 2rem !important; }
   
   .section { padding: 5rem 1.5rem; }
   .section-header { margin-bottom: 3.5rem; text-align: center !important; }
@@ -1197,10 +1203,20 @@
   .section-title { font-size: 1.8rem !important; }
 
   /* Product Detail Mobile */
-  .product-detail-title { font-size: 2rem !important; }
-  .specs-grid-detail { grid-template-columns: 1fr; gap: 1rem; }
-  .spec-item-box { padding: 1rem; }
-  .action-buttons-wrap { flex-direction: column; }
+  .product-detail-title { font-size: 1.8rem !important; }
+  .specs-grid-detail { grid-template-columns: 1fr; gap: 0.8rem; }
+  .spec-item-box { padding: 0.8rem 1.2rem; }
+  .spec-value { font-size: 1rem !important; }
+  .action-buttons-wrap { flex-direction: column; gap: 0.8rem !important; }
+  .product-enquiry-btn { padding: 14px !important; font-size: 0.9rem; }
   .product-share-btn { padding: 12px !important; }
-  .main-image-wrap { aspect-ratio: 4/5; }
+  .main-image-wrap { aspect-ratio: 1/1; padding: 1rem; }
+  .brochure-section { padding: 4rem 0 !important; }
+  .section-header { margin-bottom: 2.5rem !important; }
+  .brochure-feature { flex-direction: column; align-items: center; text-align: center; gap: 0.5rem !important; }
+  .brochure-cta-wrap { margin-top: 2rem !important; text-align: center; }
+
+  /* Navbar Mobile Tweak */
+  .nav-cta { padding: 8px 16px !important; font-size: 0.7rem !important; }
+  .nav-logo { height: 24px !important; }
 }

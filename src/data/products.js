@@ -1,4 +1,4 @@
-// Reusable product data
+// Reusable product data - Fixed
 import imgAuram from '../assets/photos/img740.jpg';
 import imgAventus from '../assets/photos/img752.jpg';
 import imgPentastic from '../assets/photos/img306.jpg';
