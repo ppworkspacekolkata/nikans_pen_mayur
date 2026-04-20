@@ -379,8 +379,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .brands-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
-  max-width: 1300px;
+  gap: 1.8rem;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -388,7 +388,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding: 4rem 2.5rem;
+  padding: 2.8rem 1.8rem;
   border: 1px solid var(--border-dim);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-3d);
@@ -420,12 +420,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 .brand-card-icon {
-  width: 64px; height: 64px;
+  width: 52px; height: 52px;
   background: var(--gold-dim);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   color: var(--gold);
-  margin: 0 auto 2rem;
+  margin: 0 auto 1.5rem;
   transition: all 0.4s var(--ease-out);
 }
 
@@ -437,28 +437,28 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .brand-card-name {
   font-family: 'DM Serif Display', serif;
-  font-size: 1.8rem;
+  font-size: 1.45rem;
   font-weight: 500;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   color: var(--text-primary);
 }
 
 .brand-card-tag {
   display: inline-block;
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--gold);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
   opacity: 0.8;
 }
 
 .brand-card-desc {
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   color: var(--text-secondary);
-  line-height: 1.8;
-  margin-bottom: 2rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
 }
 
 .brand-card-explore {

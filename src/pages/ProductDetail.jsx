@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ArrowRight, Share2, Download, Info, CheckCircle2, Maximize2, X } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import ContactModal from '../components/ContactModal';
 import { PRODUCTS } from '../data/products';
 
 const fadeUp = {
@@ -17,6 +18,7 @@ export default function ProductDetail() {
   const product = PRODUCTS.find((p) => p.id === id);
   const [selectedImg, setSelectedImg] = useState(product?.img);
   const [isLightbox, setIsLightbox] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   // Lock body scroll when lightbox is open
   useEffect(() => {
@@ -116,14 +118,18 @@ export default function ProductDetail() {
                   </div>
                 </div>
 
-                <div className="action-buttons-wrap">
-                  <a href="/contact" className="btn-primary product-enquiry-btn">
-                    Send Enquiry <ArrowRight size={20} style={{ marginLeft: '10px' }} />
-                  </a>
-                  <button className="btn-outline product-share-btn">
-                    <Share2 size={20} />
-                  </button>
-                </div>
+                 <div className="action-buttons-wrap">
+                   <button 
+                     onClick={() => setIsContactOpen(true)}
+                     className="btn-primary product-enquiry-btn"
+                     style={{ cursor: 'pointer', border: 'none' }}
+                   >
+                     Send Enquiry <ArrowRight size={20} style={{ marginLeft: '10px' }} />
+                   </button>
+                   <button className="btn-outline product-share-btn">
+                     <Share2 size={20} />
+                   </button>
+                 </div>
               </motion.div>
             </div>
           </div>
@@ -138,7 +144,7 @@ export default function ProductDetail() {
             <h2 className="section-title">Product <em>Specifications</em></h2>
           </div>
 
-          <div className="brochure-layout">
+          <div className="brochure-layout" style={{ gridTemplateColumns: '1fr', maxWidth: '800px', margin: '0 auto' }}>
             <div className="brochure-text">
               <div className="brochure-features-list">
                 <div className="brochure-feature">
@@ -164,17 +170,15 @@ export default function ProductDetail() {
                 </div>
               </div>
               <div className="brochure-cta-wrap">
-                 <a href="/media" className="btn-primary">
+                 <a 
+                   href="/product/NiKan%20Catalogue%20Oct%2025.pdf" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   className="btn-primary"
+                 >
                     <Download size={20} style={{ marginRight: '10px' }} /> Download Brochure
                  </a>
               </div>
-            </div>
-            
-            <div className="brochure-visual">
-              <div className="brochure-img-container glass-card-pro">
-                 <img src={product.brochure || product.img} alt="Brochure" />
-              </div>
-              <div className="brochure-certified-badge">CERTIFIED</div>
             </div>
           </div>
         </div>
@@ -213,6 +217,11 @@ export default function ProductDetail() {
       )}
 
       <Footer />
+      <ContactModal 
+        isOpen={isContactOpen} 
+        onClose={() => setIsContactOpen(false)} 
+        productContext={product?.name}
+      />
     </div>
   );
 }

@@ -119,7 +119,7 @@ export default function Team() {
         <Reveal>
           <div className="founder-message-container">
             <div style={{ textAlign: 'center' }}>
-              <img src={sunilPhoto} alt="Founder" style={{ width: '100%', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-md)' }} />
+              <img src={sunilPhoto} alt="Founder" style={{ width: '100%', maxWidth: '280px', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-md)' }} />
               <div style={{ marginTop: '1.5rem' }}>
                 <div style={{ fontStyle: 'italic', fontSize: '1.2rem', color: 'var(--gold)' }}>Sunil Kumar Kanodia</div>
                 <div className="label" style={{ fontSize: '0.6rem' }}>Founder & Chairman</div>
@@ -156,9 +156,9 @@ export default function Team() {
          <div className="leader-gallery-entries" style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '8rem' }}>
              
              {/* Sunil - Left Image */}
-             <div className="pro-leader-entry" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '5rem', alignItems: 'center' }}>
+             <div className="pro-leader-entry" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '5rem', alignItems: 'center' }}>
                 <TiltCard className="pro-leader-card">
-                  <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)' }}>
+                  <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
                     <img src={sunilPhoto} alt="Sunil Kumar Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
                   </div>
                 </TiltCard>
@@ -180,7 +180,7 @@ export default function Team() {
              </div>
 
              {/* Nitin - Right Image */}
-             <div className="pro-leader-entry" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '5rem', alignItems: 'center' }}>
+             <div className="pro-leader-entry" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '5rem', alignItems: 'center' }}>
                 <Reveal delay={0.1}>
                   <div className="pro-leader-info" style={{ order: 2 }}>
                     <span className="label-gold" style={{ background: 'var(--gold-dim)', padding: '4px 12px', borderRadius: '4px' }}>Director</span>
@@ -197,16 +197,16 @@ export default function Team() {
                   </div>
                 </Reveal>
                 <TiltCard className="pro-leader-card" style={{ order: 1 }}>
-                  <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)' }}>
+                  <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
                     <img src={nitinPhoto} alt="Nitin Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
                   </div>
                 </TiltCard>
              </div>
 
              {/* Nishant - Left Image */}
-             <div className="pro-leader-entry" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '5rem', alignItems: 'center' }}>
+             <div className="pro-leader-entry" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '5rem', alignItems: 'center' }}>
                 <TiltCard className="pro-leader-card">
-                  <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)' }}>
+                  <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
                     <img src={nishantPhoto} alt="Nishant Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
                   </div>
                 </TiltCard>

@@ -47,7 +47,15 @@ const PRESS = [
 ];
 
 const DOWNLOADS = [
-  { icon: <FileText size={22}/>, title: 'Product Catalogue — Oct 2025', desc: 'Full range catalogue with specs, SKU codes, and pack configurations.', type: 'PDF', tag: 'Catalogue' },
+  { 
+    icon: <FileText size={22}/>, 
+    title: 'Product Catalogue — Oct 2025', 
+    desc: 'Full range catalogue with specs, SKU codes, and pack configurations.', 
+    type: 'PDF', 
+    tag: 'Catalogue',
+    href: '/product/NiKan%20Catalogue%20Oct%2025.pdf',
+    isDirect: true
+  },
   { icon: <FileText size={22}/>, title: 'ISO 9001:2015 Certificate', desc: 'Official QMS certification document issued by ROHS Certification Pvt. Ltd.', type: 'PDF', tag: 'Certification' },
   { icon: <FileText size={22}/>, title: 'One Star Export House Certificate', desc: 'DGFT recognition certificate under Foreign Trade Policy 2023.', type: 'PDF', tag: 'Certification' },
   { icon: <Image size={22}/>, title: 'Nikan Brand Logo Pack', desc: 'High-resolution logo files in PNG, SVG, and AI formats for media use.', type: 'ZIP', tag: 'Brand Assets' },
@@ -146,8 +154,14 @@ export default function Media() {
                 <h3 className="serif" style={{ fontSize: '1.3rem', marginBottom: '0.8rem', color: 'var(--text-primary)' }}>{d.title}</h3>
                 <p className="download-desc" style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '2rem', flexGrow: 1 }}>{d.desc}</p>
                 <div style={{ marginTop: 'auto' }}>
-                  <a href="/contact" className="btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: '0.75rem', padding: '10px' }}>
-                    <Download size={16} style={{ marginRight: '8px' }}/> Request Access
+                  <a 
+                    href={d.isDirect ? d.href : "/contact"} 
+                    target={d.isDirect ? "_blank" : "_self"}
+                    rel={d.isDirect ? "noopener noreferrer" : ""}
+                    className="btn-primary" 
+                    style={{ width: '100%', justifyContent: 'center', fontSize: '0.75rem', padding: '10px' }}
+                  >
+                    <Download size={16} style={{ marginRight: '8px' }}/> {d.isDirect ? "Download Now" : "Request Access"}
                   </a>
                 </div>
               </div>

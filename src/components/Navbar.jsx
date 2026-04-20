@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Download } from 'lucide-react';
+import ContactModal from './ContactModal';
 
 import logo from '../assets/logo.png';
 
@@ -16,6 +17,7 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -55,8 +57,32 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="nav-right" style={{ gap: '1.5rem' }}>
-          <Link to="/contact" className={`nav-cta${pathname === '/contact' ? ' nav-cta--active' : ''}`}
+        <div className="nav-right" style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+          <a 
+            href="/product/NiKan%20Catalogue%20Oct%2025.pdf" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="navbar-download-btn"
+            style={{ 
+              padding: '6px 14px', 
+              fontSize: '0.65rem', 
+              fontWeight: '800', 
+              borderRadius: '4px',
+              background: 'var(--gold)',
+              color: '#000',
+              textDecoration: 'none',
+              letterSpacing: '0.05em',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            CATALOGUE <Download size={14} />
+          </a>
+          <button 
+            onClick={() => setIsContactOpen(true)}
+            className="nav-cta"
             style={{ 
               padding: '10px 24px', 
               fontSize: '0.75rem', 
@@ -66,10 +92,12 @@ export default function Navbar() {
               color: '#fff',
               display: 'flex',
               alignItems: 'center',
+              cursor: 'pointer',
+              border: 'none',
               gap: '6px'
             }}>
             INQUIRY <ArrowUpRight size={14} />
-          </Link>
+          </button>
           <button className="nav-burger" onClick={() => setOpen(o => !o)} aria-label="Menu" style={{ color: '#000' }}>
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -90,17 +118,28 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
-            <li style={{ marginTop: '3rem' }}>
-              <Link to="/contact" 
-                style={{ background: '#000', color: '#fff', padding: '1rem 2rem', borderRadius: '4px', fontWeight: '800' }} 
+            <li style={{ marginTop: '3rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <a 
+                href="/product/NiKan%20Catalogue%20Oct%2025.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ background: 'var(--gold)', color: '#000', padding: '1rem 2rem', borderRadius: '4px', fontWeight: '800', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }} 
                 onClick={() => setOpen(false)}
               >
+                DOWNLOAD CATALOGUE <Download size={20} />
+              </a>
+              <button 
+                onClick={() => { setOpen(false); setIsContactOpen(true); }}
+                style={{ background: '#000', border: 'none', cursor: 'pointer', color: '#fff', padding: '1rem 2rem', borderRadius: '4px', fontWeight: '800', textAlign: 'center' }} 
+              >
                 CONTACT US
-              </Link>
+              </button>
             </li>
           </ul>
         </div>
       )}
+
+      <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </>
   );
 }

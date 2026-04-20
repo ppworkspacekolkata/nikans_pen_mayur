@@ -91,29 +91,6 @@ export default function Exports() {
         ))}
       </div>
 
-      {/* ── REGIONS ─────────────────────── */}
-      <section className="section exports-regions-section">
-        <Reveal>
-           <div className="section-header" style={{ textAlign: 'center', marginBottom: '6rem' }}>
-              <span className="label">Markets We Serve</span>
-              <h2 className="section-title">Active Export <em>Regions</em></h2>
-           </div>
-        </Reveal>
-        <div className="exports-regions-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2.5rem' }}>
-          {REGIONS.map((r, i) => (
-            <Reveal key={r.region} delay={i * 0.1}>
-              <div className="glass-card-pro" style={{ padding: '3rem', height: '100%', borderTop: `4px solid ${r.accent}` }}>
-                <div className="export-region-flag" style={{ fontSize: '3rem', marginBottom: '1.5rem' }}>{r.flag}</div>
-                <div className="serif" style={{ fontSize: '1.6rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>{r.region}</div>
-                <p style={{ fontSize: '0.92rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem' }}>{r.desc}</p>
-                <div className="export-region-countries" style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                  {r.countries.map(c => <span key={c} style={{ fontSize: '0.7rem', fontWeight: '700', padding: '4px 10px', background: 'var(--bg)', borderRadius: '4px', border: '1px solid var(--border-dim)' }}>{c}</span>)}
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
 
       {/* ── EXPORT PROCESS ─────────────── */}
       <section className="section exports-process-section">

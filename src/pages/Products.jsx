@@ -53,32 +53,7 @@ export default function Products() {
         </div>
       </section>
 
-      {/* ── FILTER BAR ─────────────────────── */}
-      <div className="products-filter-bar glass-card-pro">
-        <div className="products-search" style={{ border: '1px solid var(--border)', background: '#fff' }}>
-          <Search size={18} style={{ color: 'var(--gold)' }} />
-          <input
-            id="product-search"
-            type="text"
-            placeholder="Search products..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            style={{ background: 'none', border: 'none', outline: 'none', fontSize: '0.95rem', width: '220px', fontWeight: '500' }}
-          />
-        </div>
-        <div className="products-cats">
-          {CATEGORIES.map(c => (
-            <button
-              key={c}
-              className={`cat-btn${activeCategory === c ? ' cat-btn--active' : ''}`}
-              onClick={() => setActiveCategory(c)}
-              style={{ padding: '8px 16px', fontSize: '0.75rem' }}
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-      </div>
+
 
       {/* ── PRODUCTS GRID ─────────────────────── */}
       <section className="section products-grid-section">
@@ -126,9 +101,15 @@ export default function Products() {
               <p className="catalogue-cta-desc">Get the complete October 2025 product catalogue with full specifications, SKUs, and pricing eligibility.</p>
             </div>
             <div className="catalogue-cta-actions">
-              <a href="/media" className="btn-primary" style={{ boxShadow: 'var(--shadow-gold)' }}>
-                <Download size={18} style={{ marginRight: '8px' }} /> View Downloads
-              </a>
+               <a 
+                 href="/product/NiKan%20Catalogue%20Oct%2025.pdf" 
+                 target="_blank" 
+                 rel="noopener noreferrer"
+                 className="btn-primary" 
+                 style={{ boxShadow: 'var(--shadow-gold)' }}
+               >
+                 <Download size={18} style={{ marginRight: '8px' }} /> Download Catalogue
+               </a>
               <a href="/contact" className="btn-outline" style={{ border: '2px solid rgba(255,255,255,0.2)', color: '#fff' }}>Request Pricing</a>
             </div>
           </div>

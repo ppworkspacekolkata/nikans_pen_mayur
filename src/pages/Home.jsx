@@ -242,10 +242,10 @@ export default function Home() {
       {/* ── BRANDS PREVIEW ────────────── */}
       <section className="section brands-section" id="brands" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-dim)', padding: '5rem 0' }}>
         <AnimatedSection>
-          <div className="section-header" style={{ marginBottom: '3rem' }}>
+          <div className="section-header" style={{ marginBottom: '3rem', textAlign: 'center' }}>
             <motion.span className="label" variants={fadeUp} custom={0} style={{ background: 'var(--gold)', color: '#000', padding: '4px 10px', borderRadius: '4px', fontWeight: '800' }}>OUR COLLECTIONS</motion.span>
             <motion.h2 className="section-title" style={{ fontSize: '2.8rem', marginTop: '1rem' }} variants={fadeUp} custom={0.1}>A Range Built for<br /><em style={{ color: 'var(--gold)' }}>Every Persona</em></motion.h2>
-            <motion.p className="section-desc" style={{ fontSize: '1rem', color: 'var(--text-muted)' }} variants={fadeUp} custom={0.2}>
+            <motion.p className="section-desc" style={{ fontSize: '1rem', color: 'var(--text-muted)', margin: '0.5rem auto 0', maxWidth: '600px' }} variants={fadeUp} custom={0.2}>
               From executive luxury to student essentials — Nikan engineering serves every segment with world-class precision.
             </motion.p>
           </div>
@@ -311,30 +311,6 @@ export default function Home() {
         </AnimatedSection>
       </section>
 
-      {/* ── EXPORTS ───────────────────── */}
-      <section className="section exports-section" id="exports">
-        <AnimatedSection>
-          <div className="section-header">
-            <span className="label">Global Reach</span>
-            <h2 className="section-title">Trusted Across<br /><em>Four Continents</em></h2>
-            <p className="section-desc">
-              Nikan products reach retailers, distributors, and institutions across the Middle East, Africa, Asia, and the Americas.
-            </p>
-          </div>
-          <div className="exports-grid">
-            {EXPORTS.map((e, i) => (
-              <motion.div key={e.region} className="export-card" variants={fadeUp} custom={i * 0.1}>
-                <div className="export-flag">{e.flag}</div>
-                <div className="export-region">{e.region}</div>
-                <div className="export-countries">{e.countries}</div>
-              </motion.div>
-            ))}
-          </div>
-          <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
-            <Link to="/exports" className="btn-primary">View Export Markets <ArrowRight size={16} /></Link>
-          </div>
-        </AnimatedSection>
-      </section>
 
       {/* ── CTA ───────────────────────── */}
       <section className="cta-section" id="contact" style={{ background: 'var(--bg-dark-pro)', color: '#fff', padding: '6rem 0' }}>
