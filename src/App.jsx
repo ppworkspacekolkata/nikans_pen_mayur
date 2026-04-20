@@ -9,6 +9,7 @@ import Exports    from './pages/Exports';
 import Careers    from './pages/Careers';
 import Media      from './pages/Media';
 import ContactUs  from './pages/ContactUs';
+import ProductDetail from './pages/ProductDetail';
 import './index.css';
 
 function AnimatedRoutes() {
@@ -33,6 +34,7 @@ function AnimatedRoutes() {
           <Route path="/careers" element={<Careers />}   />
           <Route path="/media"   element={<Media />}     />
           <Route path="/contact" element={<ContactUs />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
         </Routes>
       </motion.div>
     </AnimatePresence>
