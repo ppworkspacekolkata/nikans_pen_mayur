@@ -1052,10 +1052,10 @@
 .brochure-certified-badge { position: absolute; top: -20px; right: -20px; background: var(--gold); color: #000; padding: 15px; border-radius: 50%; fontWeight: 800; transform: rotate(15deg); box-shadow: var(--shadow-md); z-index: 5; }
 
 /* ── LIGHTBOX ──────────────────────── */
-.lightbox-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 2rem; }
-.lightbox-close { position: absolute; top: 30px; right: 30px; background: none; border: none; color: #fff; cursor: pointer; transition: transform 0.3s ease; }
-.lightbox-close:hover { transform: rotate(90deg); }
-.lightbox-img { max-width: 95vw; max-height: 90vh; object-fit: contain; border-radius: 8px; }
+.lightbox-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.92); z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+.lightbox-close { position: absolute; top: 30px; right: 30px; background: rgba(255,255,255,0.1); border: none; color: #fff; cursor: pointer; transition: all 0.3s ease; width: 50px; height: 50px; border-radius: 50%; display: flex; alignItems: center; justifyContent: center; z-index: 10; }
+.lightbox-close:hover { background: rgba(255,255,255,0.2); transform: rotate(90deg); }
+.lightbox-img { max-width: 95%; max-height: 85vh; object-fit: contain; border-radius: 4px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
 
 /* ─────────────────────────────────────────
    RESPONSIVE OVERRIDES

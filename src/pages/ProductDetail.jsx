@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ArrowRight, Share2, Download, Info, CheckCircle2, Maximize2, X } from 'lucide-react';
 import Navbar from '../components/Navbar';
@@ -16,6 +17,18 @@ export default function ProductDetail() {
   const product = PRODUCTS.find((p) => p.id === id);
   const [selectedImg, setSelectedImg] = useState(product?.img);
   const [isLightbox, setIsLightbox] = useState(false);
+
+  // Lock body scroll when lightbox is open
+  useEffect(() => {
+    if (isLightbox) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isLightbox]);
 
   if (!product) {
     return (
@@ -167,34 +180,37 @@ export default function ProductDetail() {
         </div>
       </section>
 
-      {/* ── LIGHTBOX OVERLAY ──────────────── */}
-      <AnimatePresence>
-        {isLightbox && (
-          <motion.div 
-            className="lightbox-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsLightbox(false)}
-          >
-            <button 
+      {/* ── LIGHTBOX OVERLAY (PORTAL) ──────── */}
+      {createPortal(
+        <AnimatePresence>
+          {isLightbox && (
+            <motion.div 
+              className="lightbox-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setIsLightbox(false)}
-              className="lightbox-close"
             >
-              <X size={40} />
-            </button>
-            <motion.img 
-              src={selectedImg} 
-              alt="Full Size"
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className="lightbox-img"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <button 
+                onClick={() => setIsLightbox(false)}
+                className="lightbox-close"
+              >
+                <X size={40} />
+              </button>
+              <motion.img 
+                src={selectedImg} 
+                alt="Full Size"
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.8 }}
+                className="lightbox-img"
+                onClick={(e) => e.stopPropagation()}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
 
       <Footer />
     </div>
