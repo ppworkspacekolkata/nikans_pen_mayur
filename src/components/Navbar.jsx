@@ -34,7 +34,7 @@ export default function Navbar() {
           borderBottom: scrolled ? '1px solid var(--border-dim)' : 'none'
         }}>
         <Link to="/" className="nav-logo-wrap" style={{ display: 'flex', alignItems: 'center' }}>
-          <img src={logo} alt="Nikan Logo" style={{ height: '40px', width: 'auto', objectFit: 'contain' }} />
+          <img src={logo} alt="Nikan Logo" style={{ height: '60px', width: 'auto', objectFit: 'contain' }} />
         </Link>
 
         <ul className="nav-links">
