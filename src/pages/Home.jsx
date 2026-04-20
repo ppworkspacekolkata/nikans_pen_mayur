@@ -164,9 +164,13 @@ export default function Home() {
             Mastering the Art of<br />
             <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Precision Writing</em>
           </motion.h1>
-          <motion.p className="hero-desc" style={{ fontSize: '0.95rem', color: 'var(--text-muted)', maxWidth: '600px', marginBottom: '2.5rem', lineHeight: '1.8' }} variants={fadeUp} custom={0.2} initial="hidden" animate="visible">
-            NIKAN, a global-facing brand of Tirupati Colour Pens Pvt. Ltd. (est. 2008), specializes in the manufacturing of writing and coloring instruments for international importers and bulk distributors. Backed by ISO 9001:2015 certified processes, BIS-certified product categories, and automated assembly line production, we deliver consistent quality at scale. With integrated manufacturing of key components and a strong focus on precision and reliability, NIKAN is built to be a dependable partner for global supply.
+          <motion.p className="hero-desc" style={{ fontSize: '0.95rem', color: 'var(--text-muted)', maxWidth: '600px', marginBottom: '1rem', lineHeight: '1.8' }} variants={fadeUp} custom={0.2} initial="hidden" animate="visible">
+            NIKAN, a global-facing brand of Tirupati Colour Pens Pvt. Ltd. (est. 2008), specializes in the manufacturing of writing and coloring instruments for international importers and bulk distributors.
           </motion.p>
+          <motion.p className="hero-desc" style={{ fontSize: '0.95rem', color: 'var(--text-muted)', maxWidth: '600px', marginBottom: '2.5rem', lineHeight: '1.8' }} variants={fadeUp} custom={0.25} initial="hidden" animate="visible">
+            Backed by ISO 9001:2015 certified processes, BIS-certified product categories, and automated assembly line production, we deliver consistent quality at scale. With integrated manufacturing of key components and a strong focus on precision and reliability, NIKAN is built to be a dependable partner for global supply.
+          </motion.p>
+
           <motion.div className="hero-actions" variants={fadeUp} custom={0.3} initial="hidden" animate="visible">
             <Link to="/products" className="btn-primary" style={{ boxShadow: 'var(--shadow-gold)', padding: '14px 32px' }}>Explore Products <ArrowRight size={18} /></Link>
             <Link to="/contact" className="btn-ghost" style={{ borderBottom: '2px solid var(--gold)', borderRadius: '0', padding: '8px 4px', fontWeight: '600' }}>
