@@ -89,7 +89,7 @@ function CountUp({ target, suffix = '' }) {
 }
 
 const TICKER_ITEMS = [
-  'ISO 9001:2015 Certified', 'BIS Certified Categories', 'Automated Manufacturing', 
+  'ISO 9001:2015 Certified', 'BIS Certified Categories', 'Automated Manufacturing',
   'In-House Production', 'Custom Solutions', 'Built for Global Bulk Supply'
 ];
 
@@ -156,13 +156,13 @@ function ProductCarousel() {
 
   return (
     <div style={{ position: 'relative' }}>
-      <div 
+      <div
         ref={containerRef}
         onScroll={checkScroll}
-        style={{ 
-          display: 'flex', 
-          gap: '2rem', 
-          overflowX: 'auto', 
+        style={{
+          display: 'flex',
+          gap: '2rem',
+          overflowX: 'auto',
           padding: '2rem 0',
           scrollSnapType: 'x mandatory',
           scrollbarWidth: 'none',
@@ -172,36 +172,36 @@ function ProductCarousel() {
       >
         {PRODUCTS.slice(0, 10).map((p, i) => (
           <div key={p.id} style={{ flex: '0 0 350px', scrollSnapAlign: 'start' }}>
-             <Link to={`/product/${p.id}`} className="product-card-link" style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
-                <div className="product-card glass-card-pro" style={{ padding: '2rem', height: '100%', display: 'flex', flexDirection: 'column', transition: 'transform 0.3s ease', background: '#fff' }}>
-                  <div className="product-card-image" style={{ borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--border-dim)', marginBottom: '1.5rem', background: '#fff' }}>
-                    <img src={p.img} alt={p.name} style={{ width: '100%', aspectRatio: '1/1', objectFit: 'contain', padding: '1rem' }} />
-                  </div>
-                  <div className="product-card-top" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                    <span className="label-gold" style={{ margin: 0, fontSize: '0.6rem' }}>{p.tag}</span>
-                    <span className="product-card-cat" style={{ fontSize: '0.7rem', fontWeight: '600', color: 'var(--text-muted)' }}>{p.cat}</span>
-                  </div>
-                  <div className="product-card-name" style={{ fontFamily: 'DM Serif Display', fontSize: '1.4rem', marginBottom: '0.8rem', color: 'var(--text-primary)' }}>{p.name}</div>
-                  <p className="product-card-desc" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem', flexGrow: 1, lineClamp: 2, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{p.desc}</p>
-                  
-                  <div className="product-card-specs" style={{ background: 'var(--bg-secondary)', padding: '0.8rem 1rem', borderRadius: '8px', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '4px', border: '1px solid var(--border-dim)' }}>
-                    <div className="product-spec" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}><span style={{ color: 'var(--text-muted)' }}>Tip</span><span style={{ fontWeight: '700' }}>{p.tip}</span></div>
-                    <div className="product-spec" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}><span style={{ color: 'var(--text-muted)' }}>Colours</span><span style={{ fontWeight: '700' }}>{p.colours}</span></div>
-                  </div>
-
-                  <div className="btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: '0.7rem', padding: '8px', background: 'var(--gold)', color: '#000' }}>
-                    View Details <ArrowRight size={14} style={{ marginLeft: '8px' }}/>
-                  </div>
+            <Link to={`/product/${p.id}`} className="product-card-link" style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
+              <div className="product-card glass-card-pro" style={{ padding: '2rem', height: '100%', display: 'flex', flexDirection: 'column', transition: 'transform 0.3s ease', background: '#fff' }}>
+                <div className="product-card-image" style={{ borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--border-dim)', marginBottom: '1.5rem', background: '#fff' }}>
+                  <img src={p.img} alt={p.name} style={{ width: '100%', aspectRatio: '1/1', objectFit: 'contain', padding: '1rem' }} />
                 </div>
-              </Link>
+                <div className="product-card-top" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                  <span className="label-gold" style={{ margin: 0, fontSize: '0.6rem' }}>{p.tag}</span>
+                  <span className="product-card-cat" style={{ fontSize: '0.7rem', fontWeight: '600', color: 'var(--text-muted)' }}>{p.cat}</span>
+                </div>
+                <div className="product-card-name" style={{ fontFamily: 'DM Serif Display', fontSize: '1.4rem', marginBottom: '0.8rem', color: 'var(--text-primary)' }}>{p.name}</div>
+                <p className="product-card-desc" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem', flexGrow: 1, lineClamp: 2, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{p.desc}</p>
+
+                <div className="product-card-specs" style={{ background: 'var(--bg-secondary)', padding: '0.8rem 1rem', borderRadius: '8px', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '4px', border: '1px solid var(--border-dim)' }}>
+                  <div className="product-spec" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}><span style={{ color: 'var(--text-muted)' }}>Tip</span><span style={{ fontWeight: '700' }}>{p.tip}</span></div>
+                  <div className="product-spec" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}><span style={{ color: 'var(--text-muted)' }}>Colours</span><span style={{ fontWeight: '700' }}>{p.colours}</span></div>
+                </div>
+
+                <div className="btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: '0.7rem', padding: '8px', background: 'var(--gold)', color: '#000' }}>
+                  View Details <ArrowRight size={14} style={{ marginLeft: '8px' }} />
+                </div>
+              </div>
+            </Link>
           </div>
         ))}
       </div>
 
       {/* Nav Buttons */}
-      <button 
+      <button
         onClick={() => scroll('left')}
-        style={{ 
+        style={{
           position: 'absolute', left: '-20px', top: '50%', transform: 'translateY(-50%)',
           width: '50px', height: '50px', borderRadius: '50%', background: '#fff',
           boxShadow: '0 4px 15px rgba(0,0,0,0.1)', display: canScrollLeft ? 'flex' : 'none',
@@ -210,9 +210,9 @@ function ProductCarousel() {
       >
         <ChevronLeft size={24} />
       </button>
-      <button 
+      <button
         onClick={() => scroll('right')}
-        style={{ 
+        style={{
           position: 'absolute', right: '-20px', top: '50%', transform: 'translateY(-50%)',
           width: '50px', height: '50px', borderRadius: '50%', background: '#fff',
           boxShadow: '0 4px 15px rgba(0,0,0,0.1)', display: canScrollRight ? 'flex' : 'none',
@@ -222,7 +222,8 @@ function ProductCarousel() {
         <ChevronRight size={24} />
       </button>
 
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}} />
@@ -296,14 +297,14 @@ export default function Home() {
               Bulk Enquiries <span className="btn-ghost-arrow"><ChevronRight size={18} /></span>
             </Link>
           </motion.div>
-          
+
           <motion.div className="hero-stats" variants={fadeIn} custom={0.5} initial="hidden" animate="visible">
             <div style={{ flex: 1 }}>
               <div className="hero-stat-number" style={{ color: 'var(--gold)', fontSize: '2.2rem' }}><CountUp target={20} suffix="+" /></div>
               <div className="hero-stat-label" style={{ fontSize: '0.65rem' }}>Global Markets</div>
             </div>
             <div style={{ flex: 1, borderLeft: '1px solid var(--border-dim)', paddingLeft: '2rem' }}>
-              <div className="hero-stat-number" style={{ color: 'var(--gold)', fontSize: '2.2rem' }}><CountUp target={50} suffix="+" /></div>
+              <div className="hero-stat-number" style={{ color: 'var(--gold)', fontSize: '2.2rem' }}><CountUp target={100} suffix="+" /></div>
               <div className="hero-stat-label" style={{ fontSize: '0.65rem' }}>Precision SKUs</div>
             </div>
             <div style={{ flex: 1, borderLeft: '1px solid var(--border-dim)', paddingLeft: '2rem' }}>
@@ -333,11 +334,11 @@ export default function Home() {
             <div className="slider-badge">
               MADE IN INDIA
             </div>
-            
+
             <div className="slider-dots-wrap">
               {slides.map((_, i) => (
-                <div 
-                  key={i} 
+                <div
+                  key={i}
                   className={`slider-dot ${i === currentSlide ? 'active' : ''}`}
                 />
               ))}
@@ -403,42 +404,36 @@ export default function Home() {
             <motion.h2 className="section-title" style={{ fontSize: '2.8rem', marginTop: '1rem' }} variants={fadeUp} custom={0.1}>Featured <em>Writing</em> Instruments</motion.h2>
           </div>
         </AnimatedSection>
-        
+
         <div className="container-fluid" style={{ padding: '0 4rem' }}>
           <ProductCarousel />
         </div>
       </section>
 
       {/* ── CREDENTIALS ───────────────── */}
-      <section className="section creds-section" id="credentials" style={{ background: '#fff' }}>
+      <section className="section creds-section" id="credentials" style={{ background: '#fff', padding: '6rem 0' }}>
         <AnimatedSection>
-          <div className="creds-layout">
-            <div className="creds-text-col">
+          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
               <span className="label" style={{ color: 'var(--gold)', fontWeight: '800' }}>WHY PARTNER WITH US</span>
-              <h2 className="section-title" style={{ marginTop: '1rem', fontSize: '2.8rem' }}>Certified Quality,<br /><em>Global Trust</em></h2>
-              <p className="section-desc" style={{ marginTop: '1.2rem', color: 'var(--text-muted)' }}>
-                Tirupati Colour Pens Pvt. Ltd. is a DGFT-recognised One Star Export House 
+              <h2 className="section-title" style={{ marginTop: '1rem', fontSize: '2.8rem' }}>Certified Quality, <em>Global Trust</em></h2>
+              <p className="section-desc" style={{ marginTop: '1.2rem', color: 'var(--text-muted)', maxWidth: '750px', margin: '1.2rem auto 0' }}>
+                Tirupati Colour Pens Pvt. Ltd. is a DGFT-recognised One Star Export House
                 with ISO 9001:2015 certification, ensuring every pen meets international standards.
               </p>
-              <div className="creds-list" style={{ marginTop: '2rem', gap: '1rem' }}>
-                {CREDS.map((c, i) => (
-                  <motion.div key={c.title} className="cred-item" variants={fadeUp} custom={i * 0.1} 
-                    style={{ padding: '1.2rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-dim)' }}>
-                    <div className="cred-icon" style={{ background: 'var(--gold)', color: '#000' }}>{c.icon}</div>
-                    <div>
-                      <div className="cred-item-title" style={{ fontWeight: '700' }}>{c.title}</div>
-                      <div className="cred-item-desc" style={{ fontSize: '0.8rem' }}>{c.desc}</div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
             </div>
-            <div className="creds-image-wrap" style={{ position: 'relative' }}>
-              <img className="creds-image" src={heroBg} alt="Nikan manufacturing" style={{ height: '520px', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} />
-              <div className="creds-badge" style={{ padding: '1.5rem', boxShadow: 'var(--shadow-lg)', bottom: '20px', right: '20px' }}>
-                <div className="creds-badge-num" style={{ fontSize: '2.2rem', fontWeight: '800' }}>ISO</div>
-                <div className="creds-badge-text" style={{ fontSize: '0.7rem', fontWeight: '700' }}>9001:2015<br />CERTIFIED</div>
-              </div>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+              {CREDS.map((c, i) => (
+                <motion.div key={c.title} variants={fadeUp} custom={i * 0.1}
+                  style={{ padding: '2.5rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-dim)', borderRadius: 'var(--radius-md)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', transition: 'transform 0.3s' }}>
+                  <div style={{ width: '64px', height: '64px', background: 'var(--gold)', color: '#000', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem', boxShadow: '0 10px 20px rgba(212,175,55,0.3)' }}>
+                    {c.icon}
+                  </div>
+                  <div style={{ fontWeight: '700', fontSize: '1.3rem', marginBottom: '0.8rem', color: 'var(--text-primary)' }}>{c.title}</div>
+                  <div style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.7' }}>{c.desc}</div>
+                </motion.div>
+              ))}
             </div>
           </div>
         </AnimatedSection>
@@ -451,7 +446,7 @@ export default function Home() {
           <motion.span className="label" variants={fadeUp} custom={0} style={{ color: 'var(--gold)', fontWeight: '800' }}>GLOBAL PARTNERSHIPS</motion.span>
           <motion.h2 className="section-title serif" variants={fadeUp} custom={0.1} style={{ color: '#fff', fontSize: '3rem', marginTop: '1rem' }}>Let's Build Something<br /><em style={{ color: 'var(--gold)' }}>Meaningful</em></motion.h2>
           <motion.p className="section-desc" style={{ margin: '1.2rem auto 0', textAlign: 'center', color: 'rgba(255,255,255,0.7)', maxWidth: '580px' }} variants={fadeUp} custom={0.2}>
-            We invite distributors and institutional buyers worldwide to join the Nikan family. 
+            We invite distributors and institutional buyers worldwide to join the Nikan family.
             Experience engineering excellence in every stroke.
           </motion.p>
           <motion.div className="cta-actions" variants={fadeUp} custom={0.3} style={{ marginTop: '3rem' }}>
