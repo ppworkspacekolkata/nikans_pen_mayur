@@ -51,7 +51,7 @@ export default function ContactModal({ isOpen, onClose, productContext = '' }) {
         overflowY: 'auto'
       }}>
         <motion.div 
-          className="contact-modal-content glass-card-pro"
+          className="contact-modal-content glass-card-pro modal-inner-responsive"
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -62,7 +62,6 @@ export default function ContactModal({ isOpen, onClose, productContext = '' }) {
             borderRadius: 'var(--radius-lg)',
             overflow: 'hidden',
             display: 'flex',
-            flexDirection: window.innerWidth < 768 ? 'column' : 'row',
             border: '1px solid rgba(255,255,255,0.1)',
             boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
             position: 'relative'
@@ -70,11 +69,8 @@ export default function ContactModal({ isOpen, onClose, productContext = '' }) {
         >
           {/* Left Side: Info */}
           <div className="modal-info-pane" style={{
-            width: window.innerWidth < 768 ? '100%' : '320px',
             background: 'rgba(212, 175, 55, 0.05)',
             padding: '2rem',
-            borderRight: window.innerWidth < 768 ? 'none' : '1px solid rgba(255,255,255,0.05)',
-            borderBottom: window.innerWidth < 768 ? '1px solid rgba(255,255,255,0.05)' : 'none',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
@@ -88,14 +84,14 @@ export default function ContactModal({ isOpen, onClose, productContext = '' }) {
               </p>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', margin: '1.5rem 0' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', margin: '1.5rem 0' }}>
               <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                 <div style={{ color: 'var(--gold)' }}><Mail size={16}/></div>
-                <div style={{ fontSize: '0.8rem', color: '#fff', fontWeight: '600' }}>info@nikan.in</div>
+                <div style={{ fontSize: '0.8rem', color: '#fff', fontWeight: '600' }}>exports@tirupaticolorpens.com</div>
               </div>
               <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                 <div style={{ color: 'var(--gold)' }}><Phone size={16}/></div>
-                <div style={{ fontSize: '0.8rem', color: '#fff', fontWeight: '600' }}>+91 98043 33779</div>
+                <div style={{ fontSize: '0.8rem', color: '#fff', fontWeight: '600' }}>+91 98300 58822</div>
               </div>
               <div style={{ display: 'flex', gap: '10px' }}>
                 <div style={{ color: 'var(--gold)' }}><MapPin size={16}/></div>

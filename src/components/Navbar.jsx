@@ -12,6 +12,7 @@ const NAV_LINKS = [
   { label: 'Products',   to: '/products'},
   { label: 'Exports',    to: '/exports' },
   { label: 'Media',      to: '/media'   },
+  { label: 'Contact Us', to: '/contact' },
 ];
 
 export default function Navbar() {

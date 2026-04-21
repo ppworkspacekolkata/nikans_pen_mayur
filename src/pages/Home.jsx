@@ -3,7 +3,8 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, Award, Globe, ShieldCheck, Package,
-  Pen, Palette, Highlighter, ChevronRight, Mail, MapPin
+  Pen, Palette, Highlighter, ChevronRight, Mail, MapPin,
+  ArrowLeft, ChevronLeft
 } from 'lucide-react';
 import { useMotionValue, useSpring, useTransform } from 'framer-motion';
 import heroBg from '../assets/hero-bg.png';
@@ -11,6 +12,8 @@ import heroBg from '../assets/hero-bg.png';
 
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { PRODUCTS } from '../data/products';
+
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -111,6 +114,122 @@ const EXPORTS = [
   { flag: '🌏', region: 'South & SE Asia', countries: 'Bangladesh · Nepal · Sri Lanka' },
   { flag: '🌎', region: 'Expanding', countries: 'Active market development' },
 ];
+
+function ProductCarousel() {
+  const containerRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const scroll = (dir) => {
+    if (containerRef.current) {
+      const { scrollLeft, clientWidth } = containerRef.current;
+      const amount = clientWidth * 0.8;
+      containerRef.current.scrollTo({
+        left: dir === 'left' ? scrollLeft - amount : scrollLeft + amount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const checkScroll = () => {
+    if (containerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+      setCanScrollLeft(scrollLeft > 20);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 20);
+    }
+  };
+
+  // Auto-scroll logic
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (containerRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+        if (scrollLeft + clientWidth >= scrollWidth - 10) {
+          containerRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          containerRef.current.scrollTo({ left: scrollLeft + 300, behavior: 'smooth' });
+        }
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <div 
+        ref={containerRef}
+        onScroll={checkScroll}
+        style={{ 
+          display: 'flex', 
+          gap: '2rem', 
+          overflowX: 'auto', 
+          padding: '2rem 0',
+          scrollSnapType: 'x mandatory',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+        }}
+        className="no-scrollbar"
+      >
+        {PRODUCTS.slice(0, 10).map((p, i) => (
+          <div key={p.id} style={{ flex: '0 0 350px', scrollSnapAlign: 'start' }}>
+             <Link to={`/product/${p.id}`} className="product-card-link" style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
+                <div className="product-card glass-card-pro" style={{ padding: '2rem', height: '100%', display: 'flex', flexDirection: 'column', transition: 'transform 0.3s ease', background: '#fff' }}>
+                  <div className="product-card-image" style={{ borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--border-dim)', marginBottom: '1.5rem', background: '#fff' }}>
+                    <img src={p.img} alt={p.name} style={{ width: '100%', aspectRatio: '1/1', objectFit: 'contain', padding: '1rem' }} />
+                  </div>
+                  <div className="product-card-top" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                    <span className="label-gold" style={{ margin: 0, fontSize: '0.6rem' }}>{p.tag}</span>
+                    <span className="product-card-cat" style={{ fontSize: '0.7rem', fontWeight: '600', color: 'var(--text-muted)' }}>{p.cat}</span>
+                  </div>
+                  <div className="product-card-name" style={{ fontFamily: 'DM Serif Display', fontSize: '1.4rem', marginBottom: '0.8rem', color: 'var(--text-primary)' }}>{p.name}</div>
+                  <p className="product-card-desc" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem', flexGrow: 1, lineClamp: 2, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{p.desc}</p>
+                  
+                  <div className="product-card-specs" style={{ background: 'var(--bg-secondary)', padding: '0.8rem 1rem', borderRadius: '8px', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '4px', border: '1px solid var(--border-dim)' }}>
+                    <div className="product-spec" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}><span style={{ color: 'var(--text-muted)' }}>Tip</span><span style={{ fontWeight: '700' }}>{p.tip}</span></div>
+                    <div className="product-spec" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}><span style={{ color: 'var(--text-muted)' }}>Colours</span><span style={{ fontWeight: '700' }}>{p.colours}</span></div>
+                  </div>
+
+                  <div className="btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: '0.7rem', padding: '8px', background: 'var(--gold)', color: '#000' }}>
+                    View Details <ArrowRight size={14} style={{ marginLeft: '8px' }}/>
+                  </div>
+                </div>
+              </Link>
+          </div>
+        ))}
+      </div>
+
+      {/* Nav Buttons */}
+      <button 
+        onClick={() => scroll('left')}
+        style={{ 
+          position: 'absolute', left: '-20px', top: '50%', transform: 'translateY(-50%)',
+          width: '50px', height: '50px', borderRadius: '50%', background: '#fff',
+          boxShadow: '0 4px 15px rgba(0,0,0,0.1)', display: canScrollLeft ? 'flex' : 'none',
+          alignItems: 'center', justifyContent: 'center', zIndex: 10, border: '1px solid var(--border-dim)'
+        }}
+      >
+        <ChevronLeft size={24} />
+      </button>
+      <button 
+        onClick={() => scroll('right')}
+        style={{ 
+          position: 'absolute', right: '-20px', top: '50%', transform: 'translateY(-50%)',
+          width: '50px', height: '50px', borderRadius: '50%', background: '#fff',
+          boxShadow: '0 4px 15px rgba(0,0,0,0.1)', display: canScrollRight ? 'flex' : 'none',
+          alignItems: 'center', justifyContent: 'center', zIndex: 10, border: '1px solid var(--border-dim)'
+        }}
+      >
+        <ChevronRight size={24} />
+      </button>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}} />
+    </div>
+  );
+}
+
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
@@ -274,6 +393,20 @@ export default function Home() {
             <Link to="/brands" className="btn-primary" style={{ padding: '14px 36px' }}>Explore Full Portfolio <ArrowRight size={18} /></Link>
           </div>
         </AnimatedSection>
+      </section>
+
+      {/* ── FEATURED PRODUCTS ────────── */}
+      <section className="section featured-products" style={{ background: '#fff', padding: '5rem 0', overflow: 'hidden' }}>
+        <AnimatedSection>
+          <div className="section-header" style={{ marginBottom: '3rem', textAlign: 'center' }}>
+            <motion.span className="label" variants={fadeUp} custom={0} style={{ color: 'var(--gold)', fontWeight: '800' }}>OUR BESTSELLERS</motion.span>
+            <motion.h2 className="section-title" style={{ fontSize: '2.8rem', marginTop: '1rem' }} variants={fadeUp} custom={0.1}>Featured <em>Writing</em> Instruments</motion.h2>
+          </div>
+        </AnimatedSection>
+        
+        <div className="container-fluid" style={{ padding: '0 4rem' }}>
+          <ProductCarousel />
+        </div>
       </section>
 
       {/* ── CREDENTIALS ───────────────── */}

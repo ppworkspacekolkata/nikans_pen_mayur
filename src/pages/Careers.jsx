@@ -153,7 +153,7 @@ export default function Careers() {
               We welcome open applications. If you're passionate about manufacturing, export trade, 
               design, or business development — send us your CV and a note about what you'd bring to Nikan.
             </p>
-            <a href="mailto:careers@nikan.in" className="btn-primary" style={{ boxShadow: 'var(--shadow-gold)' }}>
+            <a href="mailto:exports@tirupaticolorpens.com" className="btn-primary" style={{ boxShadow: 'var(--shadow-gold)' }}>
               Send Open Application <ArrowRight size={18}/>
             </a>
           </div>

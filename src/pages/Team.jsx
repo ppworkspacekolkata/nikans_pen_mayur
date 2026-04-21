@@ -76,7 +76,7 @@ const TEAM = [
     role: 'Chairman & Managing Director',
     bio: 'A first-generation entrepreneur whose vision established a robust and disciplined manufacturing foundation for Tirupati Colour Pens Pvt. Ltd. His commitment to precision and process has built the company\'s core systems and long-term reliability.',
     image: sunilPhoto,
-    socials: { linkedin: '#', mail: 'mailto:info@nikan.com' }
+    socials: { linkedin: '#', mail: 'mailto:exports@tirupaticolorpens.com' }
   },
   {
     name: 'Nitin Kanodia',
@@ -90,7 +90,7 @@ const TEAM = [
     role: 'Director – Operations & Growth',
     bio: 'Leading the Charge in manufacturing scalability and process optimization. His focus on progressive manufacturing thinking enables NIKAN to deliver consistent quality across global markets.',
     image: nishantPhoto,
-    socials: { linkedin: '#', mail: '#' }
+    socials: { linkedin: '#', mail: 'mailto:exports@tirupaticolorpens.com' }
   }
 ];
 
@@ -156,7 +156,7 @@ export default function Team() {
          <div className="leader-gallery-entries" style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '8rem' }}>
              
              {/* Sunil - Left Image */}
-             <div className="pro-leader-entry" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '5rem', alignItems: 'center' }}>
+             <div className="pro-leader-entry">
                 <TiltCard className="pro-leader-card">
                   <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
                     <img src={sunilPhoto} alt="Sunil Kumar Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
@@ -171,18 +171,18 @@ export default function Team() {
                       His visionary approach to precision manufacturing has transformed Nikan 
                       from a domestic refill supplier into one of India’s most respected export houses.
                     </p>
-                    <div style={{ display: 'flex', gap: '1.5rem' }}>
+                    <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'inherit' }}>
                       <a href="#" style={{ color: 'var(--gold)' }}><LinkedInIcon size={22}/></a>
-                      <a href="mailto:info@nikan.in" style={{ color: 'var(--gold)' }}><Mail size={22}/></a>
+                      <a href="mailto:exports@tirupaticolorpens.com" style={{ color: 'var(--gold)' }}><Mail size={22}/></a>
                     </div>
                   </div>
                 </Reveal>
              </div>
 
              {/* Nitin - Right Image */}
-             <div className="pro-leader-entry" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '5rem', alignItems: 'center' }}>
+             <div className="pro-leader-entry">
                 <Reveal delay={0.1}>
-                  <div className="pro-leader-info" style={{ order: 2 }}>
+                  <div className="pro-leader-info" style={{ order: window.innerWidth < 768 ? 2 : 2 }}>
                     <span className="label-gold" style={{ background: 'var(--gold-dim)', padding: '4px 12px', borderRadius: '4px' }}>Director</span>
                     <h3 className="serif" style={{ fontSize: '2.5rem', margin: '1rem 0' }}>Mr. Nitin Kanodia</h3>
                     <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '2rem' }}>
@@ -190,13 +190,13 @@ export default function Team() {
                       global strategy. Under his leadership, the brand has expanded into 20+ countries, 
                       blending analytical financial rigor with a bold vision for international trade.
                     </p>
-                    <div style={{ display: 'flex', gap: '1.5rem' }}>
+                    <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'inherit' }}>
                       <a href="#" style={{ color: 'var(--gold)' }}><LinkedInIcon size={22}/></a>
                       <a href="#" style={{ color: 'var(--gold)' }}><TwitterIcon size={22}/></a>
                     </div>
                   </div>
                 </Reveal>
-                <TiltCard className="pro-leader-card" style={{ order: 1 }}>
+                <TiltCard className="pro-leader-card" style={{ order: window.innerWidth < 768 ? 1 : 1 }}>
                   <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
                     <img src={nitinPhoto} alt="Nitin Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
                   </div>
@@ -204,7 +204,7 @@ export default function Team() {
              </div>
 
              {/* Nishant - Left Image */}
-             <div className="pro-leader-entry" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '5rem', alignItems: 'center' }}>
+             <div className="pro-leader-entry">
                 <TiltCard className="pro-leader-card">
                   <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
                     <img src={nishantPhoto} alt="Nishant Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
@@ -218,9 +218,9 @@ export default function Team() {
                       As a Chartered Accountant with a focus on operational modernization, Nishant has 
                       revolutionized Nikan’s manufacturing footprint. He leading the charge in new product category development.
                     </p>
-                    <div style={{ display: 'flex', gap: '1.5rem' }}>
+                    <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'inherit' }}>
                       <a href="#" style={{ color: 'var(--gold)' }}><LinkedInIcon size={22}/></a>
-                      <a href="#" style={{ color: 'var(--gold)' }}><Mail size={22}/></a>
+                      <a href="mailto:exports@tirupaticolorpens.com" style={{ color: 'var(--gold)' }}><Mail size={22}/></a>
                     </div>
                   </div>
                 </Reveal>

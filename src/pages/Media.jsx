@@ -83,24 +83,55 @@ export default function Media() {
         </div>
       </section>
 
-      {/* ── CORPORATE VIDEO ───────────────── */}
+      {/* ── CORPORATE VIDEOS ───────────────── */}
       <section className="section media-video-section" style={{ background: '#fff', padding: '8rem 0' }}>
         <Reveal>
           <div className="section-header" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <span className="label">Corporate Video</span>
+            <span className="label">Corporate Videos</span>
             <h2 className="section-title">Nikan <em>Facilities</em> In Action</h2>
           </div>
-          <div className="video-container glass-card-pro" style={{ maxWidth: '1000px', margin: '0 auto', overflow: 'hidden', position: 'relative', aspectRatio: '16/9', background: '#000' }}>
-            <video 
-              controls 
-              width="100%" 
-              height="100%" 
-              style={{ objectFit: 'cover' }}
-              poster="/team/sunil_chairman.png"
-            >
-              <source src="/team_media/video.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+          
+          <div className="videos-grid">
+            {/* First Video */}
+            <div className="video-container glass-card-pro" style={{ 
+              overflow: 'hidden', 
+              position: 'relative', 
+              aspectRatio: '16/9', 
+              background: '#000',
+              borderRadius: '24px',
+              boxShadow: 'var(--shadow-lg)'
+            }}>
+              <video 
+                controls 
+                width="100%" 
+                height="100%" 
+                style={{ objectFit: 'cover' }}
+                poster="/team/sunil_chairman.png"
+              >
+                <source src="/team_media/video.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
+            {/* Second Video */}
+            <div className="video-container glass-card-pro" style={{ 
+              overflow: 'hidden', 
+              position: 'relative', 
+              aspectRatio: '16/9', 
+              background: '#000',
+              borderRadius: '24px',
+              boxShadow: 'var(--shadow-lg)'
+            }}>
+              <video 
+                controls 
+                width="100%" 
+                height="100%" 
+                style={{ objectFit: 'cover' }}
+              >
+                <source src="/team_media/video 1.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
           </div>
         </Reveal>
       </section>
@@ -176,14 +207,19 @@ export default function Media() {
         <Reveal>
           <div className="media-contact-card">
             <Newspaper size={48} style={{ color: 'var(--gold)', marginBottom: '2rem' }} />
-            <h3 className="media-contact-title">Media Enquiries</h3>
+            <h3 className="media-contact-title">Media & Export Enquiries</h3>
             <p className="media-contact-desc">
-              For press enquiries, interview requests, or journalist access to brand materials and company spokespersons, 
+              For press enquiries, export opportunities, or access to brand materials, 
               please contact our communications team directly.
             </p>
-            <a href="mailto:media@nikan.in" className="btn-primary" style={{ boxShadow: 'var(--shadow-gold)' }}>
-              media@nikan.in <ArrowRight size={18}/>
-            </a>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+              <a href="mailto:exports@tirupaticolorpens.com" className="btn-primary" style={{ boxShadow: 'var(--shadow-gold)', width: 'fit-content' }}>
+                exports@tirupaticolorpens.com <ArrowRight size={18}/>
+              </a>
+              <p style={{ fontWeight: '600', color: 'var(--text-primary)', fontSize: '1.1rem' }}>
+                Direct line - +91 9830058822
+              </p>
+            </div>
           </div>
         </Reveal>
       </section>

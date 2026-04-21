@@ -11,7 +11,7 @@ const COMPANY_LINKS  = [
   { label: 'Newsroom',            to: '/media'   },
 ];
 const CONTACT_LINKS = [
-  { label: 'info@nikan.in',        href: 'mailto:info@nikan.in' },
+  { label: 'exports@tirupaticolorpens.com', href: 'mailto:exports@tirupaticolorpens.com' },
   { label: 'Product Catalogue',   href: '/media' },
   { label: 'Bulk Enquiries',      href: '/contact' },
   { label: 'Partner with Us',          href: '/contact' },
@@ -62,11 +62,14 @@ export default function Footer() {
 
         <div>
           <div className="footer-col-title" style={{ color: '#fff', fontWeight: '800', fontSize: '0.9rem', letterSpacing: '0.05em', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.8rem', marginBottom: '1.5rem' }}>CONTACT US</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <a href="mailto:info@nikan.in" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#fff', fontSize: '0.9rem', fontWeight: '600' }}>
-              <Mail size={16} style={{ color: 'var(--gold)' }} /> info@nikan.in
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+            <a href="mailto:exports@tirupaticolorpens.com" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#fff', fontSize: '0.85rem', fontWeight: '600' }}>
+              <Mail size={16} style={{ color: 'var(--gold)' }} /> exports@tirupaticolorpens.com
             </a>
-            <div style={{ display: 'flex', gap: '10px', color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#fff', fontSize: '0.85rem', fontWeight: '600' }}>
+              <Phone size={16} style={{ color: 'var(--gold)' }} /> +91 9830058822
+            </div>
+            <div style={{ display: 'flex', gap: '10px', color: 'rgba(255,255,255,0.5)', fontSize: '0.82rem' }}>
               <MapPin size={16} style={{ color: 'var(--gold)', flexShrink: 0 }} /> West Bengal, India
             </div>
             <a href="/contact" style={{ background: 'var(--gold)', color: '#000', padding: '10px 20px', borderRadius: '4px', textAlign: 'center', fontWeight: '800', fontSize: '0.75rem', marginTop: '0.5rem' }}>

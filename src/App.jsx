@@ -10,6 +10,7 @@ import Careers    from './pages/Careers';
 import Media      from './pages/Media';
 import ContactUs  from './pages/ContactUs';
 import ProductDetail from './pages/ProductDetail';
+import WhatsAppButton from './components/WhatsAppButton';
 import './index.css';
 
 function AnimatedRoutes() {
@@ -45,6 +46,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <AnimatedRoutes />
+      <WhatsAppButton />
     </BrowserRouter>
   );
 }
