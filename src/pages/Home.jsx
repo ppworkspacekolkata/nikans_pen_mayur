@@ -115,121 +115,6 @@ const EXPORTS = [
   { flag: '🌎', region: 'Expanding', countries: 'Active market development' },
 ];
 
-function ProductCarousel() {
-  const containerRef = useRef(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-
-  const scroll = (dir) => {
-    if (containerRef.current) {
-      const { scrollLeft, clientWidth } = containerRef.current;
-      const amount = clientWidth * 0.8;
-      containerRef.current.scrollTo({
-        left: dir === 'left' ? scrollLeft - amount : scrollLeft + amount,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  const checkScroll = () => {
-    if (containerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
-      setCanScrollLeft(scrollLeft > 20);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 20);
-    }
-  };
-
-  // Auto-scroll logic
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (containerRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
-        if (scrollLeft + clientWidth >= scrollWidth - 10) {
-          containerRef.current.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          containerRef.current.scrollTo({ left: scrollLeft + 300, behavior: 'smooth' });
-        }
-      }
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div style={{ position: 'relative' }}>
-      <div
-        ref={containerRef}
-        onScroll={checkScroll}
-        style={{
-          display: 'flex',
-          gap: '2rem',
-          overflowX: 'auto',
-          padding: '2rem 0',
-          scrollSnapType: 'x mandatory',
-          scrollbarWidth: 'none',
-          msOverflowStyle: 'none',
-        }}
-        className="no-scrollbar"
-      >
-        {PRODUCTS.slice(0, 10).map((p, i) => (
-          <div key={p.id} style={{ flex: '0 0 350px', scrollSnapAlign: 'start' }}>
-            <Link to={`/product/${p.id}`} className="product-card-link" style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
-              <div className="product-card glass-card-pro" style={{ padding: '2rem', height: '100%', display: 'flex', flexDirection: 'column', transition: 'transform 0.3s ease', background: '#fff' }}>
-                <div className="product-card-image" style={{ borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--border-dim)', marginBottom: '1.5rem', background: '#fff' }}>
-                  <img src={p.img} alt={p.name} style={{ width: '100%', aspectRatio: '1/1', objectFit: 'contain', padding: '1rem' }} />
-                </div>
-                <div className="product-card-top" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                  <span className="label-gold" style={{ margin: 0, fontSize: '0.6rem' }}>{p.tag}</span>
-                  <span className="product-card-cat" style={{ fontSize: '0.7rem', fontWeight: '600', color: 'var(--text-muted)' }}>{p.cat}</span>
-                </div>
-                <div className="product-card-name" style={{ fontFamily: 'DM Serif Display', fontSize: '1.4rem', marginBottom: '0.8rem', color: 'var(--text-primary)' }}>{p.name}</div>
-                <p className="product-card-desc" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem', flexGrow: 1, lineClamp: 2, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{p.desc}</p>
-
-                <div className="product-card-specs" style={{ background: 'var(--bg-secondary)', padding: '0.8rem 1rem', borderRadius: '8px', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '4px', border: '1px solid var(--border-dim)' }}>
-                  <div className="product-spec" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}><span style={{ color: 'var(--text-muted)' }}>Tip</span><span style={{ fontWeight: '700' }}>{p.tip}</span></div>
-                  <div className="product-spec" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem' }}><span style={{ color: 'var(--text-muted)' }}>Colours</span><span style={{ fontWeight: '700' }}>{p.colours}</span></div>
-                </div>
-
-                <div className="btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: '0.7rem', padding: '8px', background: 'var(--gold)', color: '#000' }}>
-                  View Details <ArrowRight size={14} style={{ marginLeft: '8px' }} />
-                </div>
-              </div>
-            </Link>
-          </div>
-        ))}
-      </div>
-
-      {/* Nav Buttons */}
-      <button
-        onClick={() => scroll('left')}
-        style={{
-          position: 'absolute', left: '-20px', top: '50%', transform: 'translateY(-50%)',
-          width: '50px', height: '50px', borderRadius: '50%', background: '#fff',
-          boxShadow: '0 4px 15px rgba(0,0,0,0.1)', display: canScrollLeft ? 'flex' : 'none',
-          alignItems: 'center', justifyContent: 'center', zIndex: 10, border: '1px solid var(--border-dim)'
-        }}
-      >
-        <ChevronLeft size={24} />
-      </button>
-      <button
-        onClick={() => scroll('right')}
-        style={{
-          position: 'absolute', right: '-20px', top: '50%', transform: 'translateY(-50%)',
-          width: '50px', height: '50px', borderRadius: '50%', background: '#fff',
-          boxShadow: '0 4px 15px rgba(0,0,0,0.1)', display: canScrollRight ? 'flex' : 'none',
-          alignItems: 'center', justifyContent: 'center', zIndex: 10, border: '1px solid var(--border-dim)'
-        }}
-      >
-        <ChevronRight size={24} />
-      </button>
-
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      `}} />
-    </div>
-  );
-}
 
 
 export default function Home() {
@@ -258,6 +143,41 @@ export default function Home() {
     }, 4000);
     return () => clearInterval(timer);
   }, [slides.length]);
+  const [categories, setCategories] = useState([]);
+  const [activeTab, setActiveTab] = useState('');
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch(API_ENDPOINTS.CATEGORIES);
+        const data = await res.json();
+        setCategories(data);
+        if (data.length > 0) setActiveTab(data[0].name);
+      } catch (err) {
+        console.error("Fetch Error:", err);
+      }
+    };
+
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch(API_ENDPOINTS.PRODUCTS);
+        const data = await res.json();
+        setProducts(data);
+      } catch (err) {
+        console.error("Fetch Error:", err);
+      }
+    };
+
+    const loadData = async () => {
+      await Promise.all([fetchCategories(), fetchProducts()]);
+      setLoading(false);
+    };
+    loadData();
+  }, []);
+
+  const filteredProducts = products.filter(p => (p.category?.name || p.category) === activeTab).slice(0, 6);
 
   return (
     <div>
@@ -359,82 +279,141 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ── BRANDS PREVIEW ────────────── */}
-      <section className="section brands-section" id="brands" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-dim)', padding: '5rem 0' }}>
+      {/* ── NEW COLLECTIONS PREVIEW ────────────── */}
+      <section className="section brands-section" id="brands" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-dim)', padding: '6rem 0' }}>
         <AnimatedSection>
-          <div className="section-header" style={{ marginBottom: '3rem', textAlign: 'center' }}>
-            <motion.span className="label" variants={fadeUp} custom={0} style={{ background: 'var(--gold)', color: '#000', padding: '4px 10px', borderRadius: '4px', fontWeight: '800' }}>OUR COLLECTIONS</motion.span>
-            <motion.h2 className="section-title" style={{ fontSize: '2.8rem', marginTop: '1rem' }} variants={fadeUp} custom={0.1}>A Range Built for<br /><em style={{ color: 'var(--gold)' }}>Every Persona</em></motion.h2>
-            <motion.p className="section-desc" style={{ fontSize: '1rem', color: 'var(--text-muted)', margin: '0.5rem auto 0', maxWidth: '600px' }} variants={fadeUp} custom={0.2}>
-              From executive luxury to student essentials — Nikan engineering serves every segment with world-class precision.
-            </motion.p>
-          </div>
-        </AnimatedSection>
-        <AnimatedSection>
-          <div className="brands-grid">
-            {BRANDS.map((brand, i) => (
-              <TiltCard key={brand.name} className="brand-card-tilt-wrap">
-                <motion.div
-                  className="brand-card"
-                  variants={fadeUp}
-                  custom={i * 0.07}
+          <div className="section-header" style={{ marginBottom: '4rem', textAlign: 'center' }}>
+            <motion.span className="label" variants={fadeUp} custom={0} style={{ background: 'var(--gold)', color: '#000', padding: '4px 12px', borderRadius: '4px', fontWeight: '800' }}>OUR COLLECTIONS</motion.span>
+            <motion.h2 className="section-title" style={{ fontSize: '3rem', marginTop: '1.2rem' }} variants={fadeUp} custom={0.1}>Explore Our <em>Versatile Range</em></motion.h2>
+            
+            {/* Category Tabs */}
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '3rem', flexWrap: 'wrap' }}>
+              {categories.map((c) => (
+                <button
+                  key={c._id}
+                  onClick={() => setActiveTab(c.name)}
+                  style={{
+                    padding: '12px 32px',
+                    borderRadius: '50px',
+                    border: '1px solid',
+                    borderColor: activeTab === c.name ? 'var(--gold)' : 'var(--border-dim)',
+                    background: activeTab === c.name ? 'var(--gold)' : 'transparent',
+                    color: activeTab === c.name ? '#000' : 'var(--text-secondary)',
+                    fontWeight: '700',
+                    fontSize: '0.9rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: activeTab === c.name ? '0 10px 20px rgba(212,175,55,0.2)' : 'none'
+                  }}
                 >
-                  <div className="brand-card-icon">{brand.icon}</div>
-                  <div className="brand-card-name">{brand.name}</div>
-                  <span className="brand-card-tag">{brand.tag}</span>
-                  <div className="brand-card-desc">{brand.desc}</div>
-                  <div className="brand-card-explore">
-                    Explore Collection <ArrowRight size={14} />
-                  </div>
-                </motion.div>
-              </TiltCard>
-            ))}
+                  {c.name}
+                </button>
+              ))}
+            </div>
           </div>
+        </AnimatedSection>
+
+        <div className="container" style={{ maxWidth: '1300px', margin: '0 auto', padding: '0 2rem' }}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+              style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '2rem' }}
+            >
+              {filteredProducts.map((product, i) => (
+                <Link to={`/product/${product.slug}`} key={product._id} className="product-card-link" style={{ textDecoration: 'none' }}>
+                  <TiltCard>
+                    <div className="brand-card" style={{ height: '100%', padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                      <div style={{ height: '180px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem', background: '#f8f8f8', borderRadius: '12px', padding: '1rem' }}>
+                        <img src={`${API_BASE_URL}${product.mainImage}`} alt={product.name} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
+                      </div>
+                      <span className="brand-card-tag" style={{ background: 'var(--gold-dim)', color: 'var(--gold)', padding: '2px 8px', fontSize: '0.65rem' }}>{product.material}</span>
+                      <h3 className="serif" style={{ fontSize: '1.3rem', color: 'var(--text-primary)', margin: '0.8rem 0 0.4rem', fontWeight: '800' }}>{product.name}</h3>
+                      <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '1.5rem' }}>SKU: {product.skuCode}</p>
+                      
+                      <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--gold)', fontWeight: '700', fontSize: '0.85rem' }}>
+                        View Details <ChevronRight size={16} />
+                      </div>
+                    </div>
+                  </TiltCard>
+                </Link>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+
           <div style={{ textAlign: 'center', marginTop: '4rem' }}>
-            <Link to="/brands" className="btn-primary" style={{ padding: '14px 36px' }}>Explore Full Portfolio <ArrowRight size={18} /></Link>
+            <Link to="/products" className="btn-primary" style={{ padding: '14px 44px' }}>
+              Browse Full Catalogue <ArrowRight size={18} />
+            </Link>
           </div>
-        </AnimatedSection>
-      </section>
-
-      {/* ── FEATURED PRODUCTS ────────── */}
-      <section className="section featured-products" style={{ background: '#fff', padding: '5rem 0', overflow: 'hidden' }}>
-        <AnimatedSection>
-          <div className="section-header" style={{ marginBottom: '3rem', textAlign: 'center' }}>
-            <motion.span className="label" variants={fadeUp} custom={0} style={{ color: 'var(--gold)', fontWeight: '800' }}>OUR BESTSELLERS</motion.span>
-            <motion.h2 className="section-title" style={{ fontSize: '2.8rem', marginTop: '1rem' }} variants={fadeUp} custom={0.1}>Featured <em>Writing</em> Instruments</motion.h2>
-          </div>
-        </AnimatedSection>
-
-        <div className="container-fluid" style={{ padding: '0 4rem' }}>
-          <ProductCarousel />
         </div>
       </section>
 
+
       {/* ── CREDENTIALS ───────────────── */}
-      <section className="section creds-section" id="credentials" style={{ background: '#fff', padding: '6rem 0' }}>
+      <section className="section creds-section" id="credentials" style={{ background: '#fff' }}>
         <AnimatedSection>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <div className="creds-layout" style={{ display: 'block', maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+            <div className="creds-text-col" style={{ paddingRight: 0 }}>
               <span className="label" style={{ color: 'var(--gold)', fontWeight: '800' }}>WHY PARTNER WITH US</span>
               <h2 className="section-title" style={{ marginTop: '1rem', fontSize: '2.8rem' }}>Certified Quality, <em>Global Trust</em></h2>
-              <p className="section-desc" style={{ marginTop: '1.2rem', color: 'var(--text-muted)', maxWidth: '750px', margin: '1.2rem auto 0' }}>
+              <p className="section-desc" style={{ maxWidth: '700px', margin: '1.2rem auto 0', color: 'var(--text-muted)' }}>
                 Tirupati Colour Pens Pvt. Ltd. is a DGFT-recognised One Star Export House
                 with ISO 9001:2015 certification, ensuring every pen meets international standards.
               </p>
+              <div className="creds-list" style={{ 
+                marginTop: '3.5rem', 
+                display: 'flex', 
+                flexDirection: 'row', 
+                justifyContent: 'center', 
+                gap: '2rem', 
+                flexWrap: 'wrap' 
+              }}>
+                {CREDS.map((c, i) => (
+                  <motion.div key={c.title} className="cred-item" variants={fadeUp} custom={i * 0.1}
+                    style={{ 
+                      flex: '1', 
+                      minWidth: '280px', 
+                      display: 'flex', 
+                      flexDirection: 'column', 
+                      alignItems: 'center', 
+                      textAlign: 'center', 
+                      padding: '2.5rem 1.5rem', 
+                      background: 'var(--bg-secondary)', 
+                      border: '1px solid var(--border-dim)',
+                      borderRadius: 'var(--radius-lg)'
+                    }}>
+                    <div className="cred-icon" style={{ 
+                      width: '60px', 
+                      height: '60px', 
+                      background: 'var(--gold)', 
+                      color: '#000', 
+                      borderRadius: '50%', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      marginBottom: '1.5rem' 
+                    }}>
+                      {c.icon}
+                    </div>
+                    <div>
+                      <div className="cred-item-title" style={{ fontWeight: '800', fontSize: '1.1rem', marginBottom: '0.5rem' }}>{c.title}</div>
+                      <div className="cred-item-desc" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{c.desc}</div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
-            
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-              {CREDS.map((c, i) => (
-                <motion.div key={c.title} variants={fadeUp} custom={i * 0.1}
-                  style={{ padding: '2.5rem', background: 'var(--bg-secondary)', border: '1px solid var(--border-dim)', borderRadius: 'var(--radius-md)', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', transition: 'transform 0.3s' }}>
-                  <div style={{ width: '64px', height: '64px', background: 'var(--gold)', color: '#000', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem', boxShadow: '0 10px 20px rgba(212,175,55,0.3)' }}>
-                    {c.icon}
-                  </div>
-                  <div style={{ fontWeight: '700', fontSize: '1.3rem', marginBottom: '0.8rem', color: 'var(--text-primary)' }}>{c.title}</div>
-                  <div style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.7' }}>{c.desc}</div>
-                </motion.div>
-              ))}
-            </div>
+            {/* <div className="creds-image-wrap" style={{ position: 'relative' }}>
+              <img className="creds-image" src={heroBg} alt="Nikan manufacturing" style={{ height: '520px', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }} />
+              <div className="creds-badge" style={{ padding: '1.5rem', boxShadow: 'var(--shadow-lg)', bottom: '20px', right: '20px' }}>
+                <div className="creds-badge-num" style={{ fontSize: '2.2rem', fontWeight: '800' }}>ISO</div>
+                <div className="creds-badge-text" style={{ fontSize: '0.7rem', fontWeight: '700' }}>9001:2015<br />CERTIFIED</div>
+              </div>
+            </div> */}
           </div>
         </AnimatedSection>
       </section>

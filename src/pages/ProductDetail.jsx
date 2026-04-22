@@ -6,7 +6,7 @@ import { ChevronLeft, ArrowRight, Share2, Download, Info, CheckCircle2, Maximize
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ContactModal from '../components/ContactModal';
-import { PRODUCTS } from '../data/products';
+import API_BASE_URL, { API_ENDPOINTS } from '../config/api';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -14,11 +14,29 @@ const fadeUp = {
 };
 
 export default function ProductDetail() {
-  const { id } = useParams();
-  const product = PRODUCTS.find((p) => p.id === id);
-  const [selectedImg, setSelectedImg] = useState(product?.img);
+  const { id: slug } = useParams(); // 'id' in route is actually the slug
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedImg, setSelectedImg] = useState(null);
   const [isLightbox, setIsLightbox] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`${API_ENDPOINTS.PRODUCTS}/${slug}`);
+        const data = await res.json();
+        setProduct(data);
+        setSelectedImg(data.mainImage);
+      } catch (err) {
+        console.error("Fetch Error:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProduct();
+  }, [slug]);
 
   // Lock body scroll when lightbox is open
   useEffect(() => {
@@ -32,21 +50,40 @@ export default function ProductDetail() {
     };
   }, [isLightbox]);
 
-  if (!product) {
+  if (loading) {
     return (
-      <div className="page-not-found">
+      <div className="loading-state">
         <Navbar />
-        <div className="section" style={{ textAlign: 'center', padding: '10rem 2rem' }}>
-          <h2>Product Not Found</h2>
-          <Link to="/products" className="btn-primary" style={{ marginTop: '2rem' }}>Back to Products</Link>
+        <div style={{ height: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className="loader-gold"></div>
         </div>
         <Footer />
       </div>
     );
   }
 
-  // Gallery items (Main + user's provided images)
-  const gallery = [product.img, ...(product.gallery || [])];
+  if (!product || product.message) {
+    return (
+      <div className="page-not-found">
+        <Navbar />
+        <div className="section" style={{ textAlign: 'center', padding: '10rem 2rem' }}>
+          <h2 style={{ fontSize: '3rem', fontWeight: '900' }}>Product Not Found</h2>
+          <p style={{ color: '#64748b', marginBottom: '2rem' }}>The document you are looking for might have been moved or archived.</p>
+          <Link to="/products" className="btn-primary" style={{ marginTop: '2rem' }}>Return to Catalogue</Link>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Gallery items (Main + multi-images + packaging)
+  const gallery = Array.from(new Set([
+    product.mainImage, 
+    ...(product.images || []), 
+    ...(product.packagingImages || [])
+  ])).filter(Boolean);
+
+  const getImgUrl = (path) => path.startsWith('http') ? path : `${API_BASE_URL}${path}`;
 
   return (
     <div className="page-product-detail">
@@ -67,7 +104,7 @@ export default function ProductDetail() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
               >
-                <img src={selectedImg} alt={product.name} className="product-main-img-display" />
+                <img src={getImgUrl(selectedImg)} alt={product.name} className="product-main-img-display" />
                 <button 
                   onClick={() => setIsLightbox(true)}
                   className="lightbox-trigger"
@@ -84,7 +121,7 @@ export default function ProductDetail() {
                     onClick={() => setSelectedImg(img)}
                     whileHover={{ scale: 1.05 }}
                   >
-                    <img src={img} alt="Thumb" />
+                    <img src={getImgUrl(img)} alt="Thumb" />
                   </motion.div>
                 ))}
               </div>
@@ -93,38 +130,49 @@ export default function ProductDetail() {
             {/* ── RIGHT: CONTENT ─────────────── */}
             <div className="product-info-panel">
               <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.1}>
-                <span className="label-gold">{product.tag}</span>
-                <h1 className="serif product-detail-title">{product.name}</h1>
-                <p className="product-detail-description">
-                  {product.details || product.desc}
+                <span className="label-gold" style={{ background: 'var(--midnight)', color: 'var(--gold)', padding: '6px 15px', borderRadius: '8px', fontSize: '0.7rem', fontWeight: '900' }}>{product.category?.name || 'Handwriting'}</span>
+                <h1 className="serif product-detail-title" style={{ marginTop: '1.2rem' }}>{product.name}</h1>
+                <p className="product-detail-description" style={{ fontSize: '1rem', lineHeight: '1.7' }}>
+                   {product.description || "Premium handwriting instrument engineered for professional precision and smooth ink delivery."}
                 </p>
 
                 <div className="specs-grid-detail">
                   <div className="spec-item-box">
-                    <div className="spec-label">Technical Tip</div>
+                    <div className="spec-label">Technical Material</div>
+                    <div className="spec-value">{product.material}</div>
+                  </div>
+                  <div className="spec-item-box">
+                    <div className="spec-label">Writing Tip</div>
                     <div className="spec-value">{product.tip}</div>
                   </div>
                   <div className="spec-item-box">
-                    <div className="spec-label">Ink Colours</div>
-                    <div className="spec-value">{product.colours}</div>
+                    <div className="spec-label">Ink Core</div>
+                    <div className="spec-value">{product.ink}</div>
                   </div>
                   <div className="spec-item-box">
-                    <div className="spec-label">Pack Standard</div>
-                    <div className="spec-value">{product.units} Units</div>
+                    <div className="spec-label">Packing Standard</div>
+                    <div className="spec-value">{product.primaryPack}</div>
                   </div>
-                  <div className="spec-item-box">
-                    <div className="spec-label">Category</div>
-                    <div className="spec-value">{product.cat}</div>
-                  </div>
+                </div>
+
+                <div className="pack-details" style={{ marginTop: '25px', padding: '20px', background: '#f8fafc', borderRadius: '15px', border: '1px solid #eef2f6' }}>
+                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                      <span style={{ fontSize: '0.8rem', fontWeight: '700', color: '#64748b' }}>Master Carton</span>
+                      <span style={{ fontSize: '0.8rem', fontWeight: '900', color: '#1a1f2e' }}>{product.masterCarton}</span>
+                   </div>
+                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ fontSize: '0.8rem', fontWeight: '700', color: '#64748b' }}>CBM Capacity</span>
+                      <span style={{ fontSize: '0.8rem', fontWeight: '900', color: 'var(--gold)' }}>{product.cbm} cm³</span>
+                   </div>
                 </div>
 
                  <div className="action-buttons-wrap">
                    <button 
                      onClick={() => setIsContactOpen(true)}
                      className="btn-primary product-enquiry-btn"
-                     style={{ cursor: 'pointer', border: 'none' }}
+                     style={{ cursor: 'pointer', border: 'none', background: 'var(--midnight)', color: '#fff', padding: '18px 35px' }}
                    >
-                     Send Enquiry <ArrowRight size={20} style={{ marginLeft: '10px' }} />
+                     Direct Enquiry <ArrowRight size={20} style={{ marginLeft: '10px' }} />
                    </button>
                    <button className="btn-outline product-share-btn">
                      <Share2 size={20} />
