@@ -11,6 +11,12 @@ import Media      from './pages/Media';
 import ContactUs  from './pages/ContactUs';
 import ProductDetail from './pages/ProductDetail';
 import WhatsAppButton from './components/WhatsAppButton';
+import AdminLayout from './admin/components/AdminLayout';
+import AdminDashboard from './admin/pages/Dashboard';
+import AdminCategories from './admin/pages/Categories';
+import AdminSubCategories from './admin/pages/SubCategories';
+import AdminProducts from './admin/pages/Products';
+import AdminInquiries from './admin/pages/Inquiries';
 import './index.css';
 
 function AnimatedRoutes() {
@@ -36,6 +42,14 @@ function AnimatedRoutes() {
           <Route path="/media"   element={<Media />}     />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+
+          {/* Admin Routes */}
+          <Route path="/admin/dashboard" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
+          <Route path="/admin/categories" element={<AdminLayout><AdminCategories /></AdminLayout>} />
+          <Route path="/admin/subcategories" element={<AdminLayout><AdminSubCategories /></AdminLayout>} />
+          <Route path="/admin/products" element={<AdminLayout><AdminProducts /></AdminLayout>} />
+          <Route path="/admin/inquiries" element={<AdminLayout><AdminInquiries /></AdminLayout>} />
+          <Route path="/admin" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
         </Routes>
       </motion.div>
     </AnimatePresence>

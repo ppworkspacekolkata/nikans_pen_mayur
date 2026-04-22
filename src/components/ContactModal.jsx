@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, ShieldCheck, Mail, Phone, MapPin } from 'lucide-react';
 import { createPortal } from 'react-dom';
+import API_BASE_URL, { API_ENDPOINTS } from '../config/api';
 
 const ENQUIRY_TYPES = [
   'Product / Catalogue Enquiry',
@@ -26,10 +27,25 @@ export default function ContactModal({ isOpen, onClose, productContext = '' }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate API call
-    await new Promise(r => setTimeout(r, 1500));
-    setSent(true);
-    setLoading(false);
+    try {
+      const res = await fetch(API_ENDPOINTS.ENQUIRIES, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          subject: form.type,
+          message: form.message,
+        })
+      });
+      if (res.ok) setSent(true);
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
