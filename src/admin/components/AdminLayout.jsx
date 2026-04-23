@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, Layers, ListTree, Package, Mail,
-  Settings, Menu, X, Bell, User, LogOut 
+  Settings, Menu, X, Bell, User, LogOut, Camera as ImageIcon
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -40,6 +40,7 @@ const AdminLayout = ({ children }) => {
     { icon: ListTree, label: 'Sub Categories', path: '/admin/subcategories' },
     { icon: Package, label: 'Products', path: '/admin/products' },
     { icon: Mail, label: 'Inquiries', path: '/admin/inquiries' },
+    { icon: ImageIcon, label: 'Media', path: '/admin/media' },
   ];
 
   const sidebarWidth = collapsed ? '80px' : '260px';

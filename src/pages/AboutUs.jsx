@@ -1,10 +1,12 @@
-import { motion, useInView, useScroll, useSpring } from 'framer-motion';
+import { motion, useInView, useScroll, useSpring, useMotionValue, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { ShieldCheck, Award, Globe, Factory, Target, Heart, Eye, Users } from 'lucide-react';
+import { ShieldCheck, Award, Globe, Factory, Target, Heart, Eye, Users, Mail } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 import sunilPhoto from '../assets/photos/Sunil Kumar.jpg';
+import nitinPhoto from '../assets/photos/Nitin Kanodia.jpg';
+import nishantPhoto from '../assets/photos/Nishant Kanodia.jpg';
 import infra1 from '../assets/photos/img331.jpg';
 import infra2 from '../assets/photos/img379.jpg';
 import infra3 from '../assets/photos/img349.jpg';
@@ -12,6 +14,19 @@ import infra4 from '../assets/photos/img408.jpg';
 import infra5 from '../assets/photos/img1644.jpg';
 import infra6 from '../assets/photos/img740.jpg';
 import legacyPen from '../assets/legacy-pen-art.png';
+
+// Inline SVGs for Brand Icons
+const LinkedInIcon = ({ size = 18 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+  </svg>
+);
+
+const TwitterIcon = ({ size = 18 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+  </svg>
+);
 
 const fadeUp = {
   hidden:  { opacity: 0, y: 32 },
@@ -34,6 +49,39 @@ function AnimatedPath({ scrollYProgress }) {
     <svg className="timeline-svg" viewBox="0 0 10 100" preserveAspectRatio="none" style={{ position: 'absolute', left: '110px', top: 0, bottom: 0, width: '2px', height: '100%', zIndex: 1 }}>
       <motion.line x1="5" y1="0" x2="5" y2="100" stroke="var(--gold)" strokeWidth="2" style={{ pathLength }} />
     </svg>
+  );
+}
+
+function TiltCard({ children, className = '' }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const rotateX = useSpring(useTransform(y, [-100, 100], [10, -10]), { stiffness: 300, damping: 30 });
+  const rotateY = useSpring(useTransform(x, [-100, 100], [-10, 10]), { stiffness: 300, damping: 30 });
+
+  function handleMouseMove(event) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    x.set(event.clientX - centerX);
+    y.set(event.clientY - centerY);
+  }
+
+  function handleMouseLeave() {
+    x.set(0); y.set(0);
+  }
+
+  return (
+    <motion.div
+      className={className}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+    >
+      <div style={{ transform: 'translateZ(20px)', width: '100%', height: '100%' }}>
+        {children}
+      </div>
+    </motion.div>
   );
 }
 
@@ -97,10 +145,11 @@ export default function AboutUs() {
           <div className="leadership-portrait-wrap">
             <Reveal>
               <div style={{ position: 'relative', padding: '10px', background: '#fff', border: '1px solid var(--border)', boxShadow: '15px 15px 0px var(--gold-dim)', borderRadius: 'var(--radius-sm)' }}>
-                <img src={sunilPhoto} alt="Mr. Sunil Kumar Kanodia" style={{ width: '100%', display: 'block' }} />
-                <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
-                  <h4 className="serif" style={{ fontSize: '1.4rem' }}>Mr. Sunil Kumar Kanodia</h4>
-                  <p className="label" style={{ fontSize: '0.65rem' }}>Chairman & Founder</p>
+                <div style={{ borderLeft: '4px solid var(--gold)', paddingLeft: '2rem' }}>
+                  <p style={{ fontStyle: 'italic', color: 'var(--text-secondary)', fontSize: '1.1rem' }}>
+                    "When I began this journey, the objective was simple—to build a manufacturing organization driven by precision, discipline, and long-term reliability."
+                  </p>
+                  <p className="label" style={{ marginTop: '1rem', color: 'var(--gold)' }}>Sunil Kumar Kanodia, Founder</p>
                 </div>
               </div>
             </Reveal>
@@ -258,6 +307,90 @@ export default function AboutUs() {
                   </div>
                </Reveal>
             </div>
+         </div>
+      </section>
+
+      {/* ── EXECUTIVE GALLERY ────────────────── */}
+      <section className="section executive-gallery" style={{ padding: '8rem 0', background: '#fff' }}>
+         <Reveal>
+           <div className="section-header" style={{ textAlign: 'center', marginBottom: '6rem' }}>
+              <span className="label">Our Principals</span>
+              <h2 className="section-title">The <em>Leadership</em> Board</h2>
+           </div>
+         </Reveal>
+
+         <div className="leader-gallery-entries" style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '8rem' }}>
+             
+             {/* Sunil - Left Image */}
+             <div className="pro-leader-entry">
+                <TiltCard className="pro-leader-card">
+                  <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
+                    <img src={sunilPhoto} alt="Sunil Kumar Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
+                  </div>
+                </TiltCard>
+                <Reveal delay={0.1}>
+                  <div className="pro-leader-info">
+                    <span className="label-gold" style={{ background: 'var(--gold-dim)', padding: '4px 12px', borderRadius: '4px' }}>Chairman</span>
+                    <h3 className="serif" style={{ fontSize: '2.5rem', margin: '1rem 0' }}>Mr. Sunil Kumar Kanodia</h3>
+                    <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '2rem' }}>
+                      A first-generation entrepreneur, Mr. Kanodia laid the foundation of Nikan back in the early 1990s. 
+                      His visionary approach to precision manufacturing has transformed Nikan 
+                      from a domestic refill supplier into one of India’s most respected export houses.
+                    </p>
+                    <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'inherit' }}>
+                      <a href="#" style={{ color: 'var(--gold)' }}><LinkedInIcon size={22}/></a>
+                      <a href="mailto:exports@tirupaticolorpens.com" style={{ color: 'var(--gold)' }}><Mail size={22}/></a>
+                    </div>
+                  </div>
+                </Reveal>
+             </div>
+
+             {/* Nitin - Right Image */}
+             <div className="pro-leader-entry">
+                <Reveal delay={0.1}>
+                  <div className="pro-leader-info">
+                    <span className="label-gold" style={{ background: 'var(--gold-dim)', padding: '4px 12px', borderRadius: '4px' }}>Director</span>
+                    <h3 className="serif" style={{ fontSize: '2.5rem', margin: '1rem 0' }}>Mr. Nitin Kanodia</h3>
+                    <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '2rem' }}>
+                      A Chartered Accountant and Gold Medalist from SRCC Delhi, Nitin has pioneered Nikan's 
+                      global strategy. Under his leadership, the brand has expanded into 20+ countries, 
+                      blending analytical financial rigor with a bold vision for international trade.
+                    </p>
+                    <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'inherit' }}>
+                      <a href="#" style={{ color: 'var(--gold)' }}><LinkedInIcon size={22}/></a>
+                      <a href="#" style={{ color: 'var(--gold)' }}><TwitterIcon size={22}/></a>
+                    </div>
+                  </div>
+                </Reveal>
+                <TiltCard className="pro-leader-card">
+                  <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
+                    <img src={nitinPhoto} alt="Nitin Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
+                  </div>
+                </TiltCard>
+             </div>
+
+             {/* Nishant - Left Image */}
+             <div className="pro-leader-entry">
+                <TiltCard className="pro-leader-card">
+                  <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
+                    <img src={nishantPhoto} alt="Nishant Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
+                  </div>
+                </TiltCard>
+                <Reveal delay={0.1}>
+                  <div className="pro-leader-info">
+                    <span className="label-gold" style={{ background: 'var(--gold-dim)', padding: '4px 12px', borderRadius: '4px' }}>Director</span>
+                    <h3 className="serif" style={{ fontSize: '2.5rem', margin: '1rem 0' }}>Mr. Nishant Kanodia</h3>
+                    <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '2rem' }}>
+                      As a Chartered Accountant with a focus on operational modernization, Nishant has 
+                      revolutionized Nikan’s manufacturing footprint. He leading the charge in new product category development.
+                    </p>
+                    <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'inherit' }}>
+                      <a href="#" style={{ color: 'var(--gold)' }}><LinkedInIcon size={22}/></a>
+                      <a href="mailto:exports@tirupaticolorpens.com" style={{ color: 'var(--gold)' }}><Mail size={22}/></a>
+                    </div>
+                  </div>
+                </Reveal>
+             </div>
          </div>
       </section>
 

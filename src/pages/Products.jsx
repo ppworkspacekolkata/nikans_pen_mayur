@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Search, ArrowRight, Download, Globe, Share2 } from 'lucide-react';
 import Navbar from '../components/Navbar';
@@ -25,6 +25,7 @@ export default function Products() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState('All');
+  const [activeSubCategory, setActiveSubCategory] = useState(null);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
@@ -36,8 +37,33 @@ export default function Products() {
           fetch(API_ENDPOINTS.PRODUCTS),
           fetch(API_ENDPOINTS.CATEGORIES)
         ]);
-        setProducts(await pRes.json());
-        setCategories(await cRes.json());
+        const pData = await pRes.json();
+        const cData = await cRes.json();
+        
+        setProducts(pData);
+        setCategories(cData);
+
+        // Check for URL search params
+        const params = new URLSearchParams(window.location.search);
+        const catId = params.get('category');
+        const subId = params.get('subcategory');
+
+        if (catId) {
+          const cat = cData.find(c => c._id === catId);
+          if (cat) {
+            setActiveCategory(cat.name);
+            setActiveSubCategory(null);
+          }
+        } else if (subId) {
+          setActiveSubCategory(subId);
+          const productWithSub = pData.find(p => (p.subCategory?._id || p.subCategory) === subId);
+          if (productWithSub) {
+            setActiveCategory(productWithSub.category?.name || "All");
+          }
+        } else {
+          setActiveCategory('All');
+          setActiveSubCategory(null);
+        }
       } catch (err) {
         console.error(err);
       } finally {
@@ -45,13 +71,14 @@ export default function Products() {
       }
     };
     loadData();
-  }, []);
+  }, [window.location.search]);
 
   const filtered = products.filter(p => {
     const matchCat = activeCategory === 'All' || (p.category?.name || p.category) === activeCategory;
+    const matchSub = !activeSubCategory || (p.subCategory?._id || p.subCategory) === activeSubCategory;
     const matchSearch = p.name.toLowerCase().includes(search.toLowerCase()) || 
                        p.skuCode.toLowerCase().includes(search.toLowerCase());
-    return matchCat && matchSearch;
+    return matchCat && matchSub && matchSearch;
   });
 
   return (
@@ -78,25 +105,72 @@ export default function Products() {
 
       {/* ── SEARCH & FILTER ────────────────── */}
       <section className="section products-toolbar">
-        <div className="container toolbar-container" style={{ display: 'flex', justifyContent: 'space-between', gap: '20px', flexWrap: 'wrap' }}>
-           <div className="category-filter" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-              <button 
-                onClick={() => setActiveCategory('All')} 
-                className={activeCategory === 'All' ? 'btn-filter active' : 'btn-filter'}
-              >
-                All Instruments
-              </button>
-              {categories.map(c => (
+        <div className="container toolbar-container">
+           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+             {/* Main Categories */}
+             <div className="category-filter" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
                 <button 
-                  key={c._id}
-                  onClick={() => setActiveCategory(c.name)} 
-                  className={activeCategory === c.name ? 'btn-filter active' : 'btn-filter'}
+                  onClick={() => {
+                    setActiveCategory('All');
+                    setActiveSubCategory(null);
+                    window.history.pushState({}, '', '/products');
+                  }} 
+                  className={activeCategory === 'All' ? 'btn-filter active' : 'btn-filter'}
                 >
-                  {c.name}
+                  All Categories
                 </button>
-              ))}
+                {categories.map(c => (
+                  <button 
+                    key={c._id}
+                    onClick={() => {
+                      setActiveCategory(c.name);
+                      setActiveSubCategory(null);
+                    }} 
+                    className={activeCategory === c.name ? 'btn-filter active' : 'btn-filter'}
+                  >
+                    {c.name}
+                  </button>
+                ))}
+             </div>
+
+             {/* Sub Categories Tabs (Only show if a category is selected) */}
+             <AnimatePresence>
+               {activeCategory !== 'All' && (
+                 <motion.div 
+                   initial={{ opacity: 0, y: -10 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   exit={{ opacity: 0, y: -10 }}
+                   style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', padding: '15px', background: '#f8fafc', borderRadius: '15px', border: '1px solid #edf2f7' }}
+                 >
+                    <button 
+                      onClick={() => setActiveSubCategory(null)}
+                      style={activeSubCategory === null ? activeSubTab : subTab}
+                    >
+                      All {activeCategory}
+                    </button>
+                    {products
+                      .filter(p => (p.category?.name || p.category) === activeCategory)
+                      .reduce((acc, p) => {
+                        if (p.subCategory && !acc.find(s => s._id === (p.subCategory._id || p.subCategory))) {
+                          acc.push(p.subCategory);
+                        }
+                        return acc;
+                      }, [])
+                      .map(sub => (
+                        <button 
+                          key={sub._id || sub}
+                          onClick={() => setActiveSubCategory(sub._id || sub)}
+                          style={activeSubCategory === (sub._id || sub) ? activeSubTab : subTab}
+                        >
+                          {sub.name || sub}
+                        </button>
+                      ))}
+                 </motion.div>
+               )}
+             </AnimatePresence>
            </div>
-           <div className="search-box-wrap" style={{ position: 'relative', width: '300px' }}>
+
+           <div className="search-box-wrap" style={{ position: 'relative', width: '300px', marginTop: '20px' }}>
               <Search size={18} style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
               <input 
                 value={search} 
@@ -175,3 +249,22 @@ export default function Products() {
     </div>
   );
 }
+
+const subTab = {
+  padding: '8px 16px',
+  background: '#fff',
+  border: '1px solid #e2e8f0',
+  borderRadius: '8px',
+  fontSize: '0.8rem',
+  fontWeight: '700',
+  color: '#64748b',
+  cursor: 'pointer',
+  transition: '0.2s'
+};
+
+const activeSubTab = {
+  ...subTab,
+  background: 'var(--midnight)',
+  color: 'var(--gold)',
+  borderColor: 'var(--midnight)'
+};

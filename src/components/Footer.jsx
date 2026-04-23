@@ -8,11 +8,11 @@ const COMPANY_LINKS  = [
   { label: 'Manufacturing', to: '/about' },
   { label: 'Global Reach',    to: '/exports' },
   { label: 'Opportunities',          to: '/careers' },
-  { label: 'Newsroom',            to: '/media'   },
+  { label: 'Media',            to: '/media'   },
 ];
 const CONTACT_LINKS = [
   { label: 'exports@tirupaticolorpens.com', href: 'mailto:exports@tirupaticolorpens.com' },
-  { label: 'Product Catalogue',   href: '/media' },
+  { label: 'Product Catalogue',   href: '/product/NiKan%20Catalogue%20Oct%2025.pdf' },
   { label: 'Bulk Enquiries',      href: '/contact' },
   { label: 'Partner with Us',          href: '/contact' },
 ];

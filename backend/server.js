@@ -18,6 +18,7 @@ app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/api/subcategories', require('./routes/subCategoryRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/enquiries', require('./routes/enquiryRoutes'));
+app.use('/api/media', require('./routes/mediaRoutes'));
 
 // Serve Static Files (for uploads)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -31,13 +32,16 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 5001;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/nikan_pen';
 
+console.log('Attempting to connect to MongoDB...');
 mongoose.connect(MONGO_URI)
   .then(() => {
-    console.log('MongoDB Connected Successfully');
+    console.log('✅ MongoDB Connected Successfully');
+    console.log('Database Name: nikan_pen');
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+      console.log(`🚀 Server is running on http://localhost:${PORT}`);
     });
   })
   .catch((err) => {
-    console.error('Database connection error:', err);
+    console.error('❌ Database connection error:', err);
+    process.exit(1);
   });

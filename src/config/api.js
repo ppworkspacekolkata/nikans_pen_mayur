@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
   CATEGORIES: `${API_BASE_URL}/api/categories`,
   SUB_CATEGORIES: `${API_BASE_URL}/api/subcategories`,
   ENQUIRIES: `${API_BASE_URL}/api/enquiries`,
+  MEDIA: `${API_BASE_URL}/api/media`,
   BASE: API_BASE_URL
 };
 

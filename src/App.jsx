@@ -17,6 +17,7 @@ import AdminCategories from './admin/pages/Categories';
 import AdminSubCategories from './admin/pages/SubCategories';
 import AdminProducts from './admin/pages/Products';
 import AdminInquiries from './admin/pages/Inquiries';
+import AdminMedia from './admin/pages/Media';
 import './index.css';
 
 function AnimatedRoutes() {
@@ -49,6 +50,7 @@ function AnimatedRoutes() {
           <Route path="/admin/subcategories" element={<AdminLayout><AdminSubCategories /></AdminLayout>} />
           <Route path="/admin/products" element={<AdminLayout><AdminProducts /></AdminLayout>} />
           <Route path="/admin/inquiries" element={<AdminLayout><AdminInquiries /></AdminLayout>} />
+          <Route path="/admin/media" element={<AdminLayout><AdminMedia /></AdminLayout>} />
           <Route path="/admin" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
         </Routes>
       </motion.div>

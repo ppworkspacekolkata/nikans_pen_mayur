@@ -26,7 +26,10 @@ const AdminCategories = () => {
   const [submitting, setSubmitting] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
 
-  const [formData, setFormData] = useState({ name: '', description: '', isActive: true });
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+
+  const [formData, setFormData] = useState({ name: '', description: '', isActive: true, category: '' });
 
   useEffect(() => { fetchData(); }, []);
 
@@ -49,32 +52,53 @@ const AdminCategories = () => {
   const getProdCountBySub = (subId) => products.filter(p => (p.subCategory?._id || p.subCategory) === subId).length;
   const getProdCountByCat = (catId) => products.filter(p => (p.category?._id || p.category) === catId).length;
 
-  const handleCreate = async (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     
-    // Auto-detect type based on current view
     const type = currentView === 'categories' ? 'categories' : 'subcategories';
-    const payload = { ...formData };
+    const method = editingItem ? 'PUT' : 'POST';
+    const url = editingItem ? `${API_BASE_URL}/api/${type}/${editingItem._id}` : `${API_BASE_URL}/api/${type}`;
     
-    // If saving sub-category, inject parent ID
-    if (type === 'subcategories' && selectedCategory) {
-      payload.category = selectedCategory._id;
+    const payload = { ...formData };
+    if (type === 'subcategories' && !payload.category) {
+      payload.category = selectedCategory?._id;
     }
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/${type}`, {
-        method: 'POST',
+      const res = await fetch(url, {
+        method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
       if (res.ok) {
         setIsModalOpen(false);
-        setFormData({ name: '', description: '', isActive: true });
+        setEditingItem(null);
+        setFormData({ name: '', description: '', isActive: true, category: '' });
         fetchData();
       }
     } catch (err) { console.error(err); }
     finally { setSubmitting(false); }
+  };
+
+  const handleDelete = async (type, id) => {
+    if (!window.confirm('Are you sure? This will delete all associated data.')) return;
+    const endpoint = type === 'category' ? `categories/${id}` : `subcategories/${id}`;
+    try {
+      await fetch(`${API_BASE_URL}/api/${endpoint}`, { method: 'DELETE' });
+      fetchData();
+    } catch (err) { console.error(err); }
+  };
+
+  const openEditModal = (item) => {
+    setEditingItem(item);
+    setFormData({ 
+      name: item.name, 
+      description: item.description || '', 
+      isActive: item.isActive,
+      category: item.category?._id || item.category || ''
+    });
+    setIsModalOpen(true);
   };
 
   const toggleStatus = async (type, id, currentStatus) => {
@@ -130,7 +154,7 @@ const AdminCategories = () => {
             <Search size={18} color="#94a3b8" />
             <input style={searchIn} placeholder="Filter records..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
           </div>
-          <button onClick={() => setIsModalOpen(true)} className="premium-btn">
+          <button onClick={() => { setEditingItem(null); setFormData({ name: '', description: '', isActive: true }); setIsModalOpen(true); }} className="premium-btn">
             <Plus size={18} /> {currentView === 'categories' ? 'New Category' : 'New Sub-Category'}
           </button>
         </div>
@@ -157,7 +181,8 @@ const AdminCategories = () => {
                         <button onClick={(e) => { e.stopPropagation(); toggleStatus('category', cat._id, cat.isActive); }} style={{ color: cat.isActive ? '#10b981' : '#cbd5e1', background: 'none', border: 'none', cursor: 'pointer' }}>
                           {cat.isActive ? <Eye size={18} /> : <EyeOff size={18} />}
                         </button>
-                        <button style={miniBtn}><Edit2 size={14} /></button>
+                         <button onClick={(e) => { e.stopPropagation(); openEditModal(cat); }} style={miniBtn}><Edit2 size={14} /></button>
+                         <button onClick={(e) => { e.stopPropagation(); handleDelete('category', cat._id); }} style={{ ...miniBtn, color: '#ef4444' }}><Trash2 size={14} /></button>
                       </div>
                    </div>
                 </div>
@@ -184,7 +209,8 @@ const AdminCategories = () => {
                          {sub.isActive ? 'VISIBLE ON SITE' : 'HIDDEN FROM SITE'}
                       </button>
                       <div style={cardActions}>
-                         <button style={miniBtn}><Trash2 size={14} color="#ef4444" /></button>
+                         <button onClick={() => openEditModal(sub)} style={miniBtn}><Edit2 size={14} /></button>
+                         <button onClick={() => handleDelete('subcategory', sub._id)} style={{ ...miniBtn, color: '#ef4444' }}><Trash2 size={14} /></button>
                       </div>
                    </div>
                 </div>
@@ -202,14 +228,18 @@ const AdminCategories = () => {
                   <span style={{ flex: 1 }}>PRODUCT DETAILS</span>
                   <span style={{ width: '150px' }}>SKU CODE</span>
                </div>
-               {products.filter(p => (p.subCategory?._id || p.subCategory) === selectedSubCategory?._id).map(prod => (
-                 <div key={prod._id} style={pRow}>
-                    <img src={`${API_BASE_URL}${prod.mainImage}`} style={pImg} />
+               {products.filter(p => (p.subCategory?._id || p.subCategory) === selectedSubCategory?._id).map(p => (
+                 <div 
+                    key={p._id} 
+                    onClick={() => { setSelectedProduct(p); setIsProductModalOpen(true); }}
+                    style={{ ...pRow, cursor: 'pointer' }}
+                 >
+                    <img src={`${API_BASE_URL}${p.mainImage}`} style={pImg} />
                     <div style={{ flex: 1 }}>
-                       <div style={{ fontWeight: '800' }}>{prod.name}</div>
-                       <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{prod.material} | {prod.tip}</div>
+                       <div style={{ fontWeight: '800' }}>{p.name}</div>
+                       <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{p.material} | {p.tip}</div>
                     </div>
-                    <div style={{ width: '150px', color: '#d4af37', fontWeight: '900' }}>{prod.skuCode}</div>
+                    <div style={{ width: '150px', color: '#d4af37', fontWeight: '900' }}>{p.skuCode}</div>
                  </div>
                ))}
             </motion.div>
@@ -229,7 +259,7 @@ const AdminCategories = () => {
                   </h2>
                   <button onClick={() => setIsModalOpen(false)} style={cBtn}><X size={20} /></button>
                </div>
-               <form onSubmit={handleCreate} style={{ padding: '35px' }}>
+               <form onSubmit={handleSave} style={{ padding: '35px' }}>
                   <div style={fGrp}>
                     <label style={fLabel}>NAME *</label>
                     <input required className="m-input" placeholder="e.g. Ball Pens" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
@@ -246,6 +276,60 @@ const AdminCategories = () => {
                      {submitting ? <Loader2 className="spinning" /> : 'SAVE RECORD'}
                   </button>
                </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* PRODUCT DETAIL MODAL */}
+      <AnimatePresence>
+        {isProductModalOpen && selectedProduct && (
+          <div style={modalOverlay}>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setIsProductModalOpen(false)} style={modalBlur} />
+            <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} style={detailModal}>
+              <div style={modalHead}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                  <div style={{ background: '#d4af37', padding: '10px', borderRadius: '12px' }}><Package size={20} color="#000" /></div>
+                  <div>
+                    <h3 style={{ margin: 0, fontWeight: '900' }}>{selectedProduct.name}</h3>
+                    <p style={{ margin: 0, fontSize: '0.75rem', color: '#64748b' }}>Technical & Packing Specifications</p>
+                  </div>
+                </div>
+                <button onClick={() => setIsProductModalOpen(false)} style={cBtn}><X size={20} /></button>
+              </div>
+              
+              <div style={{ padding: '40px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px' }}>
+                <div>
+                  <div style={sectionBox}>
+                    <h4 style={secTitle}>TECH SPECS</h4>
+                    <div style={specGrid}>
+                      <div style={specItem}><span>Material</span><strong>{selectedProduct.material}</strong></div>
+                      <div style={specItem}><span>Tip</span><strong>{selectedProduct.tip}</strong></div>
+                      <div style={specItem}><span>Ink</span><strong>{selectedProduct.ink}</strong></div>
+                    </div>
+                  </div>
+                  <div style={{ ...sectionBox, marginTop: '25px' }}>
+                    <h4 style={secTitle}>PACKING INFO</h4>
+                    <div style={specGrid}>
+                      <div style={specItem}><span>Primary</span><strong>{selectedProduct.primaryPack}</strong></div>
+                      <div style={specItem}><span>Middle</span><strong>{selectedProduct.middlePacking}</strong></div>
+                      <div style={specItem}><span>Master</span><strong>{selectedProduct.masterCarton}</strong></div>
+                      <div style={specItem}><span>CBM</span><strong>{selectedProduct.cbm}</strong></div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h4 style={secTitle}>PRODUCT MEDIA</h4>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+                    {selectedProduct.images?.map((img, i) => (
+                      <img key={i} src={`${API_BASE_URL}${img}`} style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '10px', border: '2px solid #f1f5f9' }} />
+                    ))}
+                  </div>
+                  <div style={{ marginTop: '20px', padding: '15px', background: '#f8fafc', borderRadius: '15px', fontSize: '0.85rem', color: '#64748b', fontStyle: 'italic' }}>
+                    {selectedProduct.description}
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </div>
         )}
@@ -306,5 +390,11 @@ const tableHead = { padding: '15px 25px', display: 'flex', fontSize: '0.75rem', 
 const pRow = { padding: '15px 25px', display: 'flex', alignItems: 'center', borderBottom: '1px solid #f8fafc' };
 const pImg = { width: '50px', height: '50px', borderRadius: '12px', marginRight: '20px', objectFit: 'cover' };
 const emptyPlaceholder = { padding: '100px', textAlign: 'center', gridColumn: '1/-1', color: '#94a3b8', fontWeight: '600' };
+
+const detailModal = { position: 'relative', width: '90%', maxWidth: '900px', background: '#fff', borderRadius: '30px', overflow: 'hidden', boxShadow: '0 25px 60px rgba(0,0,0,0.2)' };
+const sectionBox = { background: '#f8fafc', padding: '25px', borderRadius: '20px', border: '1px solid #f1f5f9' };
+const secTitle = { margin: '0 0 15px', fontSize: '0.75rem', fontWeight: '900', color: '#94a3b8', letterSpacing: '1.5px' };
+const specGrid = { display: 'grid', gap: '12px' };
+const specItem = { display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', borderBottom: '1px dashed #e2e8f0', paddingBottom: '8px' };
 
 export default AdminCategories;

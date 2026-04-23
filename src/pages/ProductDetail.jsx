@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ArrowRight, Share2, Download, Info, CheckCircle2, Maximize2, X } from 'lucide-react';
+import { ChevronLeft, ArrowRight, Share2, Download, Package, Settings, Truck, Maximize2, X, PlayCircle } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ContactModal from '../components/ContactModal';
@@ -14,12 +14,13 @@ const fadeUp = {
 };
 
 export default function ProductDetail() {
-  const { id: slug } = useParams(); // 'id' in route is actually the slug
+  const { id: slug } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedImg, setSelectedImg] = useState(null);
   const [isLightbox, setIsLightbox] = useState(false);
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('specs'); // 'specs' or 'packing'
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -37,18 +38,6 @@ export default function ProductDetail() {
     };
     fetchProduct();
   }, [slug]);
-
-  // Lock body scroll when lightbox is open
-  useEffect(() => {
-    if (isLightbox) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isLightbox]);
 
   if (loading) {
     return (
@@ -76,191 +65,152 @@ export default function ProductDetail() {
     );
   }
 
-  // Gallery items (Main + multi-images + packaging)
-  const gallery = Array.from(new Set([
-    product.mainImage, 
-    ...(product.images || []), 
-    ...(product.packagingImages || [])
-  ])).filter(Boolean);
+  const getImgUrl = (path) => {
+    if (!path) return '';
+    return path.startsWith('http') ? path : `${API_BASE_URL}${path}`;
+  };
 
-  const getImgUrl = (path) => path.startsWith('http') ? path : `${API_BASE_URL}${path}`;
+  const productGallery = Array.from(new Set([product.mainImage, ...(product.images || [])])).filter(Boolean);
+  const packagingGallery = (product.packagingImages || []).filter(Boolean);
 
   return (
-    <div className="page-product-detail">
+    <div className="page-product-detail" style={{ background: '#fff' }}>
       <Navbar />
 
-      <section className="section product-hero">
-        <div className="container product-detail-container">
-          <Link to="/products" className="back-link">
-            <ChevronLeft size={18} /> BACK TO CATALOGUE
-          </Link>
+      <section className="section product-hero" style={{ paddingTop: '120px', paddingBottom: '60px' }}>
+        <div className="container" style={{ maxWidth: '1400px' }}>
+          
+          <div style={{ marginBottom: '30px' }}>
+            <Link to="/products" style={backLinkStyle}>
+              <ChevronLeft size={16} /> BACK TO COLLECTION
+            </Link>
+          </div>
 
-          <div className="product-main-grid">
+          <div className="product-main-grid" style={mainGridStyle}>
             
-            {/* ── LEFT: VISUALS ──────────────── */}
-            <div className="product-visuals">
+            {/* LEFT: VISUAL GALLERY */}
+            <div className="product-gallery-side">
               <motion.div 
-                className="main-image-wrap glass-card-pro" 
-                initial={{ opacity: 0, scale: 0.95 }}
+                className="main-preview glass-card-pro" 
+                style={mainPreviewStyle}
+                initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
               >
-                <img src={getImgUrl(selectedImg)} alt={product.name} className="product-main-img-display" />
-                <button 
-                  onClick={() => setIsLightbox(true)}
-                  className="lightbox-trigger"
-                >
+                <img src={getImgUrl(selectedImg)} alt={product.name} style={mainImgStyle} />
+                <button onClick={() => setIsLightbox(true)} style={maximizeBtn}>
                   <Maximize2 size={20} />
                 </button>
               </motion.div>
 
-              <div className="gallery-thumbs">
-                {gallery.map((img, i) => (
-                  <motion.div 
-                    key={i}
-                    className={`thumb-item ${selectedImg === img ? 'thumb-active' : ''}`}
-                    onClick={() => setSelectedImg(img)}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <img src={getImgUrl(img)} alt="Thumb" />
-                  </motion.div>
-                ))}
+              <div style={thumbGridStyle}>
+                <div style={thumbSectionLabel}>PRODUCT ASSETS</div>
+                <div style={thumbRow}>
+                  {productGallery.map((img, i) => (
+                    <div 
+                      key={i} 
+                      style={thumbItemStyle(selectedImg === img)}
+                      onClick={() => setSelectedImg(img)}
+                    >
+                      <img src={getImgUrl(img)} alt="thumb" style={thumbImgInner} />
+                    </div>
+                  ))}
+                </div>
+
+                {packagingGallery.length > 0 && (
+                  <>
+                    <div style={thumbSectionLabel}>PACKAGING ASSETS</div>
+                    <div style={thumbRow}>
+                      {packagingGallery.map((img, i) => (
+                        <div 
+                          key={i} 
+                          style={thumbItemStyle(selectedImg === img)}
+                          onClick={() => setSelectedImg(img)}
+                        >
+                          <img src={getImgUrl(img)} alt="thumb" style={thumbImgInner} />
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 
-            {/* ── RIGHT: CONTENT ─────────────── */}
-            <div className="product-info-panel">
-              <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.1}>
-                <span className="label-gold" style={{ background: 'var(--midnight)', color: 'var(--gold)', padding: '6px 15px', borderRadius: '8px', fontSize: '0.7rem', fontWeight: '900' }}>{product.category?.name || 'Handwriting'}</span>
-                <h1 className="serif product-detail-title" style={{ marginTop: '1.2rem' }}>{product.name}</h1>
-                <p className="product-detail-description" style={{ fontSize: '1rem', lineHeight: '1.7' }}>
-                   {product.description || "Premium handwriting instrument engineered for professional precision and smooth ink delivery."}
-                </p>
+            {/* RIGHT: DETAILED INFO */}
+            <div className="product-info-side" style={{ paddingLeft: '40px' }}>
+              <motion.div variants={fadeUp} initial="hidden" animate="visible">
+                <div style={categoryBadge}>{product.category?.name?.toUpperCase() || 'GENERAL'}</div>
+                <h1 style={titleStyle}>{product.name}</h1>
+                <div style={skuStyle}>SKU: <span>{product.skuCode}</span></div>
+                
+                <p style={descStyle}>{product.description}</p>
 
-                <div className="specs-grid-detail">
-                  <div className="spec-item-box">
-                    <div className="spec-label">Technical Material</div>
-                    <div className="spec-value">{product.material}</div>
-                  </div>
-                  <div className="spec-item-box">
-                    <div className="spec-label">Writing Tip</div>
-                    <div className="spec-value">{product.tip}</div>
-                  </div>
-                  <div className="spec-item-box">
-                    <div className="spec-label">Ink Core</div>
-                    <div className="spec-value">{product.ink}</div>
-                  </div>
-                  <div className="spec-item-box">
-                    <div className="spec-label">Packing Standard</div>
-                    <div className="spec-value">{product.primaryPack}</div>
-                  </div>
+                {/* TABS FOR SPECS */}
+                <div style={tabHeader}>
+                  <button 
+                    style={activeTab === 'specs' ? activeTabBtn : inactiveTabBtn}
+                    onClick={() => setActiveTab('specs')}
+                  >
+                    <Settings size={16} /> TECHNICAL SPECS
+                  </button>
+                  <button 
+                    style={activeTab === 'packing' ? activeTabBtn : inactiveTabBtn}
+                    onClick={() => setActiveTab('packing')}
+                  >
+                    <Truck size={16} /> PACKING & LOGISTICS
+                  </button>
                 </div>
 
-                <div className="pack-details" style={{ marginTop: '25px', padding: '20px', background: '#f8fafc', borderRadius: '15px', border: '1px solid #eef2f6' }}>
-                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                      <span style={{ fontSize: '0.8rem', fontWeight: '700', color: '#64748b' }}>Master Carton</span>
-                      <span style={{ fontSize: '0.8rem', fontWeight: '900', color: '#1a1f2e' }}>{product.masterCarton}</span>
-                   </div>
-                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ fontSize: '0.8rem', fontWeight: '700', color: '#64748b' }}>CBM Capacity</span>
-                      <span style={{ fontSize: '0.8rem', fontWeight: '900', color: 'var(--gold)' }}>{product.cbm} cm³</span>
-                   </div>
+                <div style={tabContent}>
+                  {activeTab === 'specs' ? (
+                    <div style={specsTable}>
+                      <div style={specRow}><span style={specKey}>Material</span><span style={specVal}>{product.material}</span></div>
+                      <div style={specRow}><span style={specKey}>Writing Tip</span><span style={specVal}>{product.tip}</span></div>
+                      <div style={specRow}><span style={specKey}>Ink Type</span><span style={specVal}>{product.ink}</span></div>
+                    </div>
+                  ) : (
+                    <div style={specsTable}>
+                      <div style={specRow}><span style={specKey}>Primary Pack</span><span style={specVal}>{product.primaryPack}</span></div>
+                      <div style={specRow}><span style={specKey}>Middle Packing</span><span style={specVal}>{product.middlePacking}</span></div>
+                      <div style={specRow}><span style={specKey}>Master Carton</span><span style={specVal}>{product.masterCarton}</span></div>
+                      <div style={specRow}><span style={specKey}>CBM Capacity</span><span style={specVal} className="text-gold">{product.cbm} cm³</span></div>
+                    </div>
+                  )}
                 </div>
 
-                 <div className="action-buttons-wrap">
-                   <button 
-                     onClick={() => setIsContactOpen(true)}
-                     className="btn-primary product-enquiry-btn"
-                     style={{ cursor: 'pointer', border: 'none', background: 'var(--midnight)', color: '#fff', padding: '18px 35px' }}
-                   >
-                     Direct Enquiry <ArrowRight size={20} style={{ marginLeft: '10px' }} />
-                   </button>
-                   <button className="btn-outline product-share-btn">
-                     <Share2 size={20} />
-                   </button>
-                 </div>
+                <div style={actionsContainer}>
+                  <button onClick={() => setIsContactOpen(true)} style={enquiryBtn}>
+                    SEND BULK ENQUIRY <ArrowRight size={18} />
+                  </button>
+                  <button style={shareBtn}><Share2 size={20} /></button>
+                </div>
+
+                <div style={isoBadge}>
+                  <CheckCircle size={16} color="var(--gold)" />
+                  ISO 9001:2015 CERTIFIED MANUFACTURING
+                </div>
               </motion.div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── BROCHURE / TECHNICAL DATA ─────── */}
-      <section className="section brochure-section">
-        <div className="container brochure-container">
-          <div className="section-header">
-            <span className="label">Technical Data</span>
-            <h2 className="section-title">Product <em>Specifications</em></h2>
-          </div>
-
-          <div className="brochure-layout" style={{ gridTemplateColumns: '1fr', maxWidth: '800px', margin: '0 auto' }}>
-            <div className="brochure-text">
-              <div className="brochure-features-list">
-                <div className="brochure-feature">
-                   <CheckCircle2 size={32} className="feature-icon" />
-                   <div>
-                      <h4>International Standards</h4>
-                      <p>Manufactured in an ISO 9001:2015 certified facility ensuring consistent quality for global distributors.</p>
-                   </div>
-                </div>
-                <div className="brochure-feature">
-                   <CheckCircle2 size={32} className="feature-icon" />
-                   <div>
-                      <h4>Bulk Supply Optimization</h4>
-                      <p>Standardized master carton packaging designed for shipping durability and efficient inventory management.</p>
-                   </div>
-                </div>
-                <div className="brochure-feature">
-                   <CheckCircle2 size={32} className="feature-icon" />
-                   <div>
-                      <h4>Custom Branding Available</h4>
-                      <p>OEM/ODM services available for large-scale importers needing tailored branding and packaging.</p>
-                   </div>
-                </div>
-              </div>
-              <div className="brochure-cta-wrap">
-                 <a 
-                   href="/product/NiKan%20Catalogue%20Oct%2025.pdf" 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   className="btn-primary"
-                 >
-                    <Download size={20} style={{ marginRight: '10px' }} /> Download Brochure
-                 </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── LIGHTBOX OVERLAY (PORTAL) ──────── */}
-      {createPortal(
-        <AnimatePresence>
-          {isLightbox && (
-            <motion.div 
-              className="lightbox-overlay"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsLightbox(false)}
-            >
-              <button 
-                onClick={() => setIsLightbox(false)}
-                className="lightbox-close"
-              >
-                <X size={40} />
-              </button>
-              <motion.img 
-                src={selectedImg} 
-                alt="Full Size"
-                initial={{ scale: 0.8 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0.8 }}
-                className="lightbox-img"
-                onClick={(e) => e.stopPropagation()}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>,
+      {/* LIGHTBOX */}
+      {isLightbox && createPortal(
+        <motion.div 
+          style={lightboxOverlay}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          onClick={() => setIsLightbox(false)}
+        >
+          <button style={closeBtn} onClick={() => setIsLightbox(false)}><X size={40} /></button>
+          <motion.img 
+            src={getImgUrl(selectedImg)} 
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            style={lightboxImgStyle}
+            onClick={e => e.stopPropagation()}
+          />
+        </motion.div>,
         document.body
       )}
 
@@ -268,8 +218,43 @@ export default function ProductDetail() {
       <ContactModal 
         isOpen={isContactOpen} 
         onClose={() => setIsContactOpen(false)} 
-        productContext={product?.name}
+        productContext={`${product.name} (SKU: ${product.skuCode})`}
       />
     </div>
   );
+}
+
+// STYLES
+const backLinkStyle = { color: '#64748b', fontSize: '0.8rem', fontWeight: '800', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', letterSpacing: '1px' };
+const mainGridStyle = { display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '60px', alignItems: 'start' };
+const mainPreviewStyle = { position: 'relative', background: '#fff', borderRadius: '24px', padding: '40px', border: '1px solid #f1f5f9', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '500px' };
+const mainImgStyle = { width: '100%', height: 'auto', maxHeight: '450px', objectFit: 'contain' };
+const maximizeBtn = { position: 'absolute', top: '20px', right: '20px', background: '#f1f5f9', border: 'none', padding: '12px', borderRadius: '50%', cursor: 'pointer' };
+const thumbGridStyle = { marginTop: '20px' };
+const thumbSectionLabel = { fontSize: '0.65rem', fontWeight: '900', color: '#94a3b8', letterSpacing: '1px', marginBottom: '10px' };
+const thumbRow = { display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '20px' };
+const thumbItemStyle = (active) => ({ width: '70px', height: '70px', borderRadius: '12px', border: active ? '2px solid var(--gold)' : '1px solid #e2e8f0', padding: '8px', cursor: 'pointer', background: '#fff', transition: '0.2s' });
+const thumbImgInner = { width: '100%', height: '100%', objectFit: 'contain' };
+const categoryBadge = { background: 'var(--gold)', color: '#000', padding: '6px 12px', borderRadius: '4px', fontSize: '0.65rem', fontWeight: '900', display: 'inline-block', letterSpacing: '1px' };
+const titleStyle = { fontSize: '3rem', fontFamily: 'var(--serif)', fontWeight: '900', color: '#1a1f2e', margin: '15px 0 5px 0' };
+const skuStyle = { fontSize: '0.9rem', color: '#64748b', fontWeight: '700', marginBottom: '25px' };
+const descStyle = { fontSize: '1rem', color: '#475569', lineHeight: '1.7', marginBottom: '35px' };
+const tabHeader = { display: 'flex', gap: '10px', borderBottom: '1px solid #e2e8f0', marginBottom: '20px' };
+const activeTabBtn = { padding: '12px 20px', background: 'none', border: 'none', borderBottom: '2px solid #000', fontSize: '0.8rem', fontWeight: '900', color: '#000', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' };
+const inactiveTabBtn = { padding: '12px 20px', background: 'none', border: 'none', fontSize: '0.8rem', fontWeight: '700', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' };
+const tabContent = { minHeight: '180px' };
+const specsTable = { display: 'flex', flexDirection: 'column', gap: '1px', background: '#f1f5f9', borderRadius: '12px', overflow: 'hidden', border: '1px solid #f1f5f9' };
+const specRow = { display: 'flex', justifyContent: 'space-between', padding: '15px 20px', background: '#fff' };
+const specKey = { fontSize: '0.85rem', color: '#64748b', fontWeight: '600' };
+const specVal = { fontSize: '0.85rem', color: '#1a1f2e', fontWeight: '800' };
+const actionsContainer = { display: 'flex', gap: '15px', marginTop: '40px' };
+const enquiryBtn = { flexGrow: 1, background: '#000', color: '#fff', border: 'none', padding: '20px', borderRadius: '12px', fontSize: '0.9rem', fontWeight: '800', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', cursor: 'pointer', transition: '0.3s' };
+const shareBtn = { width: '64px', height: '64px', background: '#fff', border: '2px solid #e2e8f0', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' };
+const isoBadge = { marginTop: '30px', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.7rem', fontWeight: '800', color: '#94a3b8' };
+const lightboxOverlay = { position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(0,0,0,0.92)', zIndex: 2000, display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'zoom-out' };
+const closeBtn = { position: 'absolute', top: '30px', right: '30px', background: 'none', border: 'none', color: '#fff', cursor: 'pointer' };
+const lightboxImgStyle = { maxWidth: '85%', maxHeight: '85vh', objectFit: 'contain', borderRadius: '12px' };
+
+function CheckCircle({ size, color }) {
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>;
 }
