@@ -44,16 +44,15 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 5001;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/nikan_pen';
 
-console.log('Attempting to connect to MongoDB...');
+console.log('Connecting to MongoDB...');
 mongoose.connect(MONGO_URI)
-  .then(() => {
-    console.log('✅ MongoDB Connected Successfully');
-    console.log('Database Name: nikan_pen');
-    app.listen(PORT, () => {
-      console.log(`🚀 Server is running on http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error('❌ Database connection error:', err);
-    process.exit(1);
+  .then(() => console.log('✅ MongoDB Connected'))
+  .catch(err => console.error('❌ MongoDB Connection Error:', err));
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server is running on http://localhost:${PORT}`);
   });
+}
+
+module.exports = app;
