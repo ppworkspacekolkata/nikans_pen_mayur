@@ -4,17 +4,42 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+// Configure Cloudinary
+if (process.env.CLOUDINARY_CLOUD_NAME) {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+  });
+}
+
 // Storage Configuration
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadPath = path.join(__dirname, '..', 'uploads', 'products');
-    if (!fs.existsSync(uploadPath)) fs.mkdirSync(uploadPath, { recursive: true });
-    cb(null, uploadPath);
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  }
-});
+let storage;
+if (process.env.CLOUDINARY_CLOUD_NAME) {
+  storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: 'nikan_products',
+      allowedFormats: ['jpg', 'png', 'jpeg', 'webp', 'mp4'],
+    },
+  });
+} else {
+  // Fallback to /tmp for Vercel, or local uploads folder for dev
+  storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      const isProd = process.env.NODE_ENV === 'production';
+      const uploadPath = path.join(isProd ? '/tmp' : __dirname, isProd ? '' : '..', 'uploads', 'products');
+      if (!fs.existsSync(uploadPath)) fs.mkdirSync(uploadPath, { recursive: true });
+      cb(null, uploadPath);
+    },
+    filename: (req, file, cb) => {
+      cb(null, `${Date.now()}-${file.originalname}`);
+    }
+  });
+}
 
 exports.upload = multer({ storage }).fields([
   { name: 'images', maxCount: 10 },
@@ -46,12 +71,14 @@ exports.getProductBySlug = async (req, res) => {
   }
 };
 
+const getFilePath = (f) => f.path.startsWith('http') ? f.path : `/uploads/products/${f.filename}`;
+
 exports.createProduct = async (req, res) => {
   try {
-    const files = req.files;
-    const imagesPaths = files.images ? files.images.map(f => `/uploads/products/${f.filename}`) : [];
-    const pkgPaths = files.packagingImages ? files.packagingImages.map(f => `/uploads/products/${f.filename}`) : [];
-    const videoPaths = files.videos ? files.videos.map(f => `/uploads/products/${f.filename}`) : [];
+    const files = req.files || {};
+    const imagesPaths = files.images ? files.images.map(getFilePath) : [];
+    const pkgPaths = files.packagingImages ? files.packagingImages.map(getFilePath) : [];
+    const videoPaths = files.videos ? files.videos.map(getFilePath) : [];
 
     const mainImage = imagesPaths[req.body.mainImageIdx || 0] || (imagesPaths.length > 0 ? imagesPaths[0] : null);
 
@@ -85,9 +112,9 @@ exports.updateProduct = async (req, res) => {
     let existingVideos = req.body.existingVideos ? JSON.parse(req.body.existingVideos) : [];
 
     // New paths
-    const newImages = files.images ? files.images.map(f => `/uploads/products/${f.filename}`) : [];
-    const newPkg = files.packagingImages ? files.packagingImages.map(f => `/uploads/products/${f.filename}`) : [];
-    const newVideos = files.videos ? files.videos.map(f => `/uploads/products/${f.filename}`) : [];
+    const newImages = files.images ? files.images.map(getFilePath) : [];
+    const newPkg = files.packagingImages ? files.packagingImages.map(getFilePath) : [];
+    const newVideos = files.videos ? files.videos.map(getFilePath) : [];
 
     // Merge
     const allImages = [...existingImages, ...newImages];
