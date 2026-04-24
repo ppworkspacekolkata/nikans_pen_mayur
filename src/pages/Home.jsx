@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
@@ -121,29 +121,33 @@ const EXPORTS = [
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const slides = [
-    '/product/auram 1.png',
-    '/product/aventus 2.png',
-    '/product/aviator 1.png',
-    '/product/bold mark 1.png',
-    '/product/chisel marker 1.png',
-    '/product/grip 1.png',
-    '/product/pentastic 1.png',
-    '/product/trikon 1.png'
-  ];
+  const [heroSettings, setHeroSettings] = useState(null);
+  const [heroLoading, setHeroLoading] = useState(true);
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', fn);
-    return () => window.removeEventListener('scroll', fn);
+    const fetchHeroSettings = async () => {
+      try {
+        const res = await fetch(API_ENDPOINTS.HERO_SETTINGS);
+        const data = await res.json();
+        setHeroSettings(data);
+      } catch (err) {
+        console.error("Hero Settings Error:", err);
+      } finally {
+        setHeroLoading(false);
+      }
+    };
+    fetchHeroSettings();
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [slides.length]);
+    if (heroSettings?.images?.length > 1) {
+      const timer = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % heroSettings.images.length);
+      }, 5000);
+      return () => clearInterval(timer);
+    }
+  }, [heroSettings?.images]);
+
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [activeTab, setActiveTab] = useState('');
@@ -185,88 +189,249 @@ export default function Home() {
       <Navbar />
 
       {/* ── HERO ────────────────────────── */}
-      <section className="hero" style={{ background: 'linear-gradient(165deg, #ffffff 50%, #fff9e6 100%)', minHeight: '85vh', paddingTop: 'calc(var(--nav-h) + 2rem)' }}>
-        <motion.div
-          className="hero-bg-glow"
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.2, 0.4, 0.2],
-            x: [0, 30, 0],
-            y: [0, -20, 0]
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <div className="hero-content">
-          <motion.div className="hero-eyebrow" variants={fadeUp} custom={0} initial="hidden" animate="visible">
-            <div className="hero-eyebrow-line" style={{ height: '3px', width: '24px', background: 'var(--gold)' }} />
-            <span className="label" style={{ color: 'var(--text-primary)', fontWeight: '800', letterSpacing: '0.2em' }}>ESTABLISHED EXCELLENCE</span>
-          </motion.div>
-          <motion.h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.2rem)', letterSpacing: '-0.04em', lineHeight: '1.1', marginBottom: '1.2rem' }} variants={fadeUp} custom={0.1} initial="hidden" animate="visible">
-            Mastering the Art of<br />
-            <em style={{ color: 'var(--gold)', fontStyle: 'italic' }}>Precision Writing</em>
-          </motion.h1>
-          <motion.p className="hero-desc" style={{ fontSize: '0.95rem', color: 'var(--text-muted)', maxWidth: '600px', marginBottom: '1rem', lineHeight: '1.8' }} variants={fadeUp} custom={0.2} initial="hidden" animate="visible">
-            NIKAN, a global-facing brand of Tirupati Colour Pens Pvt. Ltd. (est. 2008), specializes in the manufacturing of writing and coloring instruments for international importers and bulk distributors.
-          </motion.p>
-          <motion.p className="hero-desc" style={{ fontSize: '0.95rem', color: 'var(--text-muted)', maxWidth: '600px', marginBottom: '2.5rem', lineHeight: '1.8' }} variants={fadeUp} custom={0.25} initial="hidden" animate="visible">
-            Backed by ISO 9001:2015 certified processes, BIS-certified product categories, and automated assembly line production, we deliver consistent quality at scale. With integrated manufacturing of key components and a strong focus on precision and reliability, NIKAN is built to be a dependable partner for global supply.
-          </motion.p>
+      <section className="hero" style={{
+        background: '#fffef5',
+        minHeight: '100vh',
+        paddingTop: 'calc(var(--nav-h) + 2rem)',
+        display: 'flex',
+        alignItems: 'center',
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        <div className="container" style={{
+          maxWidth: '1500px',
+          margin: '0 auto',
+          padding: '0 2rem',
+          display: 'grid',
+          gridTemplateColumns: '1.2fr 1fr',
+          gap: '12rem',
+          alignItems: 'center',
+          position: 'relative',
+          zIndex: 1
+        }}>
 
-          <motion.div className="hero-actions" variants={fadeUp} custom={0.3} initial="hidden" animate="visible">
-            <Link to="/products" className="btn-primary" style={{ boxShadow: 'var(--shadow-gold)', padding: '14px 32px' }}>Explore Products <ArrowRight size={18} /></Link>
-            <Link to="/contact" className="btn-ghost" style={{ borderBottom: '2px solid var(--gold)', borderRadius: '0', padding: '8px 4px', fontWeight: '600' }}>
-              Bulk Enquiries <span className="btn-ghost-arrow"><ChevronRight size={18} /></span>
-            </Link>
-          </motion.div>
-
-          <motion.div className="hero-stats" variants={fadeIn} custom={0.5} initial="hidden" animate="visible">
-            <div style={{ flex: 1 }}>
-              <div className="hero-stat-number" style={{ color: 'var(--gold)', fontSize: '2.2rem' }}><CountUp target={20} suffix="+" /></div>
-              <div className="hero-stat-label" style={{ fontSize: '0.65rem' }}>Global Markets</div>
-            </div>
-            <div style={{ flex: 1, borderLeft: '1px solid var(--border-dim)', paddingLeft: '2rem' }}>
-              <div className="hero-stat-number" style={{ color: 'var(--gold)', fontSize: '2.2rem' }}><CountUp target={100} suffix="+" /></div>
-              <div className="hero-stat-label" style={{ fontSize: '0.65rem' }}>Precision SKUs</div>
-            </div>
-            <div style={{ flex: 1, borderLeft: '1px solid var(--border-dim)', paddingLeft: '2rem' }}>
-              <div className="hero-stat-number" style={{ color: 'var(--gold)', fontSize: '2.2rem' }}><CountUp target={15} suffix="+" /></div>
-              <div className="hero-stat-label" style={{ fontSize: '0.65rem' }}>Years Active</div>
-            </div>
-          </motion.div>
-        </div>
-        <motion.div className="hero-slider-container" variants={fadeIn} custom={0.4} initial="hidden" animate="visible">
-          <motion.div
-            className="slider-content-wrap"
-            whileHover={{ rotateY: 5, rotateX: -2, scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 150, damping: 20 }}
-          >
+          {/* Left Column: Text Content */}
+          <div className="hero-content">
             <AnimatePresence mode="wait">
-              <motion.img
-                key={currentSlide}
-                src={slides[currentSlide]}
-                alt={`Nikan Pen slide ${currentSlide + 1}`}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="slider-main-img"
-              />
-            </AnimatePresence>
-            <div className="slider-badge">
-              MADE IN INDIA
-            </div>
+              <motion.div
+                key="hero-text"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: { opacity: 0, x: -20 },
+                  visible: { opacity: 1, x: 0, transition: { staggerChildren: 0.1, duration: 0.6 } }
+                }}
+              >
+                <motion.div variants={fadeUp} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '2.5rem' }}>
+                  <div style={{ height: '3px', width: '25px', background: 'var(--gold)' }} />
+                  <span style={{ color: '#1a1f2e', fontWeight: '800', letterSpacing: '0.1em', fontSize: '0.75rem', textTransform: 'uppercase' }}>ESTABLISHED EXCELLENCE</span>
+                </motion.div>
 
-            <div className="slider-dots-wrap">
-              {slides.map((_, i) => (
-                <div
-                  key={i}
-                  className={`slider-dot ${i === currentSlide ? 'active' : ''}`}
-                />
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
+                <motion.h1
+                  variants={fadeUp}
+                  style={{
+                    fontSize: 'clamp(3rem, 5vw, 4.8rem)',
+                    letterSpacing: '-0.02em',
+                    lineHeight: '1.1',
+                    marginBottom: '2rem',
+                    color: '#1a1f2e',
+                    fontWeight: '900',
+                    fontFamily: "'Playfair Display', serif"
+                  }}
+                >
+                  {heroSettings?.title || "Mastering the Art of"} <br />
+                  <span style={{
+                    color: 'var(--gold)',
+                    fontFamily: "'Playfair Display', serif",
+                    fontWeight: '900'
+                  }}>
+                    {heroSettings?.subtitle || "Precision Writing"}
+                  </span>
+                </motion.h1>
+
+                <motion.p
+                  variants={fadeUp}
+                  style={{
+                    fontSize: '1rem',
+                    color: '#64748b',
+                    maxWidth: '650px',
+                    marginBottom: '1.5rem',
+                    lineHeight: '1.8',
+                    fontWeight: '500'
+                  }}
+                >
+                  {heroSettings?.description || "NIKAN, a global-facing brand of Tirupati Colour Pens Pvt. Ltd. (est. 2008), specializes in the manufacturing of writing and coloring instruments for international importers and bulk distributors."}
+                </motion.p>
+
+                <motion.p
+                  variants={fadeUp}
+                  style={{
+                    fontSize: '1rem',
+                    color: '#64748b',
+                    maxWidth: '650px',
+                    marginBottom: '3rem',
+                    lineHeight: '1.8',
+                    fontWeight: '500'
+                  }}
+                >
+                  Backed by ISO 9001:2015 certified processes, BIS-certified product categories, and automated assembly line production, we deliver consistent quality at scale. With integrated manufacturing of key components and a strong focus on precision and reliability, NIKAN is built to be a dependable partner for global supply.
+                </motion.p>
+
+                <motion.div variants={fadeUp} style={{ display: 'flex', alignItems: 'center', gap: '3rem' }}>
+                  <Link to="/products" className="btn-primary" style={{
+                    padding: '16px 40px',
+                    borderRadius: '50px',
+                    fontSize: '0.95rem',
+                    fontWeight: '800',
+                    background: 'var(--gold)',
+                    color: '#fff',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    boxShadow: '0 10px 25px rgba(212,175,55,0.2)'
+                  }}>
+                    EXPLORE PRODUCTS <ArrowRight size={18} />
+                  </Link>
+                  <Link to="/contact" style={{
+                    textDecoration: 'none',
+                    color: '#1a1f2e',
+                    fontWeight: '700',
+                    fontSize: '1rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}>
+                    Bulk Enquiries <ChevronRight size={20} />
+                  </Link>
+                </motion.div>
+
+                {/* Simple White Stats Card with More Spacing */}
+                <motion.div
+                  variants={fadeUp}
+                  style={{
+                    marginTop: '6.5rem',
+                    display: 'flex',
+                    gap: '1.5rem',
+                    padding: '35px',
+                    background: '#fff',
+                    borderRadius: '15px',
+                    width: 'fit-content',
+                    boxShadow: '0 20px 45px rgba(0,0,0,0.03)',
+                    border: '1px solid #f1f5f9'
+                  }}
+                >
+                  {(heroSettings?.stats || [
+                    { value: '20+', label: 'GLOBAL MARKETS' },
+                    { value: '100+', label: 'PRECISION SKUS' },
+                    { value: '15+', label: 'YEARS ACTIVE' }
+                  ]).map((stat, idx) => (
+                    <React.Fragment key={idx}>
+                      <div style={{ minWidth: '120px', textAlign: 'left', padding: '0 20px' }}>
+                        <div style={{ color: 'var(--gold)', fontSize: '2.2rem', fontWeight: '900', marginBottom: '5px' }}>
+                          <CountUp target={parseInt(stat.value) || 0} suffix={stat.value.toString().includes('+') ? '+' : ''} />
+                        </div>
+                        <div style={{ fontSize: '0.6rem', fontWeight: '700', color: '#94a3b8', letterSpacing: '0.05em' }}>{stat.label}</div>
+                      </div>
+                      {idx < 2 && <div style={{ width: '1px', background: '#f1f5f9' }} />}
+                    </React.Fragment>
+                  ))}
+                </motion.div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Right Column: Slider Card */}
+          <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              style={{
+                width: '100%',
+                maxWidth: '550px',
+                aspectRatio: '1.2/1',
+                background: '#fff',
+                borderRadius: '15px',
+                boxShadow: '0 20px 50px rgba(0,0,0,0.02)',
+                padding: '40px',
+                display: 'flex',
+                flexDirection: 'column',
+                position: 'relative',
+                border: '1px solid #f1f5f9'
+              }}
+            >
+              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentSlide}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.5 }}
+                    style={{ height: '100%', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    {heroSettings?.images?.length > 0 ? (
+                      <img
+                        src={getImageUrl(heroSettings.images[currentSlide])}
+                        alt=""
+                        style={{ maxHeight: '90%', maxWidth: '90%', objectFit: 'contain' }}
+                      />
+                    ) : (
+                      <div style={{ color: '#cbd5e1' }}>No Slides Added</div>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Bottom Elements Row */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 'auto' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                  <div style={{
+                    background: 'var(--gold)',
+                    color: '#000',
+                    padding: '10px 15px',
+                    borderRadius: '4px',
+                    fontWeight: '800',
+                    fontSize: '0.75rem'
+                  }}>
+                    MADE IN INDIA
+                  </div>
+
+                  {/* Floating Specs Icons */}
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#fff', border: '1px solid #f1f5f9', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '5px' }}>
+                      <span style={{ fontSize: '0.6rem', fontWeight: '900', color: '#1a1f2e' }}>0.7</span>
+                      <span style={{ fontSize: '0.4rem', color: '#94a3b8' }}>TIP</span>
+                    </div>
+                    <div style={{ width: '40px', height: '40px', borderRadius: '5px', background: '#fff', border: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div style={{ width: '15px', height: '15px', background: '#3498db', borderRadius: '50% 50% 50% 10%', transform: 'rotate(-45deg)' }} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Dots Container */}
+                <div style={{ display: 'flex', gap: '6px' }}>
+                  {(heroSettings?.images || [1, 2, 3, 4, 5, 6, 7]).map((_, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        width: '6px',
+                        height: '6px',
+                        background: i === currentSlide ? 'var(--gold)' : '#cbd5e1',
+                        borderRadius: '50%',
+                        transition: '0.3s'
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </section>
+
+
 
       {/* ── TRUST STRIP ─────────────────────── */}
       <div className="ticker-wrapper" aria-hidden="true" style={{ background: 'var(--bg-dark-pro)', border: 'none', padding: '1.2rem 0' }}>
@@ -286,7 +451,7 @@ export default function Home() {
           <div className="section-header" style={{ marginBottom: '4rem', textAlign: 'center' }}>
             <motion.span className="label" variants={fadeUp} custom={0} style={{ background: 'var(--gold)', color: '#000', padding: '4px 12px', borderRadius: '4px', fontWeight: '800' }}>OUR COLLECTIONS</motion.span>
             <motion.h2 className="section-title" style={{ fontSize: '3rem', marginTop: '1.2rem' }} variants={fadeUp} custom={0.1}>Explore Our <em>Versatile Range</em></motion.h2>
-            
+
             {/* Category Tabs */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '3rem', flexWrap: 'wrap' }}>
               {categories.map((c) => (
@@ -338,9 +503,9 @@ export default function Home() {
                       <span className="brand-card-tag" style={{ background: 'var(--gold-dim)', color: 'var(--gold)', padding: '2px 8px', fontSize: '0.65rem', textTransform: 'uppercase' }}>Sub-Category</span>
                       <h3 className="serif" style={{ fontSize: '1.3rem', color: 'var(--text-primary)', margin: '0.8rem 0 0.4rem', fontWeight: '800' }}>{sub.name}</h3>
                       {sub.description && (
-                         <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '1.5rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{sub.description}</p>
+                        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '1.5rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{sub.description}</p>
                       )}
-                      
+
                       <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--gold)', fontWeight: '700', fontSize: '0.85rem' }}>
                         View Products <ChevronRight size={16} />
                       </div>
@@ -371,38 +536,38 @@ export default function Home() {
                 Tirupati Colour Pens Pvt. Ltd. is a DGFT-recognised One Star Export House
                 with ISO 9001:2015 certification, ensuring every pen meets international standards.
               </p>
-              <div className="creds-list" style={{ 
-                marginTop: '3.5rem', 
-                display: 'flex', 
-                flexDirection: 'row', 
-                justifyContent: 'center', 
-                gap: '2rem', 
-                flexWrap: 'wrap' 
+              <div className="creds-list" style={{
+                marginTop: '3.5rem',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                gap: '2rem',
+                flexWrap: 'wrap'
               }}>
                 {CREDS.map((c, i) => (
                   <motion.div key={c.title} className="cred-item" variants={fadeUp} custom={i * 0.1}
-                    style={{ 
-                      flex: '1', 
-                      minWidth: '280px', 
-                      display: 'flex', 
-                      flexDirection: 'column', 
-                      alignItems: 'center', 
-                      textAlign: 'center', 
-                      padding: '2.5rem 1.5rem', 
-                      background: 'var(--bg-secondary)', 
+                    style={{
+                      flex: '1',
+                      minWidth: '280px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                      padding: '2.5rem 1.5rem',
+                      background: 'var(--bg-secondary)',
                       border: '1px solid var(--border-dim)',
                       borderRadius: 'var(--radius-lg)'
                     }}>
-                    <div className="cred-icon" style={{ 
-                      width: '60px', 
-                      height: '60px', 
-                      background: 'var(--gold)', 
-                      color: '#000', 
-                      borderRadius: '50%', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center', 
-                      marginBottom: '1.5rem' 
+                    <div className="cred-icon" style={{
+                      width: '60px',
+                      height: '60px',
+                      background: 'var(--gold)',
+                      color: '#000',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginBottom: '1.5rem'
                     }}>
                       {c.icon}
                     </div>

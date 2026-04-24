@@ -1,5 +1,6 @@
 // Nikan Pen Global API Configuration
-const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:5001' : '');
+// Hardcoding for local dev to ensure no connection issues
+const API_BASE_URL = 'http://localhost:5001';
 
 export const API_ENDPOINTS = {
   PRODUCTS: `${API_BASE_URL}/api/products`,
@@ -7,6 +8,7 @@ export const API_ENDPOINTS = {
   SUB_CATEGORIES: `${API_BASE_URL}/api/subcategories`,
   ENQUIRIES: `${API_BASE_URL}/api/enquiries`,
   MEDIA: `${API_BASE_URL}/api/media`,
+  HERO_SETTINGS: `${API_BASE_URL}/api/hero-settings`,
   BASE: API_BASE_URL
 };
 

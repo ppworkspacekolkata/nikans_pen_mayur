@@ -50,6 +50,7 @@ const AdminLayout = ({ children }) => {
     { icon: Package, label: 'Products', path: '/admin/products' },
     { icon: Mail, label: 'Inquiries', path: '/admin/inquiries' },
     { icon: ImageIcon, label: 'Media', path: '/admin/media' },
+    { icon: LayoutDashboard, label: 'Hero Slider', path: '/admin/hero-slider' },
   ];
 
   const sidebarWidth = collapsed ? '80px' : '260px';

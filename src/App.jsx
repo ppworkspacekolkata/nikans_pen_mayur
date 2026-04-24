@@ -22,6 +22,7 @@ import AdminInquiries from './admin/pages/Inquiries';
 import AdminMedia from './admin/pages/Media';
 import AdminLogin from './admin/pages/Login';
 import AdminSettings from './admin/pages/Settings';
+import AdminHeroSlider from './admin/pages/HeroSlider';
 import './index.css';
 
 function AnimatedRoutes() {
@@ -58,6 +59,7 @@ function AnimatedRoutes() {
           <Route path="/admin/inquiries" element={<AdminLayout><AdminInquiries /></AdminLayout>} />
           <Route path="/admin/media" element={<AdminLayout><AdminMedia /></AdminLayout>} />
           <Route path="/admin/settings" element={<AdminLayout><AdminSettings /></AdminLayout>} />
+          <Route path="/admin/hero-slider" element={<AdminLayout><AdminHeroSlider /></AdminLayout>} />
           <Route path="/admin" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
         </Routes>
       </motion.div>
