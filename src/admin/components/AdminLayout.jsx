@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, Layers, ListTree, Package, Mail,
   Settings, Menu, X, Bell, User, LogOut, Camera as ImageIcon
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuth } from '../../context/AuthContext';
 
 const SidebarItem = ({ icon: Icon, label, path, active, collapsed }) => (
   <Link to={path} style={{ textDecoration: 'none' }}>
@@ -33,6 +34,14 @@ const AdminLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, token, loading, logout } = useAuth();
+
+  useEffect(() => {
+    if (!loading && !token) {
+      navigate('/admin/login');
+    }
+  }, [token, loading, navigate]);
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/admin/dashboard' },
@@ -44,6 +53,9 @@ const AdminLayout = ({ children }) => {
   ];
 
   const sidebarWidth = collapsed ? '80px' : '260px';
+
+  if (loading) return <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Loading...</div>;
+  if (!token) return null;
 
   return (
     <div style={{ display: 'flex', height: '100vh', background: '#f5f7fb', overflow: 'hidden' }}>
@@ -94,11 +106,16 @@ const AdminLayout = ({ children }) => {
         </div>
 
         <div style={{ padding: '20px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-          <SidebarItem icon={Settings} label="Settings" path="/admin/settings" collapsed={collapsed} />
-          <div style={{ 
-            display: 'flex', alignItems: 'center', padding: '12px 16px', margin: '4px 12px', 
-            cursor: 'pointer', color: '#ff4d4f', gap: '12px' 
-          }}>
+          <SidebarItem icon={Settings} label="Settings" path="/admin/settings" active={location.pathname === '/admin/settings'} collapsed={collapsed} />
+          <div 
+            onClick={logout}
+            style={{ 
+              display: 'flex', alignItems: 'center', padding: '12px 16px', margin: '4px 12px', 
+              cursor: 'pointer', color: '#ff4d4f', gap: '12px', borderRadius: '8px',
+              transition: 'background 0.2s'
+            }}
+            className="logout-hover"
+          >
             <LogOut size={20} />
             {!collapsed && <span style={{ fontSize: '0.9rem', fontWeight: '600' }}>Logout</span>}
           </div>
@@ -118,7 +135,7 @@ const AdminLayout = ({ children }) => {
               <Menu size={24} />
             </button>
             <h2 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#2d3748', margin: 0 }}>
-              {menuItems.find(i => i.path === location.pathname)?.label || 'Dashboard'}
+              {menuItems.find(i => i.path === location.pathname)?.label || (location.pathname === '/admin/settings' ? 'Settings' : 'Admin Panel')}
             </h2>
           </div>
 
@@ -128,8 +145,8 @@ const AdminLayout = ({ children }) => {
               <span style={{ position: 'absolute', top: '-5px', right: '-5px', width: '10px', height: '10px', background: '#ff4d4f', borderRadius: '50%', border: '2px solid #fff' }} />
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', paddingLeft: '20px', borderLeft: '1px solid #edf2f7' }}>
-              <div style={{ textAlign: 'right', display: 'none' /* hidden on mobile */ }}>
-                <div style={{ fontWeight: '700', fontSize: '0.85rem' }}>Admin User</div>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontWeight: '700', fontSize: '0.85rem' }}>{user?.username || 'Admin User'}</div>
                 <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Store Manager</div>
               </div>
               <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#dee2e6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -150,6 +167,7 @@ const AdminLayout = ({ children }) => {
           .sidebar-desktop { display: none !important; }
           .sidebar-mobile-open { position: fixed !important; height: 100vh !important; }
         }
+        .logout-hover:hover { background: rgba(255, 77, 79, 0.1); }
       `}} />
     </div>
   );

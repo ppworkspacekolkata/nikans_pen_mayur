@@ -196,7 +196,7 @@ const AdminCategories = () => {
                 .filter(s => (s.category?._id || s.category) === selectedCategory?._id)
                 .filter(s => s.name.toLowerCase().includes(searchTerm.toLowerCase()))
                 .map(sub => (
-                <div key={sub._id} style={{ ...catCard, borderLeft: '4px solid var(--midnight)' }}>
+                <div key={sub._id} style={{ ...catCard, borderLeft: '4px solid #1a1f2e' }}>
                    <div onClick={() => { setSelectedSubCategory(sub); setCurrentView('products'); }} style={cardTop}>
                       <div style={{ ...iconBox, background: '#f8fafc' }}><LayoutGrid size={24} color="#64748b" /></div>
                       <div style={cardContent}>
@@ -339,11 +339,11 @@ const AdminCategories = () => {
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap');
         * { font-family: 'Outfit', sans-serif; box-sizing: border-box; }
         :root { --gold: #d4af37; --midnight: #1a1f2e; }
-        .premium-btn { background: var(--midnight); color: #fff; border: none; padding: 14px 25px; border-radius: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.15); transition: 0.3s; }
+        .premium-btn { background: #1a1f2e; color: #fff; border: none; padding: 14px 25px; border-radius: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.15); transition: 0.3s; }
         .premium-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
         .m-input, .m-textarea { width: 100%; padding: 14px; border: 2px solid #edf2f7; border-radius: 12px; outline: none; font-weight: 600; transition: 0.3s; }
         .m-input:focus, .m-textarea:focus { border-color: var(--gold); }
-        .m-save-btn { width: 100%; padding: 20px; background: var(--midnight); color: #fff; border: none; border-radius: 18px; font-weight: 900; margin-top: 30px; cursor: pointer; transition: 0.3s; }
+        .m-save-btn { width: 100%; padding: 20px; background: #1a1f2e; color: #fff; border: none; border-radius: 18px; font-weight: 900; margin-top: 30px; cursor: pointer; transition: 0.3s; }
         .m-save-btn:hover { background: #000; letter-spacing: 1px; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         .spinning { animation: spin 0.8s linear infinite; }

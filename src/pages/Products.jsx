@@ -264,7 +264,7 @@ const subTab = {
 
 const activeSubTab = {
   ...subTab,
-  background: 'var(--midnight)',
+  background: '#1a1f2e',
   color: 'var(--gold)',
-  borderColor: 'var(--midnight)'
+  borderColor: '#1a1f2e'
 };

@@ -15,6 +15,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 
 // Routes
+app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/api/subcategories', require('./routes/subCategoryRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
