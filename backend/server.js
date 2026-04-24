@@ -23,10 +23,22 @@ app.use('/api/media', require('./routes/mediaRoutes'));
 // Serve Static Files (for uploads)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Basic Route
-app.get('/', (req, res) => {
-  res.send('Nikan Pen API is running...');
-});
+// Serve Frontend in Production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../dist')));
+  
+  app.get('*', (req, res) => {
+    // Exclude API routes and uploads
+    if (!req.path.startsWith('/api') && !req.path.startsWith('/uploads')) {
+      res.sendFile(path.join(__dirname, '../dist/index.html'));
+    }
+  });
+} else {
+  // Basic Route for development
+  app.get('/', (req, res) => {
+    res.send('Nikan Pen API is running...');
+  });
+}
 
 // Database Connection
 const PORT = process.env.PORT || 5001;

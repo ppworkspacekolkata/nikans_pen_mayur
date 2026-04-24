@@ -129,7 +129,7 @@ const AdminInquiries = () => {
                   <td style={td}>
                     {inq.product ? (
                       <div style={prodRef}>
-                        <img src={`http://localhost:5000${inq.product.mainImage}`} style={pThumb} />
+                        <img src={`${API_ENDPOINTS.BASE}${inq.product.mainImage}`} style={pThumb} />
                         <div><div style={{ fontWeight: '800', fontSize: '0.75rem' }}>{inq.product.name}</div><div style={{ fontSize: '0.65rem', color: '#d4af37' }}>SKU: {inq.product.skuCode}</div></div>
                       </div>
                     ) : <span style={{ color: '#cbd5e1', fontSize: '0.8rem' }}>Global enquiry</span>}
