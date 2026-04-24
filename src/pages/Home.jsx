@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {
   ArrowRight, Award, Globe, ShieldCheck, Package,
   Pen, Palette, Highlighter, ChevronRight, Mail, MapPin,
-  ArrowLeft, ChevronLeft
+  ArrowLeft, ChevronLeft, Layers
 } from 'lucide-react';
 import { useMotionValue, useSpring, useTransform } from 'framer-motion';
 import heroBg from '../assets/hero-bg.png';
@@ -144,8 +144,8 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [slides.length]);
   const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
   const [activeTab, setActiveTab] = useState('');
-  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -160,24 +160,24 @@ export default function Home() {
       }
     };
 
-    const fetchProducts = async () => {
+    const fetchSubCategories = async () => {
       try {
-        const res = await fetch(API_ENDPOINTS.PRODUCTS);
+        const res = await fetch(API_ENDPOINTS.SUB_CATEGORIES);
         const data = await res.json();
-        setProducts(data);
+        setSubCategories(data);
       } catch (err) {
         console.error("Fetch Error:", err);
       }
     };
 
     const loadData = async () => {
-      await Promise.all([fetchCategories(), fetchProducts()]);
+      await Promise.all([fetchCategories(), fetchSubCategories()]);
       setLoading(false);
     };
     loadData();
   }, []);
 
-  const filteredProducts = products.filter(p => (p.category?.name || p.category) === activeTab).slice(0, 6);
+  const filteredSubCategories = subCategories.filter(s => (s.category?.name || s.category) === activeTab);
 
   return (
     <div>
@@ -323,19 +323,25 @@ export default function Home() {
               transition={{ duration: 0.4 }}
               style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '2rem' }}
             >
-              {filteredProducts.map((product, i) => (
-                <Link to={`/product/${product.slug}`} key={product._id} className="product-card-link" style={{ textDecoration: 'none' }}>
+              {filteredSubCategories.map((sub, i) => (
+                <Link to={`/products?subCategory=${sub.slug}`} key={sub._id} className="product-card-link" style={{ textDecoration: 'none' }}>
                   <TiltCard>
                     <div className="brand-card" style={{ height: '100%', padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                       <div style={{ height: '180px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem', background: '#f8f8f8', borderRadius: '12px', padding: '1rem' }}>
-                        <img src={`${API_BASE_URL}${product.mainImage}`} alt={product.name} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
+                        {sub.image ? (
+                          <img src={`${API_BASE_URL}${sub.image}`} alt={sub.name} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
+                        ) : (
+                          <Layers size={64} color="var(--gold)" opacity={0.5} />
+                        )}
                       </div>
-                      <span className="brand-card-tag" style={{ background: 'var(--gold-dim)', color: 'var(--gold)', padding: '2px 8px', fontSize: '0.65rem' }}>{product.material}</span>
-                      <h3 className="serif" style={{ fontSize: '1.3rem', color: 'var(--text-primary)', margin: '0.8rem 0 0.4rem', fontWeight: '800' }}>{product.name}</h3>
-                      <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '1.5rem' }}>SKU: {product.skuCode}</p>
+                      <span className="brand-card-tag" style={{ background: 'var(--gold-dim)', color: 'var(--gold)', padding: '2px 8px', fontSize: '0.65rem', textTransform: 'uppercase' }}>Sub-Category</span>
+                      <h3 className="serif" style={{ fontSize: '1.3rem', color: 'var(--text-primary)', margin: '0.8rem 0 0.4rem', fontWeight: '800' }}>{sub.name}</h3>
+                      {sub.description && (
+                         <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '1.5rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{sub.description}</p>
+                      )}
                       
                       <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--gold)', fontWeight: '700', fontSize: '0.85rem' }}>
-                        View Details <ChevronRight size={16} />
+                        View Products <ChevronRight size={16} />
                       </div>
                     </div>
                   </TiltCard>
