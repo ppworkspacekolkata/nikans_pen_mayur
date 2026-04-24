@@ -5,7 +5,7 @@ import {
   X, AlertCircle, ChevronRight, Loader2, Package
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import API_BASE_URL, { API_ENDPOINTS } from '../../config/api';
+import API_BASE_URL, { API_ENDPOINTS, getImageUrl } from '../../config/api';
 
 const AdminSubCategories = () => {
   const [subCategories, setSubCategories] = useState([]);
@@ -170,7 +170,7 @@ const AdminSubCategories = () => {
                   <div style={{ display: 'grid', gap: '15px' }}>
                     {products.filter(p => (p.subCategory?._id || p.subCategory) === selectedSub._id).map(p => (
                       <div key={p._id} style={{ display: 'flex', alignItems: 'center', gap: '15px', padding: '12px', background: '#f8fafc', borderRadius: '15px' }}>
-                        <img src={`${API_BASE_URL}${p.mainImage}`} style={{ width: '50px', height: '50px', borderRadius: '10px', objectFit: 'cover' }} alt="" />
+                        <img src={getImageUrl(p.mainImage)} style={{ width: '50px', height: '50px', borderRadius: '10px', objectFit: 'cover' }} alt="" />
                         <div style={{ flex: 1 }}>
                           <div style={{ fontWeight: '800', color: '#1e293b', fontSize: '0.9rem' }}>{p.name}</div>
                           <div style={{ fontSize: '0.75rem', color: '#64748b' }}>SKU: {p.skuCode}</div>

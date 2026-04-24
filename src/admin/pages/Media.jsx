@@ -5,7 +5,7 @@ import {
   Edit2, Camera, Video, Layers, ArrowUpRight
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import API_BASE_URL, { API_ENDPOINTS } from '../../config/api';
+import API_BASE_URL, { API_ENDPOINTS, getImageUrl } from '../../config/api';
 
 const AdminMedia = () => {
   const [mediaList, setMediaList] = useState([]);
@@ -173,7 +173,7 @@ const AdminMedia = () => {
             <div key={media._id} className="glass-card-pro" style={{ background: '#fff', overflow: 'hidden' }}>
               <div style={{ position: 'relative', height: '200px' }}>
                 <img 
-                  src={`${API_BASE_URL}${media.thumbnail}`} 
+                  src={getImageUrl(media.thumbnail)} 
                   alt={media.title}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
@@ -297,7 +297,7 @@ const AdminMedia = () => {
                       {thumbnail ? (
                         <div style={{ width: '100%', height: '100%', position: 'relative' }}>
                           <img 
-                            src={thumbnail.isExisting ? `${API_BASE_URL}${thumbnail.url}` : thumbnail.url} 
+                            src={thumbnail.isExisting ? getImageUrl(thumbnail.url) : thumbnail.url} 
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
                           />
                           <button 
@@ -341,7 +341,7 @@ const AdminMedia = () => {
                             <Video color="#fff" opacity={0.5} size={24} />
                           </div>
                         ) : (
-                          <img src={item.isExisting ? `${API_BASE_URL}${item.url}` : item.url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          <img src={item.isExisting ? getImageUrl(item.url) : item.url} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         )}
                         <button 
                           type="button" onClick={() => removeItem(item.id, 'gallery')}

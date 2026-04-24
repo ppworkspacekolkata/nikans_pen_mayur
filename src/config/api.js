@@ -10,4 +10,11 @@ export const API_ENDPOINTS = {
   BASE: API_BASE_URL
 };
 
+// Smart image URL helper — handles both Cloudinary full URLs and local /uploads/ paths
+export const getImageUrl = (path) => {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  return `${API_BASE_URL}${path}`;
+};
+
 export default API_BASE_URL;

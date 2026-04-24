@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Search, ArrowRight, Download, Globe, Share2 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import API_BASE_URL, { API_ENDPOINTS } from '../config/api';
+import API_BASE_URL, { API_ENDPOINTS, getImageUrl } from '../config/api';
 
 const fadeUp = {
   hidden:  { opacity: 0, y: 28 },
@@ -195,7 +195,7 @@ export default function Products() {
                 <Link to={`/product/${p.slug}`} className="product-card-link" style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
                   <div className="product-card glass-card-pro" style={{ padding: '2rem', height: '100%', display: 'flex', flexDirection: 'column', transition: 'transform 0.3s ease' }}>
                     <div className="product-card-image" style={{ borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--border-dim)', marginBottom: '1.5rem', background: '#fff' }}>
-                      <img src={`${API_BASE_URL}${p.mainImage}`} alt={p.name} style={{ width: '100%', aspectRatio: '1/1', objectFit: 'contain', padding: '1rem' }} />
+                      <img src={getImageUrl(p.mainImage)} alt={p.name} style={{ width: '100%', aspectRatio: '1/1', objectFit: 'contain', padding: '1rem' }} />
                     </div>
                     <div className="product-card-top" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                       <span className="label-gold" style={{ margin: 0 }}>{p.skuCode}</span>

@@ -7,7 +7,7 @@ import {
   Edit2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import API_BASE_URL, { API_ENDPOINTS } from '../../config/api';
+import API_BASE_URL, { API_ENDPOINTS, getImageUrl } from '../../config/api';
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
@@ -110,11 +110,11 @@ const AdminProducts = () => {
       name: p.name, skuCode: p.skuCode, category: p.category?._id || p.category, subCategory: p.subCategory?._id || p.subCategory,
       description: p.description, material: p.material, tip: p.tip, ink: p.ink, primaryPack: p.primaryPack, middlePacking: p.middlePacking, masterCarton: p.masterCarton, cbm: p.cbm, isActive: p.isActive
     });
-    const existingImgs = (p.images || []).map(img => ({ id: img, url: `${API_BASE_URL}${img}`, isExisting: true, path: img }));
+    const existingImgs = (p.images || []).map(img => ({ id: img, url: getImageUrl(img), isExisting: true, path: img }));
     setProductImages(existingImgs);
-    const existingPkg = (p.packagingImages || []).map(img => ({ id: img, url: `${API_BASE_URL}${img}`, isExisting: true, path: img }));
+    const existingPkg = (p.packagingImages || []).map(img => ({ id: img, url: getImageUrl(img), isExisting: true, path: img }));
     setPackagingImages(existingPkg);
-    const existingVids = (p.videos || []).map(vid => ({ id: vid, url: `${API_BASE_URL}${vid}`, isExisting: true, path: vid }));
+    const existingVids = (p.videos || []).map(vid => ({ id: vid, url: getImageUrl(vid), isExisting: true, path: vid }));
     setVideos(existingVids);
     const mIdx = (p.images || []).indexOf(p.mainImage);
     setMainImageIdx(mIdx >= 0 ? mIdx : 0);
@@ -136,7 +136,7 @@ const AdminProducts = () => {
           <div style={gridFlow}>
             {products.map((p, idx) => (
               <motion.div key={p._id} style={{ ...productCard, cursor: 'pointer' }} onClick={() => { setSelectedProduct(p); setIsDetailModalOpen(true); }}>
-                <div style={imgContainer}><img src={`${API_BASE_URL}${p.mainImage}`} style={cardImg} alt="" /><div style={cardBadge}>{p.skuCode}</div></div>
+                <div style={imgContainer}><img src={getImageUrl(p.mainImage)} style={cardImg} alt="" /><div style={cardBadge}>{p.skuCode}</div></div>
                 <div style={cardInfo}><h3 style={cardTitle}>{p.name}</h3>
                   <div style={cardActions} onClick={(e) => e.stopPropagation()}>
                     <button onClick={() => openEdit(p)} style={actionBtn}><Edit2 size={14} /></button>
@@ -169,7 +169,7 @@ const AdminProducts = () => {
                         <h4 style={miniSecTitle}>PRODUCT GALLERY</h4>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
                            {selectedProduct.images?.map((img, i) => (
-                             <div key={i} style={galleryItem}><img src={`${API_BASE_URL}${img}`} style={fullImg} /></div>
+                             <div key={i} style={galleryItem}><img src={getImageUrl(img)} style={fullImg} /></div>
                            ))}
                         </div>
                      </div>
@@ -177,7 +177,7 @@ const AdminProducts = () => {
                         <h4 style={miniSecTitle}>PACKAGING ASSETS</h4>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
                            {selectedProduct.packagingImages?.map((img, i) => (
-                             <div key={i} style={galleryItemMini}><img src={`${API_BASE_URL}${img}`} style={fullImg} /></div>
+                             <div key={i} style={galleryItemMini}><img src={getImageUrl(img)} style={fullImg} /></div>
                            ))}
                            {(!selectedProduct.packagingImages || selectedProduct.packagingImages.length === 0) && <span style={noDataText}>No assets.</span>}
                         </div>

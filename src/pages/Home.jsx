@@ -13,6 +13,7 @@ import heroBg from '../assets/hero-bg.png';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { PRODUCTS } from '../data/products';
+import API_BASE_URL, { API_ENDPOINTS, getImageUrl } from '../config/api';
 
 
 const fadeUp = {
@@ -329,7 +330,7 @@ export default function Home() {
                     <div className="brand-card" style={{ height: '100%', padding: '2rem', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                       <div style={{ height: '180px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem', background: '#f8f8f8', borderRadius: '12px', padding: '1rem' }}>
                         {sub.image ? (
-                          <img src={`${API_BASE_URL}${sub.image}`} alt={sub.name} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
+                          <img src={getImageUrl(sub.image)} alt={sub.name} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
                         ) : (
                           <Layers size={64} color="var(--gold)" opacity={0.5} />
                         )}

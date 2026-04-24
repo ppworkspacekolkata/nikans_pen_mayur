@@ -7,7 +7,7 @@ import {
   Boxes, LayoutGrid, Info, CheckSquare
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import API_BASE_URL, { API_ENDPOINTS } from '../../config/api';
+import API_BASE_URL, { API_ENDPOINTS, getImageUrl } from '../../config/api';
 
 const AdminCategories = () => {
   const [currentView, setCurrentView] = useState('categories'); 
@@ -234,7 +234,7 @@ const AdminCategories = () => {
                     onClick={() => { setSelectedProduct(p); setIsProductModalOpen(true); }}
                     style={{ ...pRow, cursor: 'pointer' }}
                  >
-                    <img src={`${API_BASE_URL}${p.mainImage}`} style={pImg} />
+                    <img src={getImageUrl(p.mainImage)} style={pImg} />
                     <div style={{ flex: 1 }}>
                        <div style={{ fontWeight: '800' }}>{p.name}</div>
                        <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{p.material} | {p.tip}</div>
@@ -322,7 +322,7 @@ const AdminCategories = () => {
                   <h4 style={secTitle}>PRODUCT MEDIA</h4>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
                     {selectedProduct.images?.map((img, i) => (
-                      <img key={i} src={`${API_BASE_URL}${img}`} style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '10px', border: '2px solid #f1f5f9' }} />
+                      <img key={i} src={getImageUrl(img)} style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '10px', border: '2px solid #f1f5f9' }} />
                     ))}
                   </div>
                   <div style={{ marginTop: '20px', padding: '15px', background: '#f8fafc', borderRadius: '15px', fontSize: '0.85rem', color: '#64748b', fontStyle: 'italic' }}>
