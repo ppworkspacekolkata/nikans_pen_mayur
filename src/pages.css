@@ -1263,8 +1263,8 @@
   .products-cats {
     width: 100vw;
     margin-left: -1rem;
-   MASTER RESPONSIVE OVERRIDES (Micro-Targeted)
-   ────────────────────────────────────────────────────────────────────────── */
+   /* MASTER RESPONSIVE OVERRIDES (Micro-Targeted)
+      ────────────────────────────────────────────────────────────────────────── */
 
 /* Laptop & Large Tablets (<= 1280px) */
 @media (max-width: 1280px) {
