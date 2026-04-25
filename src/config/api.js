@@ -8,6 +8,7 @@ export const API_ENDPOINTS = {
   ENQUIRIES: `${API_BASE_URL}/api/enquiries`,
   MEDIA: `${API_BASE_URL}/api/media`,
   HERO_SETTINGS: `${API_BASE_URL}/api/hero-settings`,
+  VIDEO_POSTS: `${API_BASE_URL}/api/video-posts`,
   BASE: API_BASE_URL
 };
 

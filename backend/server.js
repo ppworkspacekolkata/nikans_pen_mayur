@@ -27,6 +27,7 @@ app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/enquiries', require('./routes/enquiryRoutes'));
 app.use('/api/media', require('./routes/mediaRoutes'));
 app.use('/api/hero-settings', require('./routes/heroSettingsRoutes'));
+app.use('/api/video-posts', require('./routes/videoRoutes'));
 
 // Serve Static Files (for uploads)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

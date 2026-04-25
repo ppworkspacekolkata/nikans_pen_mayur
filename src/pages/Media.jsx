@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { 
-  FileText, Download, Image as ImageIcon, Newspaper, 
+import {
+  FileText, Download, Image as ImageIcon, Newspaper,
   ArrowRight, Play, Layers, Film
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -10,8 +10,8 @@ import Footer from '../components/Footer';
 import API_BASE_URL, { API_ENDPOINTS, getImageUrl } from '../config/api';
 
 const fadeUp = {
-  hidden:  { opacity: 0, y: 28 },
-  visible: (d = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.7, delay: d, ease: [0.22,1,0.36,1] } }),
+  hidden: { opacity: 0, y: 28 },
+  visible: (d = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.7, delay: d, ease: [0.22, 1, 0.36, 1] } }),
 };
 
 function Reveal({ children, delay = 0 }) {
@@ -26,22 +26,29 @@ function Reveal({ children, delay = 0 }) {
 
 export default function Media() {
   const [mediaList, setMediaList] = useState([]);
+  const [videoPosts, setVideoPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchMedia = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetch(API_ENDPOINTS.MEDIA);
-        const data = await res.json();
-        setMediaList(data.filter(m => m.isActive));
+        const [mRes, vRes] = await Promise.all([
+          fetch(API_ENDPOINTS.MEDIA),
+          fetch(API_ENDPOINTS.VIDEO_POSTS)
+        ]);
+        const mData = await mRes.json();
+        const vData = await vRes.json();
+        
+        setMediaList(mData.filter(m => m.isActive));
+        setVideoPosts(vData.filter(v => v.isActive));
         setLoading(false);
       } catch (err) {
         console.error('Error fetching media:', err);
         setLoading(false);
       }
     };
-    fetchMedia();
+    fetchData();
   }, []);
 
   return (
@@ -58,7 +65,7 @@ export default function Media() {
             News, resources<br />& <em>Brand assets</em>
           </motion.h1>
           <motion.p className="page-hero-desc" variants={fadeUp} custom={0.2} initial="hidden" animate="visible">
-            Explore Nikan’s world-class manufacturing in action through our corporate films 
+            Explore Nikan’s world-class manufacturing in action through our corporate films
             and get in touch with our media relations team for export enquiries.
           </motion.p>
         </div>
@@ -79,29 +86,29 @@ export default function Media() {
             {loading ? (
               <div style={{ textAlign: 'center', padding: '4rem' }}>Loading media albums...</div>
             ) : (
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fill, minmax(380px, 1fr))', 
-                gap: '2.5rem' 
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(380px, 1fr))',
+                gap: '2.5rem'
               }}>
                 {mediaList.map((album, idx) => (
-                  <motion.div 
+                  <motion.div
                     key={album._id}
                     whileHover={{ y: -10 }}
                     onClick={() => navigate(`/media/${album._id}`)}
                     className="glass-card-pro"
-                    style={{ 
-                      cursor: 'pointer', 
-                      background: '#fff', 
-                      borderRadius: '24px', 
+                    style={{
+                      cursor: 'pointer',
+                      background: '#fff',
+                      borderRadius: '24px',
                       overflow: 'hidden',
                       boxShadow: '0 10px 40px rgba(0,0,0,0.04)',
                       border: '1px solid #f1f5f9'
                     }}
                   >
                     <div style={{ height: '260px', position: 'relative', overflow: 'hidden' }}>
-                      <img 
-                        src={getImageUrl(album.thumbnail)} 
+                      <img
+                        src={getImageUrl(album.thumbnail)}
                         alt={album.title}
                         style={{ width: '100%', height: '100%', objectFit: 'cover', transition: '0.6s transform cubic-bezier(0.22, 1, 0.36, 1)' }}
                         className="album-img"
@@ -142,55 +149,81 @@ export default function Media() {
 
       {/* ── CORPORATE VIDEOS ───────────────── */}
       <section className="section media-video-section" style={{ background: '#fff', padding: '8rem 0' }}>
-        <Reveal>
-          <div className="section-header" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <span className="label">Corporate Videos</span>
-            <h2 className="section-title">Nikan <em>Facilities</em> In Action</h2>
-          </div>
-          
-          <div className="videos-grid">
-            {/* First Video */}
-            <div className="video-container glass-card-pro" style={{ 
-              overflow: 'hidden', 
-              position: 'relative', 
-              aspectRatio: '16/9', 
-              background: '#000',
-              borderRadius: '24px',
-              boxShadow: 'var(--shadow-lg)'
-            }}>
-              <video 
-                controls 
-                width="100%" 
-                height="100%" 
-                style={{ objectFit: 'cover' }}
-                poster="/team/sunil_chairman.png"
-              >
-                <source src="/team_media/video.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+        <div className="container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 2rem' }}>
+          <Reveal>
+            <div className="section-header" style={{ textAlign: 'center', marginBottom: '5rem' }}>
+              <span className="label">Corporate Showcase</span>
+              <h2 className="section-title">Films & <em>Storytelling</em></h2>
+              <p className="section-subtitle" style={{ maxWidth: '600px', margin: '1rem auto' }}>
+                Watch our journey, manufacturing excellence, and global impact through our curated film library.
+              </p>
             </div>
 
-            {/* Second Video */}
-            <div className="video-container glass-card-pro" style={{ 
-              overflow: 'hidden', 
-              position: 'relative', 
-              aspectRatio: '16/9', 
-              background: '#000',
-              borderRadius: '24px',
-              boxShadow: 'var(--shadow-lg)'
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(450px, 1fr))',
+              gap: '3rem'
             }}>
-              <video 
-                controls 
-                width="100%" 
-                height="100%" 
-                style={{ objectFit: 'cover' }}
-              >
-                <source src="/team_media/video 1.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+              {videoPosts.map((video, idx) => (
+                <motion.div
+                  key={video._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="video-post-card glass-card-pro"
+                  style={{
+                    background: '#fff',
+                    borderRadius: '24px',
+                    overflow: 'hidden',
+                    border: '1px solid #f1f5f9',
+                    display: 'flex',
+                    flexDirection: 'column'
+                  }}
+                >
+                  <div style={{
+                    position: 'relative',
+                    aspectRatio: '16/9',
+                    background: '#000',
+                    overflow: 'hidden'
+                  }}>
+                    <video
+                      controls
+                      width="100%"
+                      height="100%"
+                      style={{ objectFit: 'cover' }}
+                      poster={video.thumbnail ? getImageUrl(video.thumbnail) : ''}
+                    >
+                      <source src={getImageUrl(video.videoUrl)} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                  <div style={{ padding: '2rem' }}>
+                    <h3 style={{ fontSize: '1.4rem', fontWeight: '800', color: '#1a1f2e', marginBottom: '12px' }}>{video.title}</h3>
+                    <p style={{ color: '#64748b', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
+                      {video.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+
+              {/* Keep existing static videos as fallback if needed, or remove them */}
+              {!videoPosts.length && (
+                <>
+                  <div className="video-container glass-card-pro" style={{ overflow: 'hidden', aspectRatio: '16/9', background: '#000', borderRadius: '24px' }}>
+                    <video controls width="100%" height="100%" style={{ objectFit: 'cover' }} poster="/team/sunil_chairman.png">
+                      <source src="/team_media/video.mp4" type="video/mp4" />
+                    </video>
+                  </div>
+                  <div className="video-container glass-card-pro" style={{ overflow: 'hidden', aspectRatio: '16/9', background: '#000', borderRadius: '24px' }}>
+                    <video controls width="100%" height="100%" style={{ objectFit: 'cover' }}>
+                      <source src="/team_media/video 1.mp4" type="video/mp4" />
+                    </video>
+                  </div>
+                </>
+              )}
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </section>
 
       {/* ── MEDIA CONTACT ─────────────── */}
@@ -200,12 +233,12 @@ export default function Media() {
             <Newspaper size={48} style={{ color: 'var(--gold)', marginBottom: '2rem' }} />
             <h3 className="media-contact-title">Media & Export Enquiries</h3>
             <p className="media-contact-desc">
-              For press enquiries, export opportunities, or access to brand materials, 
+              For press enquiries, export opportunities, or access to brand materials,
               please contact our communications team directly.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
               <a href="mailto:exports@tirupaticolorpens.com" className="btn-primary" style={{ boxShadow: 'var(--shadow-gold)', width: 'fit-content' }}>
-                exports@tirupaticolorpens.com <ArrowRight size={18}/>
+                exports@tirupaticolorpens.com <ArrowRight size={18} />
               </a>
               <p style={{ fontWeight: '600', color: 'var(--text-primary)', fontSize: '1.1rem' }}>
                 Direct line - +91 9830058822
@@ -216,7 +249,8 @@ export default function Media() {
       </section>
 
       <Footer />
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .album-img:hover { transform: scale(1.05); }
         .glass-card-pro:hover .album-img { transform: scale(1.05); }
       `}} />

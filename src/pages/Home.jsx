@@ -152,6 +152,22 @@ export default function Home() {
   const [subCategories, setSubCategories] = useState([]);
   const [activeTab, setActiveTab] = useState('');
   const [loading, setLoading] = useState(true);
+  const [recentProducts, setRecentProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchRecentProducts = async () => {
+      try {
+        const res = await fetch(API_ENDPOINTS.PRODUCTS);
+        const data = await res.json();
+        // Take last 6 products (newest first)
+        const sorted = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 6);
+        setRecentProducts(sorted);
+      } catch (err) {
+        console.error("Fetch Products Error:", err);
+      }
+    };
+    fetchRecentProducts();
+  }, []);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -519,6 +535,71 @@ export default function Home() {
           <div style={{ textAlign: 'center', marginTop: '4rem' }}>
             <Link to="/products" className="btn-primary" style={{ padding: '14px 44px' }}>
               Browse Full Catalogue <ArrowRight size={18} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+
+      {/* ── OUR PREFERENCE PRODUCTS ────────────── */}
+      <section className="section pref-products-section" style={{ background: '#fff', padding: '6rem 0' }}>
+        <AnimatedSection>
+          <div className="section-header" style={{ marginBottom: '4rem', textAlign: 'center' }}>
+            <motion.span className="label" variants={fadeUp} custom={0} style={{ color: 'var(--gold)', fontWeight: '800', letterSpacing: '2px' }}>EXPERT CHOICES</motion.span>
+            <motion.h2 className="section-title" style={{ fontSize: '3rem', marginTop: '1rem' }} variants={fadeUp} custom={0.1}>Our <em>Preference Products</em></motion.h2>
+          </div>
+        </AnimatedSection>
+
+        <div className="container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 2rem' }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', 
+            gap: '2.5rem',
+            rowGap: '4rem' 
+          }}>
+            {recentProducts.map((p, i) => (
+              <AnimatedSection key={p._id}>
+                <Link to={`/product/${p.slug}`} className="product-card-link" style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
+                  <div className="product-card glass-card-pro" style={{ padding: '2rem', height: '100%', display: 'flex', flexDirection: 'column', transition: 'transform 0.3s ease' }}>
+                    <div className="product-card-image" style={{ borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--border-dim)', marginBottom: '1.5rem', background: '#fff' }}>
+                      <img src={getImageUrl(p.mainImage)} alt={p.name} style={{ width: '100%', aspectRatio: '1/1', objectFit: 'contain', padding: '1.2rem' }} />
+                    </div>
+                    
+                    <div className="product-card-top" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                      <span className="label-gold" style={{ margin: 0 }}>{p.skuCode}</span>
+                      <span className="product-card-cat" style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--gold)' }}>{p.subCategory?.name || p.category?.name}</span>
+                    </div>
+
+                    <div className="product-card-name" style={{ fontFamily: 'var(--serif)', fontSize: '1.4rem', marginBottom: '0.8rem', color: 'var(--text-primary)', fontWeight: '800' }}>{p.name}</div>
+                    <p className="product-card-desc" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6', marginBottom: '1.5rem', flexGrow: 1 }}>{p.description?.substr(0, 85)}...</p>
+                    
+                    <div className="product-card-specs" style={{ background: 'var(--bg-secondary)', padding: '1rem 1.2rem', borderRadius: '8px', marginBottom: '2rem', display: 'flex', flexDirection: 'column', gap: '6px', border: '1px solid var(--border-dim)' }}>
+                      <div className="product-spec" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                        <span style={{ color: 'var(--text-muted)' }}>Material</span>
+                        <span style={{ fontWeight: '700' }}>{p.material}</span>
+                      </div>
+                      <div className="product-spec" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                        <span style={{ color: 'var(--text-muted)' }}>Tip Size</span>
+                        <span style={{ fontWeight: '700' }}>{p.tip}</span>
+                      </div>
+                      <div className="product-spec" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}>
+                        <span style={{ color: 'var(--text-muted)' }}>Pack</span>
+                        <span style={{ fontWeight: '700' }}>{p.primaryPack}</span>
+                      </div>
+                    </div>
+
+                    <div className="btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: '0.75rem', padding: '12px' }}>
+                      View Enterprise Specs <ArrowRight size={14} style={{ marginLeft: '8px' }}/>
+                    </div>
+                  </div>
+                </Link>
+              </AnimatedSection>
+            ))}
+          </div>
+          
+          <div style={{ textAlign: 'center', marginTop: '5rem' }}>
+            <Link to="/products" className="btn-primary" style={{ padding: '16px 48px' }}>
+              View All Products <ArrowRight size={18} />
             </Link>
           </div>
         </div>

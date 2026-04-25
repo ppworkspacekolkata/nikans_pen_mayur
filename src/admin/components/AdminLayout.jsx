@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, Layers, ListTree, Package, Mail,
-  Settings, Menu, X, Bell, User, LogOut, Camera as ImageIcon
+  Settings, Menu, X, Bell, User, LogOut, Camera as ImageIcon, Video
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
@@ -50,6 +50,7 @@ const AdminLayout = ({ children }) => {
     { icon: Package, label: 'Products', path: '/admin/products' },
     { icon: Mail, label: 'Inquiries', path: '/admin/inquiries' },
     { icon: ImageIcon, label: 'Media', path: '/admin/media' },
+    { icon: Video, label: 'Videos', path: '/admin/videos' },
     { icon: LayoutDashboard, label: 'Hero Slider', path: '/admin/hero-slider' },
   ];
 
