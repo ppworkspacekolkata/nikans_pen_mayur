@@ -1240,3 +1240,55 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 .glass-card-pro:hover::before { opacity: 1; }
+
+/* -- RESPONSIVE FIXES ----------- */
+@media (max-width: 768px) {
+  .contact-modal-body {
+    flex-direction: column !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+  }
+  .contact-modal-left {
+    width: 100% !important;
+    padding: 2rem !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+  }
+  .contact-modal-right {
+    padding: 2rem !important;
+  }
+  .legacy-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2rem !important;
+  }
+  .legacy-header-title {
+    font-size: 2rem !important;
+  }
+  .page-hero-title {
+    font-size: clamp(2.5rem, 8vw, 3.5rem) !important;
+  }
+  .page-hero-desc {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+  .legacy-grid-container {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.hero-container {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 12rem;
+}
+@media (max-width: 1024px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-hero-premium { padding: calc(var(--nav-h) + 2rem) 2rem 3rem !important; }
+}

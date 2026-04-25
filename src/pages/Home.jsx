@@ -214,13 +214,10 @@ export default function Home() {
         position: 'relative',
         overflow: 'hidden'
       }}>
-        <div className="container" style={{
+        <div className="container hero-container" style={{
           maxWidth: '1500px',
           margin: '0 auto',
           padding: '0 2rem',
-          display: 'grid',
-          gridTemplateColumns: '1.2fr 1fr',
-          gap: '12rem',
           alignItems: 'center',
           position: 'relative',
           zIndex: 1
@@ -244,21 +241,18 @@ export default function Home() {
                 </motion.div>
 
                 <motion.h1
+                  className="page-hero-title"
                   variants={fadeUp}
                   style={{
-                    fontSize: 'clamp(3rem, 5vw, 4.8rem)',
-                    letterSpacing: '-0.02em',
                     lineHeight: '1.1',
                     marginBottom: '2rem',
                     color: '#1a1f2e',
                     fontWeight: '900',
-                    fontFamily: "'Playfair Display', serif"
                   }}
                 >
                   {heroSettings?.title || "Mastering the Art of"} <br />
                   <span style={{
                     color: 'var(--gold)',
-                    fontFamily: "'Playfair Display', serif",
                     fontWeight: '900'
                   }}>
                     {heroSettings?.subtitle || "Precision Writing"}

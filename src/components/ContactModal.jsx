@@ -82,6 +82,7 @@ export default function ContactModal({ isOpen, onClose, productContext = '' }) {
       }}
     >
       <motion.div 
+        className="contact-modal-body"
         initial={{ opacity: 0, scale: 0.95, y: 0 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         style={{
@@ -98,7 +99,7 @@ export default function ContactModal({ isOpen, onClose, productContext = '' }) {
         }}
       >
         {/* Left Side Info */}
-        <div style={{
+        <div className="contact-modal-left" style={{
           width: '320px',
           background: 'linear-gradient(135deg, rgba(255,215,0,0.1), transparent)',
           padding: '3rem 2.5rem',
@@ -134,7 +135,7 @@ export default function ContactModal({ isOpen, onClose, productContext = '' }) {
         </div>
 
         {/* Right Side Form */}
-        <div style={{ flex: 1, padding: '3rem', position: 'relative', overflowY: 'auto' }}>
+        <div className="contact-modal-right" style={{ flex: 1, padding: '3rem', position: 'relative', overflowY: 'auto' }}>
           <button onClick={onClose} style={{ position: 'absolute', top: '25px', right: '25px', color: '#888', cursor: 'pointer', transition: 'color 0.2s' }}>
             <X size={24} />
           </button>
