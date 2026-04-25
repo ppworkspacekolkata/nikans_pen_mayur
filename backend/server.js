@@ -59,6 +59,15 @@ app.get('/ping', (req, res) => {
   res.json({ status: 'ok', msg: 'Global ping works' });
 });
 
+// Debug catch-all for /api
+app.all('/api/*', (req, res) => {
+  res.status(404).json({
+    message: `Express: Route ${req.method} ${req.url} not found`,
+    path: req.path,
+    baseUrl: req.baseUrl
+  });
+});
+
 if (process.env.NODE_ENV !== 'production') {
   // Basic Route for development
   app.get('/', (req, res) => {
