@@ -244,13 +244,13 @@ export default function Home() {
                   className="page-hero-title"
                   variants={fadeUp}
                   style={{
-                    lineHeight: '1.1',
+                    lineHeight: '1.2',
                     marginBottom: '2rem',
                     color: '#1a1f2e',
                     fontWeight: '900',
                   }}
                 >
-                  {heroSettings?.title || "Mastering the Art of"} <br />
+                  {heroSettings?.title || "Mastering the Art of"}{" "}
                   <span style={{
                     color: 'var(--gold)',
                     fontWeight: '900'
@@ -320,18 +320,8 @@ export default function Home() {
 
                 {/* Simple White Stats Card with More Spacing */}
                 <motion.div
+                  className="hero-stats-card"
                   variants={fadeUp}
-                  style={{
-                    marginTop: '6.5rem',
-                    display: 'flex',
-                    gap: '1.5rem',
-                    padding: '35px',
-                    background: '#fff',
-                    borderRadius: '15px',
-                    width: 'fit-content',
-                    boxShadow: '0 20px 45px rgba(0,0,0,0.03)',
-                    border: '1px solid #f1f5f9'
-                  }}
                 >
                   {(heroSettings?.stats || [
                     { value: '20+', label: 'GLOBAL MARKETS' },
@@ -339,13 +329,13 @@ export default function Home() {
                     { value: '15+', label: 'YEARS ACTIVE' }
                   ]).map((stat, idx) => (
                     <React.Fragment key={idx}>
-                      <div style={{ minWidth: '120px', textAlign: 'left', padding: '0 20px' }}>
+                      <div className="hero-stat-item">
                         <div style={{ color: 'var(--gold)', fontSize: '2.2rem', fontWeight: '900', marginBottom: '5px' }}>
                           <CountUp target={parseInt(stat.value) || 0} suffix={stat.value.toString().includes('+') ? '+' : ''} />
                         </div>
                         <div style={{ fontSize: '0.6rem', fontWeight: '700', color: '#94a3b8', letterSpacing: '0.05em' }}>{stat.label}</div>
                       </div>
-                      {idx < 2 && <div style={{ width: '1px', background: '#f1f5f9' }} />}
+                      {idx < 2 && <div className="hero-stat-divider" />}
                     </React.Fragment>
                   ))}
                 </motion.div>
@@ -355,25 +345,27 @@ export default function Home() {
 
           {/* Right Column: Slider Card */}
           <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8 }}
+            <motion.div 
+              variants={fadeUp} 
+              initial="hidden"
+              animate="visible"
+              className="hero-slider-card"
               style={{
                 width: '100%',
-                maxWidth: '550px',
-                aspectRatio: '1.2/1',
+                maxWidth: '500px',
+                margin: '0 auto',
                 background: '#fff',
-                borderRadius: '15px',
-                boxShadow: '0 20px 50px rgba(0,0,0,0.02)',
-                padding: '40px',
+                borderRadius: '20px',
+                boxShadow: 'var(--shadow-lg)',
+                padding: '1.5rem',
+                border: '1px solid #f1f5f9',
                 display: 'flex',
                 flexDirection: 'column',
-                position: 'relative',
-                border: '1px solid #f1f5f9'
+                gap: '1.5rem',
+                height: 'auto'
               }}
             >
-              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+              <div style={{ position: 'relative', width: '100%', aspectRatio: '1/1', background: '#f8fafc', borderRadius: '15px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentSlide}
@@ -386,7 +378,7 @@ export default function Home() {
                     {heroSettings?.images?.length > 0 ? (
                       <img
                         src={getImageUrl(heroSettings.images[currentSlide])}
-                        alt=""
+                        alt="Nikan Product"
                         style={{ maxHeight: '90%', maxWidth: '90%', objectFit: 'contain' }}
                       />
                     ) : (
@@ -394,47 +386,24 @@ export default function Home() {
                     )}
                   </motion.div>
                 </AnimatePresence>
-              </div>
-
-              {/* Bottom Elements Row */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 'auto' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                  <div style={{
-                    background: 'var(--gold)',
-                    color: '#000',
-                    padding: '10px 15px',
-                    borderRadius: '4px',
-                    fontWeight: '800',
-                    fontSize: '0.75rem'
-                  }}>
+                
+                <div style={{ position: 'absolute', top: '15px', left: '15px' }}>
+                  <div style={{ background: 'var(--gold)', color: '#000', padding: '6px 12px', borderRadius: '4px', fontWeight: '800', fontSize: '0.65rem' }}>
                     MADE IN INDIA
                   </div>
-
-                  {/* Floating Specs Icons */}
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#fff', border: '1px solid #f1f5f9', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '5px' }}>
-                      <span style={{ fontSize: '0.6rem', fontWeight: '900', color: '#1a1f2e' }}>0.7</span>
-                      <span style={{ fontSize: '0.4rem', color: '#94a3b8' }}>TIP</span>
-                    </div>
-                    <div style={{ width: '40px', height: '40px', borderRadius: '5px', background: '#fff', border: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <div style={{ width: '15px', height: '15px', background: '#3498db', borderRadius: '50% 50% 50% 10%', transform: 'rotate(-45deg)' }} />
-                    </div>
-                  </div>
                 </div>
+              </div>
 
-                {/* Dots Container */}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                   <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#fff', border: '1px solid #f1f5f9', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                     <span style={{ fontSize: '0.5rem', fontWeight: '900' }}>0.7</span>
+                     <span style={{ fontSize: '0.35rem', color: '#94a3b8' }}>TIP</span>
+                   </div>
+                </div>
                 <div style={{ display: 'flex', gap: '6px' }}>
                   {(heroSettings?.images || [1, 2, 3, 4, 5, 6, 7]).map((_, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        width: '6px',
-                        height: '6px',
-                        background: i === currentSlide ? 'var(--gold)' : '#cbd5e1',
-                        borderRadius: '50%',
-                        transition: '0.3s'
-                      }}
-                    />
+                    <div key={i} style={{ width: '6px', height: '6px', background: i === currentSlide ? 'var(--gold)' : '#cbd5e1', borderRadius: '50%', transition: '0.3s' }} />
                   ))}
                 </div>
               </div>

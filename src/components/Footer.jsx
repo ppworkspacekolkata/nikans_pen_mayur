@@ -2,19 +2,19 @@ import { Link } from 'react-router-dom';
 import { Mail, MapPin, Phone, ArrowRight, Globe, Share2 } from 'lucide-react';
 import logo from '../assets/logo.png';
 
-const PRODUCTS_LINKS = ['Ball Point Pens','Washable Markers','Gel Pens','Sketch Pens','Gift Sets'];
-const COMPANY_LINKS  = [
+const PRODUCTS_LINKS = ['Ball Point Pens', 'Washable Markers', 'Gel Pens', 'Sketch Pens', 'Gift Sets'];
+const COMPANY_LINKS = [
   { label: 'Our Story', to: '/about' },
   { label: 'Manufacturing', to: '/about' },
-  { label: 'Global Reach',    to: '/exports' },
-  { label: 'Opportunities',          to: '/careers' },
-  { label: 'Media',            to: '/media'   },
+  { label: 'Global Reach', to: '/exports' },
+  { label: 'Opportunities', to: '/careers' },
+  { label: 'Media', to: '/media' },
 ];
 const CONTACT_LINKS = [
   { label: 'exports@tirupaticolorpens.com', href: 'mailto:exports@tirupaticolorpens.com' },
-  { label: 'Product Catalogue',   href: '/product/NiKan%20Catalogue%20Oct%2025.pdf' },
-  { label: 'Bulk Enquiries',      href: '/contact' },
-  { label: 'Partner with Us',          href: '/contact' },
+  { label: 'Product Catalogue', href: '/product/NiKan%20Catalogue%20Oct%2025.pdf' },
+  { label: 'Bulk Enquiries', href: '/contact' },
+  { label: 'Partner with Us', href: '/contact' },
 ];
 
 export default function Footer() {
@@ -26,7 +26,7 @@ export default function Footer() {
             <img src={logo} alt="Nikan Logo" style={{ height: '45px', width: 'auto', objectFit: 'contain' }} />
           </Link>
           <p className="footer-brand-desc" style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: 'rgba(255,255,255,0.5)', lineHeight: '1.6' }}>
-            Transforming the world of writing with Indian engineering excellence. 
+            Transforming the world of writing with Indian engineering excellence.
             ISO 9001:2015 Certified Manufacturing.
           </p>
           <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
@@ -70,7 +70,7 @@ export default function Footer() {
               <Phone size={16} style={{ color: 'var(--gold)' }} /> +91 9830058822
             </div>
             <div style={{ display: 'flex', gap: '10px', color: 'rgba(255,255,255,0.5)', fontSize: '0.82rem' }}>
-              <MapPin size={16} style={{ color: 'var(--gold)', flexShrink: 0 }} /> West Bengal, India
+              <MapPin size={16} style={{ color: 'var(--gold)', flexShrink: 0 }} /> Tirupati Colour Pens Pvt. Ltd., Vill-Nandabhanga, Guljarmore, P.O. Kanganberia, South 24 Parganas — 743503, West Bengal, India
             </div>
             <a href="/contact" style={{ background: 'var(--gold)', color: '#000', padding: '10px 20px', borderRadius: '4px', textAlign: 'center', fontWeight: '800', fontSize: '0.75rem', marginTop: '0.5rem' }}>
               GET A QUOTE

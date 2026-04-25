@@ -1292,3 +1292,74 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 @media (max-width: 768px) {
   .page-hero-premium { padding: calc(var(--nav-h) + 2rem) 2rem 3rem !important; }
 }
+
+.hero-slider-card {
+  width: 100%;
+  max-width: 550px;
+  aspect-ratio: 1.2/1;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.02);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 1px solid #f1f5f9;
+}
+.hero-stats-card {
+  margin-top: 6.5rem;
+  display: flex;
+  gap: 1.5rem;
+  padding: 35px;
+  background: #fff;
+  border-radius: 15px;
+  width: fit-content;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.03);
+  border: 1px solid #f1f5f9;
+}
+.hero-stat-item {
+  min-width: 120px;
+  text-align: left;
+  padding: 0 20px;
+}
+.hero-stat-divider {
+  width: 1px;
+  background: #f1f5f9;
+}
+@media (max-width: 768px) {
+  .hero-slider-card {
+    padding: 20px;
+    aspect-ratio: 1/1;
+  }
+  .hero-stats-card {
+    margin-top: 3rem;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+    gap: 1rem;
+    align-items: center;
+  }
+  .hero-stat-item {
+    text-align: center;
+    padding: 0;
+  }
+  .hero-stat-divider {
+    width: 100%;
+    height: 1px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-info-side { padding-left: 40px; }
+}
+
+@media (min-width: 1024px) {
+  .contact-info-col, .contact-form-col { padding: 3.5rem; }
+}
+
+.timeline-header { padding: 0 6rem 4rem; }
+.mvv-card { padding: 3.5rem; height: 100%; display: flex; flex-direction: column; }
+@media (max-width: 768px) {
+  .timeline-header { padding: 0 1.5rem 2rem; text-align: center; }
+  .mvv-card { padding: 1.5rem; }
+}

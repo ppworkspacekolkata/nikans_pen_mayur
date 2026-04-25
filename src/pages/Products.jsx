@@ -170,7 +170,7 @@ export default function Products() {
              </AnimatePresence>
            </div>
 
-           <div className="search-box-wrap" style={{ position: 'relative', width: '300px', marginTop: '20px' }}>
+           <div className="search-box-wrap" style={{ position: 'relative', marginTop: '20px' }}>
               <Search size={18} style={{ position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
               <input 
                 value={search} 

@@ -29,7 +29,7 @@ const fadeUp = {
 
 function Reveal({ children, delay = 0 }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
+  const inView = useInView(ref, { once: true, margin: '0px' });
   return (
     <motion.div ref={ref} variants={fadeUp} custom={delay} initial="hidden" animate={inView ? 'visible' : 'hidden'}>
       {children}
@@ -115,7 +115,7 @@ export default function Team() {
       </section>
 
       {/* ── CHAIRMAN'S MESSAGE ──────────────── */}
-      <section className="section chairman-message-section" style={{ background: '#fff', borderBottom: '1px solid var(--border-dim)', padding: '8rem 0' }}>
+      <section className="section chairman-message-section" style={{ background: '#fff', borderBottom: '1px solid var(--border-dim)' }}>
         <Reveal>
           <div className="founder-message-container">
             <div style={{ textAlign: 'center' }}>
@@ -153,7 +153,7 @@ export default function Team() {
            </div>
          </Reveal>
 
-         <div className="leader-gallery-entries" style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '8rem' }}>
+         <div className="leader-gallery-entries">
              
              {/* Sunil - Left Image */}
              <div className="pro-leader-entry">
@@ -182,7 +182,7 @@ export default function Team() {
              {/* Nitin - Right Image */}
              <div className="pro-leader-entry">
                 <Reveal delay={0.1}>
-                  <div className="pro-leader-info" style={{ order: window.innerWidth < 768 ? 2 : 2 }}>
+                  <div className="pro-leader-info" >
                     <span className="label-gold" style={{ background: 'var(--gold-dim)', padding: '4px 12px', borderRadius: '4px' }}>Director</span>
                     <h3 className="serif" style={{ fontSize: '2.5rem', margin: '1rem 0' }}>Mr. Nitin Kanodia</h3>
                     <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '2rem' }}>
@@ -196,7 +196,7 @@ export default function Team() {
                     </div>
                   </div>
                 </Reveal>
-                <TiltCard className="pro-leader-card" style={{ order: window.innerWidth < 768 ? 1 : 1 }}>
+                <TiltCard className="pro-leader-card">
                   <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
                     <img src={nitinPhoto} alt="Nitin Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
                   </div>
@@ -230,8 +230,8 @@ export default function Team() {
       </section>
 
       {/* ── CULTURE SECTION ─────────────────── */}
-      <section className="section team-culture-section" style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)', padding: '8rem 0' }}>
-        <div className="culture-layout" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <section className="section team-culture-section" style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}>
+        <div className="culture-layout">
            <Reveal>
               <div className="culture-text-card" style={{ background: '#fff', padding: '4rem', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-dim)', boxShadow: 'var(--shadow-lg)' }}>
                  <span className="label" style={{ color: 'var(--gold)' }}>Our Corporate Values</span>
@@ -241,7 +241,7 @@ export default function Team() {
                     excellence and mutual growth. We believe that a better writing experience 
                     starts with a better workspace.
                  </p>
-                 <div className="culture-stats" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', marginTop: '3rem' }}>
+                 <div className="culture-stats">
                     <div className="culture-stat">
                        <div className="serif culture-stat-num" style={{ color: 'var(--gold)', fontSize: '3.5rem' }}>500+</div>
                        <div className="label">Skilled Artisans</div>

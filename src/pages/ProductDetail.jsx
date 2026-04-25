@@ -136,10 +136,10 @@ export default function ProductDetail() {
             </div>
 
             {/* RIGHT: DETAILED INFO */}
-            <div className="product-info-side" style={{ paddingLeft: '40px' }}>
+            <div className="product-info-side">
               <motion.div variants={fadeUp} initial="hidden" animate="visible">
                 <div style={categoryBadge}>{product.category?.name?.toUpperCase() || 'GENERAL'}</div>
-                <h1 style={titleStyle}>{product.name}</h1>
+                <h1 className="product-detail-title" style={titleStyle}>{product.name}</h1>
                 <div style={skuStyle}>SKU: <span>{product.skuCode}</span></div>
                 
                 <p style={descStyle}>{product.description}</p>
@@ -177,7 +177,7 @@ export default function ProductDetail() {
                   )}
                 </div>
 
-                <div style={actionsContainer}>
+                <div className="action-buttons-wrap" style={actionsContainer}>
                   <button onClick={() => setIsContactOpen(true)} style={enquiryBtn}>
                     SEND BULK ENQUIRY <ArrowRight size={18} />
                   </button>
@@ -226,7 +226,7 @@ export default function ProductDetail() {
 
 // STYLES
 const backLinkStyle = { color: '#64748b', fontSize: '0.8rem', fontWeight: '800', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '8px', letterSpacing: '1px' };
-const mainGridStyle = { display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '60px', alignItems: 'start' };
+const mainGridStyle = { alignItems: 'start' }; // rely on .product-main-grid in css
 const mainPreviewStyle = { position: 'relative', background: '#fff', borderRadius: '24px', padding: '40px', border: '1px solid #f1f5f9', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '500px' };
 const mainImgStyle = { width: '100%', height: 'auto', maxHeight: '450px', objectFit: 'contain' };
 const maximizeBtn = { position: 'absolute', top: '20px', right: '20px', background: '#f1f5f9', border: 'none', padding: '12px', borderRadius: '50%', cursor: 'pointer' };
@@ -236,7 +236,7 @@ const thumbRow = { display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom:
 const thumbItemStyle = (active) => ({ width: '70px', height: '70px', borderRadius: '12px', border: active ? '2px solid var(--gold)' : '1px solid #e2e8f0', padding: '8px', cursor: 'pointer', background: '#fff', transition: '0.2s' });
 const thumbImgInner = { width: '100%', height: '100%', objectFit: 'contain' };
 const categoryBadge = { background: 'var(--gold)', color: '#000', padding: '6px 12px', borderRadius: '4px', fontSize: '0.65rem', fontWeight: '900', display: 'inline-block', letterSpacing: '1px' };
-const titleStyle = { fontSize: '3rem', fontFamily: 'var(--serif)', fontWeight: '900', color: '#1a1f2e', margin: '15px 0 5px 0' };
+const titleStyle = { fontFamily: 'var(--serif)', fontWeight: '900', color: '#1a1f2e', margin: '15px 0 5px 0' }; // font-size managed by css
 const skuStyle = { fontSize: '0.9rem', color: '#64748b', fontWeight: '700', marginBottom: '25px' };
 const descStyle = { fontSize: '1rem', color: '#475569', lineHeight: '1.7', marginBottom: '35px' };
 const tabHeader = { display: 'flex', gap: '10px', borderBottom: '1px solid #e2e8f0', marginBottom: '20px' };
@@ -247,7 +247,7 @@ const specsTable = { display: 'flex', flexDirection: 'column', gap: '1px', backg
 const specRow = { display: 'flex', justifyContent: 'space-between', padding: '15px 20px', background: '#fff' };
 const specKey = { fontSize: '0.85rem', color: '#64748b', fontWeight: '600' };
 const specVal = { fontSize: '0.85rem', color: '#1a1f2e', fontWeight: '800' };
-const actionsContainer = { display: 'flex', gap: '15px', marginTop: '40px' };
+const actionsContainer = { display: 'flex', gap: '15px', marginTop: '40px' }; // Use class action-buttons-wrap
 const enquiryBtn = { flexGrow: 1, background: '#000', color: '#fff', border: 'none', padding: '20px', borderRadius: '12px', fontSize: '0.9rem', fontWeight: '800', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', cursor: 'pointer', transition: '0.3s' };
 const shareBtn = { width: '64px', height: '64px', background: '#fff', border: '2px solid #e2e8f0', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' };
 const isoBadge = { marginTop: '30px', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.7rem', fontWeight: '800', color: '#94a3b8' };

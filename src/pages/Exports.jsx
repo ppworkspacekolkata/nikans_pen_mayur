@@ -11,7 +11,7 @@ const fadeUp = {
 
 function Reveal({ children, delay = 0 }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
+  const inView = useInView(ref, { once: true, margin: '0px' });
   return (
     <motion.div ref={ref} variants={fadeUp} custom={delay} initial="hidden" animate={inView ? 'visible' : 'hidden'}>
       {children}
@@ -90,6 +90,38 @@ export default function Exports() {
           </div>
         ))}
       </div>
+
+      {/* ── GLOBAL PRESENCE ───────────────── */}
+      <section className="section exports-regions-section">
+        <Reveal>
+           <div className="section-header" style={{ textAlign: 'center', marginBottom: '6rem' }}>
+              <span className="label">Active Markets</span>
+              <h2 className="section-title">Our Global <em>Presence</em></h2>
+              <p className="section-desc" style={{ marginInline: 'auto' }}>
+                We actively distribute products across 20+ countries through four primary regional hubs.
+              </p>
+           </div>
+        </Reveal>
+        
+        <div className="exports-regions-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+          {REGIONS.map((r, i) => (
+            <Reveal key={r.region} delay={i * 0.1}>
+              <div className="region-card glass-card-pro" style={{ padding: '3rem', borderTop: `4px solid ${r.accent}` }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '1.5rem' }}>
+                   <span style={{ fontSize: '2rem' }}>{r.flag}</span>
+                   <h3 className="serif" style={{ fontSize: '1.8rem' }}>{r.region}</h3>
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '1.5rem' }}>
+                  {r.countries.map(c => (
+                    <span key={c} style={{ fontSize: '0.7rem', fontWeight: '800', padding: '4px 10px', background: 'var(--bg-secondary)', borderRadius: '4px', color: 'var(--text-muted)' }}>{c.toUpperCase()}</span>
+                  ))}
+                </div>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.7' }}>{r.desc}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
 
 
       {/* ── EXPORT PROCESS ─────────────── */}

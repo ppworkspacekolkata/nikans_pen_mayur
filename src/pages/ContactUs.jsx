@@ -69,7 +69,7 @@ export default function ContactUs() {
         <div className="contact-layout">
 
           {/* Left: Info */}
-          <div className="contact-info-col glass-card-pro" style={{ padding: '3.5rem' }}>
+          <div className="contact-info-col glass-card-pro">
             <Reveal>
               <div className="section-header" style={{ marginBottom: '3rem' }}>
                 <span className="label-gold">Our Details</span>
@@ -143,7 +143,7 @@ export default function ContactUs() {
           </div>
 
           {/* Right: Form */}
-          <div className="contact-form-col glass-card-pro" style={{ background: 'var(--bg-dark-pro)', padding: '3.5rem' }}>
+          <div className="contact-form-col glass-card-pro" style={{ background: 'var(--bg-dark-pro)' }}>
             <Reveal delay={0.1}>
               {sent ? (
                 <div className="premium-success-card">

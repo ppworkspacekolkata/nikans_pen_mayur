@@ -156,13 +156,10 @@ function Navbar() {
       {open && (
         <div className="mobile-drawer" style={mobileDrawerStyle}>
           <ul style={{ padding: '4rem 2rem' }}>
-            {['About Us', 'Exports', 'Media', 'Contact Us'].map((label) => (
-              <li key={label} style={{ margin: '1.5rem 0' }}>
-                <Link to={`/${label.toLowerCase().replace(' ', '')}`} style={mobileMainLink} onClick={() => setOpen(false)}>
-                  {label.toUpperCase()}
-                </Link>
-              </li>
-            ))}
+            <li><Link to="/about" style={mobileMainLink} onClick={() => setOpen(false)}>ABOUT US</Link></li>
+            <li><Link to="/exports" style={mobileMainLink} onClick={() => setOpen(false)}>EXPORTS</Link></li>
+            <li><Link to="/media" style={mobileMainLink} onClick={() => setOpen(false)}>MEDIA</Link></li>
+            <li><Link to="/contact" style={mobileMainLink} onClick={() => setOpen(false)}>CONTACT US</Link></li>
             
             <li style={{ margin: '2rem 0' }}>
               <div style={mobileProductsHeader}>PRODUCTS</div>
@@ -216,6 +213,11 @@ function Navbar() {
         .nav--scrolled .nav-link { color: #1f2937; }
         @media (max-width: 1024px) {
           .nav-links { display: none !important; }
+          .navbar-download-btn, .nav-cta { display: none !important; }
+          .nav-burger { display: block !important; }
+        }
+        @media (max-width: 768px) {
+          .nav-logo-wrap img { height: 40px !important; }
         }
       `}} />
     </>
@@ -228,12 +230,12 @@ const navContainerStyle = (scrolled) => ({
   top: 0,
   left: 0,
   width: '100%',
-  height: '90px',
-  background: scrolled ? '#fff' : 'rgba(255, 255, 255, 0.8)',
-  backdropFilter: 'blur(10px)',
-  borderBottom: scrolled ? '1px solid #e5e7eb' : 'none',
+  height: scrolled ? '72px' : '90px',
+  background: scrolled ? '#fff' : 'rgba(255, 255, 255, 0.9)',
+  backdropFilter: 'blur(12px)',
+  borderBottom: scrolled ? '1px solid #f1f5f9' : 'none',
   zIndex: 1000,
-  transition: '0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+  transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
   display: 'flex',
   justifyContent: 'center'
 });

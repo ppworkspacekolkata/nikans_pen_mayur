@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  ChevronLeft, ChevronRight, X, Play, 
+import {
+  ChevronLeft, ChevronRight, X, Play,
   Image as ImageIcon, Film, ArrowLeft, Download, Share2
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
@@ -49,8 +49,8 @@ export default function MediaDetail() {
       <Navbar />
 
       {/* ── HERO HEADER ────────────────────── */}
-      <section style={{ 
-        padding: '120px 6rem 60px', 
+      <section style={{
+        padding: '120px 6rem 60px',
         background: 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)',
         borderBottom: '1px solid #edf2f7'
       }}>
@@ -58,15 +58,15 @@ export default function MediaDetail() {
           <Link to="/media" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#64748b', textDecoration: 'none', marginBottom: '30px', fontWeight: '600', fontSize: '0.9rem' }}>
             <ArrowLeft size={18} /> BACK TO GALLERIES
           </Link>
-          
+
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               style={{ borderRadius: '30px', overflow: 'hidden', boxShadow: '0 20px 50px rgba(0,0,0,0.1)', aspectRatio: '16/10' }}
             >
-              <img 
-                src={getImageUrl(album.thumbnail)} 
+              <img
+                src={getImageUrl(album.thumbnail)}
                 alt={album.title}
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
@@ -85,7 +85,7 @@ export default function MediaDetail() {
               <p style={{ color: '#64748b', fontSize: '1.1rem', lineHeight: '1.8', marginBottom: '30px' }}>
                 {album.description}
               </p>
-              
+
               <div style={{ display: 'flex', gap: '20px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#1a1f2e', fontWeight: '700' }}>
                   <ImageIcon size={20} color="var(--gold)" /> {album.gallery.filter(i => i.fileType === 'image').length} Photos
@@ -103,25 +103,25 @@ export default function MediaDetail() {
       <section style={{ padding: '80px 6rem' }}>
         <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{ fontSize: '1.8rem', fontWeight: '900', marginBottom: '40px', textAlign: 'center' }}>Album <em>Gallery</em></h2>
-          
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
-            gap: '20px' 
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+            gap: '20px'
           }}>
             {album.gallery.map((item, idx) => (
               <motion.div
                 key={idx}
                 whileHover={{ y: -5, scale: 1.02 }}
                 onClick={() => setActiveMediaIdx(idx)}
-                style={{ 
-                  borderRadius: '20px', overflow: 'hidden', 
+                style={{
+                  borderRadius: '20px', overflow: 'hidden',
                   cursor: 'pointer', background: '#f8fafc',
                   aspectRatio: '1/1', position: 'relative'
                 }}
               >
-                <img 
-                  src={getImageUrl(item.url)} 
+                <img
+                  src={getImageUrl(item.url)}
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
                 {item.fileType === 'video' && (
@@ -141,12 +141,12 @@ export default function MediaDetail() {
       {/* ── LIGHTBOX OVERLAY ────────────────── */}
       <AnimatePresence>
         {activeMediaIdx !== null && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            style={{ 
-              position: 'fixed', inset: 0, zIndex: 10000, 
+            style={{
+              position: 'fixed', inset: 0, zIndex: 10000,
               background: 'rgba(10, 10, 10, 0.98)', backdropFilter: 'blur(20px)',
               display: 'flex', alignItems: 'center', justifyContent: 'center'
             }}
@@ -166,7 +166,7 @@ export default function MediaDetail() {
             </button>
 
             {/* Media Content */}
-            <motion.div 
+            <motion.div
               key={activeMediaIdx}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -179,12 +179,12 @@ export default function MediaDetail() {
                   <source src={getImageUrl(album.gallery[activeMediaIdx].url)} type="video/mp4" />
                 </video>
               ) : (
-                <img 
-                  src={getImageUrl(album.gallery[activeMediaIdx].url)} 
+                <img
+                  src={getImageUrl(album.gallery[activeMediaIdx].url)}
                   style={{ maxWidth: '100%', maxHeight: '85vh', objectFit: 'contain', borderRadius: '15px', boxShadow: '0 30px 100px rgba(0,0,0,0.5)' }}
                 />
               )}
-              
+
               <div style={{ position: 'absolute', bottom: '-60px', left: 0, right: 0, textAlign: 'center', color: '#fff' }}>
                 <span style={{ fontSize: '0.9rem', fontWeight: '600', background: 'rgba(255,255,255,0.1)', padding: '8px 20px', borderRadius: '50px' }}>
                   {activeMediaIdx + 1} / {album.gallery.length}
@@ -196,7 +196,8 @@ export default function MediaDetail() {
       </AnimatePresence>
 
       <Footer />
-      <style dangerouslySetInnerHTML={{ __html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .page-media-detail img { transition: 0.5s ease; }
         .hover-overlay:hover { opacity: 1 !important; }
       `}} />

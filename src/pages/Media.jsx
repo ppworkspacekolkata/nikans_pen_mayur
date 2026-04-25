@@ -39,7 +39,7 @@ export default function Media() {
         ]);
         const mData = await mRes.json();
         const vData = await vRes.json();
-        
+
         setMediaList(mData.filter(m => m.isActive));
         setVideoPosts(vData.filter(v => v.isActive));
         setLoading(false);

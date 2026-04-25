@@ -18,19 +18,19 @@ import legacyPen from '../assets/legacy-pen-art.png';
 // Inline SVGs for Brand Icons
 const LinkedInIcon = ({ size = 18 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect x="2" y="9" width="4" height="12" /><circle cx="4" cy="4" r="2" />
   </svg>
 );
 
 const TwitterIcon = ({ size = 18 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
   </svg>
 );
 
 const fadeUp = {
-  hidden:  { opacity: 0, y: 32 },
-  visible: (d = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.7, delay: d, ease: [0.22,1,0.36,1] } }),
+  hidden: { opacity: 0, y: 32 },
+  visible: (d = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.7, delay: d, ease: [0.22, 1, 0.36, 1] } }),
 };
 
 function Reveal({ children, delay = 0 }) {
@@ -86,12 +86,12 @@ function TiltCard({ children, className = '' }) {
 }
 
 const VALUES = [
-  { icon: <ShieldCheck size={22}/>, title: 'Uncompromising Quality', desc: 'Every product line undergoes rigorous QC aligned with ISO 9001:2015 standards before reaching our customers.' },
-  { icon: <Globe size={22}/>, title: 'Global Perspective', desc: 'We think beyond borders — engineering products that meet the expectations of buyers across four continents.' },
-  { icon: <Target size={22}/>, title: 'Innovation-Led Design', desc: 'From ergonomic grips to nickel-silver tips, every design decision is rooted in a better writing experience.' },
-  { icon: <Factory size={22}/>, title: 'Manufacturing Integrity', desc: 'Our West Bengal facility operates with precision manufacturing protocols, monitored at every production stage.' },
-  { icon: <Heart size={22}/>, title: 'Purpose for Every Writer', desc: 'From a child holding their first pen to a professional signing a deal — we make writing instruments for every life stage.' },
-  { icon: <Award size={22}/>, title: 'Recognised Excellence', desc: 'Honoured as a DGFT One Star Export House by the Ministry of Commerce & Industry, Government of India.' },
+  { icon: <ShieldCheck size={22} />, title: 'Uncompromising Quality', desc: 'Every product line undergoes rigorous QC aligned with ISO 9001:2015 standards before reaching our customers.' },
+  { icon: <Globe size={22} />, title: 'Global Perspective', desc: 'We think beyond borders — engineering products that meet the expectations of buyers across four continents.' },
+  { icon: <Target size={22} />, title: 'Innovation-Led Design', desc: 'From ergonomic grips to nickel-silver tips, every design decision is rooted in a better writing experience.' },
+  { icon: <Factory size={22} />, title: 'Manufacturing Integrity', desc: 'Our West Bengal facility operates with precision manufacturing protocols, monitored at every production stage.' },
+  { icon: <Heart size={22} />, title: 'Purpose for Every Writer', desc: 'From a child holding their first pen to a professional signing a deal — we make writing instruments for every life stage.' },
+  { icon: <Award size={22} />, title: 'Recognised Excellence', desc: 'Honoured as a DGFT One Star Export House by the Ministry of Commerce & Industry, Government of India.' },
 ];
 
 const TIMELINE = [
@@ -123,7 +123,7 @@ export default function AboutUs() {
             Crafting the Tools<br />That <em>Shape Ideas</em>
           </motion.h1>
           <motion.p className="page-hero-desc" variants={fadeUp} custom={0.2} initial="hidden" animate="visible">
-            For over a decade, Nikan has been engineering precision writing instruments 
+            For over a decade, Nikan has been engineering precision writing instruments
             that blend Indian manufacturing heritage with global quality benchmarks.
           </motion.p>
         </div>
@@ -183,13 +183,13 @@ export default function AboutUs() {
               </div>
             </Reveal>
           </div>
-          
+
           <div className="legacy-illust-wrap">
             <Reveal delay={0.2}>
               <div style={{ position: 'relative' }}>
-                <motion.img 
-                  src={legacyPen} 
-                  alt="Artistic Pen Illustration" 
+                <motion.img
+                  src={legacyPen}
+                  alt="Artistic Pen Illustration"
                   className="legacy-illust"
                   initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
                   whileInView={{ opacity: 0.95, scale: 1, rotate: -2 }}
@@ -208,11 +208,11 @@ export default function AboutUs() {
           <span className="label">Our Journey</span>
           <h2 className="section-title">A Legacy of<br /><em>Constant Growth</em></h2>
         </div>
-        
+
         <div className="timeline" style={{ position: 'relative', overflow: 'hidden' }}>
           <div className="timeline-line-bg" style={{ position: 'absolute', left: '110px', top: 0, bottom: 0, width: '1px', background: 'var(--border-dim)' }} />
           <AnimatedPath scrollYProgress={scrollYProgress} />
-          
+
           {TIMELINE.map((item, i) => (
             <Reveal key={item.year} delay={i * 0.1}>
               <div className="timeline-item">
@@ -228,170 +228,170 @@ export default function AboutUs() {
       {/* ── MISSION, VISION AND VALUES ────────── */}
       <section className="brochure-section" style={{ background: 'var(--bg-secondary)', padding: '8rem 0' }}>
         <div className="brochure-inner" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-           <div className="brochure-header" style={{ marginBottom: '6rem', background: 'var(--bg-dark-pro)', borderTop: '4px solid var(--gold)', padding: '2rem 3rem', boxShadow: 'var(--shadow-3d)' }}>
-              <div className="nav-logo" style={{ fontSize: '1.4rem', color: '#fff' }}>ni<span>k</span>an <span className="nav-reg" style={{ color: 'rgba(255,255,255,0.4)' }}>®</span></div>
-              <h2 className="brochure-header-title" style={{ color: '#fff', margin: 0 }}>Mission, Vision & Values</h2>
-           </div>
+          <div className="brochure-header" style={{ marginBottom: '6rem', background: 'var(--bg-dark-pro)', borderTop: '4px solid var(--gold)', padding: '2rem 3rem', boxShadow: 'var(--shadow-3d)' }}>
+            <div className="nav-logo" style={{ fontSize: '1.4rem', color: '#fff' }}>ni<span>k</span>an <span className="nav-reg" style={{ color: 'rgba(255,255,255,0.4)' }}>®</span></div>
+            <h2 className="brochure-header-title" style={{ color: '#fff', margin: 0 }}>Mission, Vision & Values</h2>
+          </div>
 
-           <div className="mvv-grid-new">
-              <Reveal delay={0.1}>
-                 <div className="glass-card-pro" style={{ padding: '3.5rem', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                    <div className="serif" style={{ fontSize: '1.8rem', color: 'var(--gold)', marginBottom: '1.5rem' }}>Mission</div>
-                    <ul style={{ paddingLeft: '1.2rem', color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '1rem' }}>
-                       <li style={{ marginBottom: '1rem' }}>Serving diverse customers with an efficient range of exquisite writing instruments.</li>
-                       <li>Offering premium quality products globally at accessible and reasonable price rates.</li>
-                    </ul>
-                 </div>
-              </Reveal>
-              <Reveal delay={0.2}>
-                 <div className="glass-card-pro" style={{ background: 'var(--bg-dark-pro)', color: '#fff', border: '2px solid var(--gold)', padding: '3.5rem', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                    <div className="serif" style={{ fontSize: '1.8rem', color: 'var(--gold)', marginBottom: '1.5rem' }}>Vision</div>
-                    <ul style={{ paddingLeft: '1.2rem', color: 'rgba(255,255,255,0.7)', lineHeight: '1.8', fontSize: '1rem' }}>
-                       <li style={{ marginBottom: '1rem' }}>To be the go-to stationery brand by building efficient and lasting global solutions.</li>
-                       <li style={{ marginBottom: '1rem' }}>Building deeper relationships with our customers, who are our greatest strength.</li>
-                       <li>Contributing to the ecosystem through high-quality, sustainable stationery.</li>
-                    </ul>
-                 </div>
-              </Reveal>
-              <Reveal delay={0.3}>
-                 <div className="glass-card-pro" style={{ padding: '3.5rem', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                    <div className="serif" style={{ fontSize: '1.8rem', color: 'var(--gold)', marginBottom: '1.5rem' }}>Values</div>
-                    <ul style={{ paddingLeft: '1.2rem', color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '1rem' }}>
-                       <li style={{ marginBottom: '1rem' }}>Empowering the future through education and active community support.</li>
-                       <li style={{ marginBottom: '1rem' }}>Believing in the power of the written word to build a stronger and better nation.</li>
-                       <li>Offering essential tools to underprivileged minds across India.</li>
-                    </ul>
-                 </div>
-              </Reveal>
-           </div>
+          <div className="mvv-grid-new">
+            <Reveal delay={0.1}>
+              <div className="glass-card-pro" style={{ padding: '3.5rem', height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <div className="serif" style={{ fontSize: '1.8rem', color: 'var(--gold)', marginBottom: '1.5rem' }}>Mission</div>
+                <ul style={{ paddingLeft: '1.2rem', color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '1rem' }}>
+                  <li style={{ marginBottom: '1rem' }}>Serving diverse customers with an efficient range of exquisite writing instruments.</li>
+                  <li>Offering premium quality products globally at accessible and reasonable price rates.</li>
+                </ul>
+              </div>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <div className="glass-card-pro" style={{ background: 'var(--bg-dark-pro)', color: '#fff', border: '2px solid var(--gold)', padding: '3.5rem', height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <div className="serif" style={{ fontSize: '1.8rem', color: 'var(--gold)', marginBottom: '1.5rem' }}>Vision</div>
+                <ul style={{ paddingLeft: '1.2rem', color: 'rgba(255,255,255,0.7)', lineHeight: '1.8', fontSize: '1rem' }}>
+                  <li style={{ marginBottom: '1rem' }}>To be the go-to stationery brand by building efficient and lasting global solutions.</li>
+                  <li style={{ marginBottom: '1rem' }}>Building deeper relationships with our customers, who are our greatest strength.</li>
+                  <li>Contributing to the ecosystem through high-quality, sustainable stationery.</li>
+                </ul>
+              </div>
+            </Reveal>
+            <Reveal delay={0.3}>
+              <div className="glass-card-pro" style={{ padding: '3.5rem', height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <div className="serif" style={{ fontSize: '1.8rem', color: 'var(--gold)', marginBottom: '1.5rem' }}>Values</div>
+                <ul style={{ paddingLeft: '1.2rem', color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '1rem' }}>
+                  <li style={{ marginBottom: '1rem' }}>Empowering the future through education and active community support.</li>
+                  <li style={{ marginBottom: '1rem' }}>Believing in the power of the written word to build a stronger and better nation.</li>
+                  <li>Offering essential tools to underprivileged minds across India.</li>
+                </ul>
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* ── WHY US AND USPs ─────────────── */}
       <section className="section usps-section" style={{ background: 'var(--bg)' }}>
-         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-            <Reveal>
-              <div className="section-header" style={{ textAlign: 'center', marginBottom: '5rem' }}>
-                 <span className="label">Competitive Edge</span>
-                 <h2 className="section-title">The <em>Nikan</em> Advantage</h2>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <Reveal>
+            <div className="section-header" style={{ textAlign: 'center', marginBottom: '5rem' }}>
+              <span className="label">Competitive Edge</span>
+              <h2 className="section-title">The <em>Nikan</em> Advantage</h2>
+            </div>
+          </Reveal>
+
+          <div className="usp-grid-pro">
+            <Reveal delay={0.1}>
+              <div className="usp-card-pro" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-dim)', padding: '2.5rem', borderRadius: 'var(--radius-lg)', textAlign: 'center', height: '100%' }}>
+                <div className="usp-icon-wrap" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--gold)' }}>🏭</div>
+                <div className="serif" style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>High-Capacity Manufacturing</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Modern infrastructure with advanced high-speed automation.</p>
               </div>
             </Reveal>
-
-            <div className="usp-grid-pro">
-               <Reveal delay={0.1}>
-                  <div className="usp-card-pro" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-dim)', padding: '2.5rem', borderRadius: 'var(--radius-lg)', textAlign: 'center', height: '100%' }}>
-                     <div className="usp-icon-wrap" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--gold)' }}>🏭</div>
-                     <div className="serif" style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>High-Capacity Manufacturing</div>
-                     <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Modern infrastructure with advanced high-speed automation.</p>
-                  </div>
-               </Reveal>
-               <Reveal delay={0.2}>
-                  <div className="usp-card-pro" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-dim)', padding: '2.5rem', borderRadius: 'var(--radius-lg)', textAlign: 'center', height: '100%' }}>
-                     <div className="usp-icon-wrap" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--gold)' }}>✨</div>
-                     <div className="serif" style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Premium & Diverse Range</div>
-                     <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Pioneering stationery designs that outperform industry peers.</p>
-                  </div>
-               </Reveal>
-               <Reveal delay={0.3}>
-                  <div className="usp-card-pro" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-dim)', padding: '2.5rem', borderRadius: 'var(--radius-lg)', textAlign: 'center', height: '100%' }}>
-                     <div className="usp-icon-wrap" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--gold)' }}>🎨</div>
-                     <div className="serif" style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Superior Vibrancy</div>
-                     <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Consistent, high-quality ink across a massive array of categories.</p>
-                  </div>
-               </Reveal>
-               <Reveal delay={0.4}>
-                  <div className="usp-card-pro" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-dim)', padding: '2.5rem', borderRadius: 'var(--radius-lg)', textAlign: 'center', height: '100%' }}>
-                     <div className="usp-icon-wrap" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--gold)' }}>📍</div>
-                     <div className="serif" style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Kolkata Heritage</div>
-                     <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Headquartered in West Bengal, serving the global demand.</p>
-                  </div>
-               </Reveal>
-            </div>
-         </div>
+            <Reveal delay={0.2}>
+              <div className="usp-card-pro" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-dim)', padding: '2.5rem', borderRadius: 'var(--radius-lg)', textAlign: 'center', height: '100%' }}>
+                <div className="usp-icon-wrap" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--gold)' }}>✨</div>
+                <div className="serif" style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Premium & Diverse Range</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Pioneering stationery designs that outperform industry peers.</p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.3}>
+              <div className="usp-card-pro" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-dim)', padding: '2.5rem', borderRadius: 'var(--radius-lg)', textAlign: 'center', height: '100%' }}>
+                <div className="usp-icon-wrap" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--gold)' }}>🎨</div>
+                <div className="serif" style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Superior Vibrancy</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Consistent, high-quality ink across a massive array of categories.</p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.4}>
+              <div className="usp-card-pro" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-dim)', padding: '2.5rem', borderRadius: 'var(--radius-lg)', textAlign: 'center', height: '100%' }}>
+                <div className="usp-icon-wrap" style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--gold)' }}>📍</div>
+                <div className="serif" style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>Kolkata Heritage</div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Headquartered in West Bengal, serving the global demand.</p>
+              </div>
+            </Reveal>
+          </div>
+        </div>
       </section>
 
       {/* ── EXECUTIVE GALLERY ────────────────── */}
       <section className="section executive-gallery" style={{ padding: '8rem 0', background: '#fff' }}>
-         <Reveal>
-           <div className="section-header" style={{ textAlign: 'center', marginBottom: '6rem' }}>
-              <span className="label">Our Principals</span>
-              <h2 className="section-title">The <em>Leadership</em> Board</h2>
-           </div>
-         </Reveal>
+        <Reveal>
+          <div className="section-header" style={{ textAlign: 'center', marginBottom: '6rem' }}>
+            <span className="label">Our Principals</span>
+            <h2 className="section-title">The <em>Leadership</em> Board</h2>
+          </div>
+        </Reveal>
 
-         <div className="leader-gallery-entries" style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '8rem' }}>
-             
-             {/* Sunil - Left Image */}
-             <div className="pro-leader-entry">
-                <TiltCard className="pro-leader-card">
-                  <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
-                    <img src={sunilPhoto} alt="Sunil Kumar Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
-                  </div>
-                </TiltCard>
-                <Reveal delay={0.1}>
-                  <div className="pro-leader-info">
-                    <span className="label-gold" style={{ background: 'var(--gold-dim)', padding: '4px 12px', borderRadius: '4px' }}>Chairman</span>
-                    <h3 className="serif" style={{ fontSize: '2.5rem', margin: '1rem 0' }}>Mr. Sunil Kumar Kanodia</h3>
-                    <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '2rem' }}>
-                      A first-generation entrepreneur, Mr. Kanodia laid the foundation of Nikan back in the early 1990s. 
-                      His visionary approach to precision manufacturing has transformed Nikan 
-                      from a domestic refill supplier into one of India’s most respected export houses.
-                    </p>
-                    <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'inherit' }}>
-                      <a href="#" style={{ color: 'var(--gold)' }}><LinkedInIcon size={22}/></a>
-                      <a href="mailto:exports@tirupaticolorpens.com" style={{ color: 'var(--gold)' }}><Mail size={22}/></a>
-                    </div>
-                  </div>
-                </Reveal>
-             </div>
+        <div className="leader-gallery-entries" style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '8rem' }}>
 
-             {/* Nitin - Right Image */}
-             <div className="pro-leader-entry">
-                <Reveal delay={0.1}>
-                  <div className="pro-leader-info">
-                    <span className="label-gold" style={{ background: 'var(--gold-dim)', padding: '4px 12px', borderRadius: '4px' }}>Director</span>
-                    <h3 className="serif" style={{ fontSize: '2.5rem', margin: '1rem 0' }}>Mr. Nitin Kanodia</h3>
-                    <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '2rem' }}>
-                      A Chartered Accountant and Gold Medalist from SRCC Delhi, Nitin has pioneered Nikan's 
-                      global strategy. Under his leadership, the brand has expanded into 20+ countries, 
-                      blending analytical financial rigor with a bold vision for international trade.
-                    </p>
-                    <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'inherit' }}>
-                      <a href="#" style={{ color: 'var(--gold)' }}><LinkedInIcon size={22}/></a>
-                      <a href="#" style={{ color: 'var(--gold)' }}><TwitterIcon size={22}/></a>
-                    </div>
-                  </div>
-                </Reveal>
-                <TiltCard className="pro-leader-card">
-                  <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
-                    <img src={nitinPhoto} alt="Nitin Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
-                  </div>
-                </TiltCard>
-             </div>
+          {/* Sunil - Left Image */}
+          <div className="pro-leader-entry">
+            <TiltCard className="pro-leader-card">
+              <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
+                <img src={sunilPhoto} alt="Sunil Kumar Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
+              </div>
+            </TiltCard>
+            <Reveal delay={0.1}>
+              <div className="pro-leader-info">
+                <span className="label-gold" style={{ background: 'var(--gold-dim)', padding: '4px 12px', borderRadius: '4px' }}>Chairman</span>
+                <h3 className="serif" style={{ fontSize: '2.5rem', margin: '1rem 0' }}>Mr. Sunil Kumar Kanodia</h3>
+                <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '2rem' }}>
+                  A first-generation entrepreneur, Mr. Kanodia laid the foundation of Nikan back in the early 1990s.
+                  His visionary approach to precision manufacturing has transformed Nikan
+                  from a domestic refill supplier into one of India’s most respected export houses.
+                </p>
+                <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'inherit' }}>
+                  <a href="#" style={{ color: 'var(--gold)' }}><LinkedInIcon size={22} /></a>
+                  <a href="mailto:exports@tirupaticolorpens.com" style={{ color: 'var(--gold)' }}><Mail size={22} /></a>
+                </div>
+              </div>
+            </Reveal>
+          </div>
 
-             {/* Nishant - Left Image */}
-             <div className="pro-leader-entry">
-                <TiltCard className="pro-leader-card">
-                  <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
-                    <img src={nishantPhoto} alt="Nishant Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
-                  </div>
-                </TiltCard>
-                <Reveal delay={0.1}>
-                  <div className="pro-leader-info">
-                    <span className="label-gold" style={{ background: 'var(--gold-dim)', padding: '4px 12px', borderRadius: '4px' }}>Director</span>
-                    <h3 className="serif" style={{ fontSize: '2.5rem', margin: '1rem 0' }}>Mr. Nishant Kanodia</h3>
-                    <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '2rem' }}>
-                      As a Chartered Accountant with a focus on operational modernization, Nishant has 
-                      revolutionized Nikan’s manufacturing footprint. He leading the charge in new product category development.
-                    </p>
-                    <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'inherit' }}>
-                      <a href="#" style={{ color: 'var(--gold)' }}><LinkedInIcon size={22}/></a>
-                      <a href="mailto:exports@tirupaticolorpens.com" style={{ color: 'var(--gold)' }}><Mail size={22}/></a>
-                    </div>
-                  </div>
-                </Reveal>
-             </div>
-         </div>
+          {/* Nitin - Right Image */}
+          <div className="pro-leader-entry">
+            <Reveal delay={0.1}>
+              <div className="pro-leader-info">
+                <span className="label-gold" style={{ background: 'var(--gold-dim)', padding: '4px 12px', borderRadius: '4px' }}>Director</span>
+                <h3 className="serif" style={{ fontSize: '2.5rem', margin: '1rem 0' }}>Mr. Nitin Kanodia</h3>
+                <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '2rem' }}>
+                  A Chartered Accountant and Gold Medalist from SRCC Delhi, Nitin has pioneered Nikan's
+                  global strategy. Under his leadership, the brand has expanded into 20+ countries,
+                  blending analytical financial rigor with a bold vision for international trade.
+                </p>
+                <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'inherit' }}>
+                  <a href="#" style={{ color: 'var(--gold)' }}><LinkedInIcon size={22} /></a>
+                  <a href="#" style={{ color: 'var(--gold)' }}><TwitterIcon size={22} /></a>
+                </div>
+              </div>
+            </Reveal>
+            <TiltCard className="pro-leader-card">
+              <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
+                <img src={nitinPhoto} alt="Nitin Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
+              </div>
+            </TiltCard>
+          </div>
+
+          {/* Nishant - Left Image */}
+          <div className="pro-leader-entry">
+            <TiltCard className="pro-leader-card">
+              <div style={{ position: 'relative', borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: 'var(--border-thick)', boxShadow: 'var(--shadow-3d)', maxWidth: '320px' }}>
+                <img src={nishantPhoto} alt="Nishant Kanodia" style={{ width: '100%', aspectRatio: '4/5', objectFit: 'cover' }} />
+              </div>
+            </TiltCard>
+            <Reveal delay={0.1}>
+              <div className="pro-leader-info">
+                <span className="label-gold" style={{ background: 'var(--gold-dim)', padding: '4px 12px', borderRadius: '4px' }}>Director</span>
+                <h3 className="serif" style={{ fontSize: '2.5rem', margin: '1rem 0' }}>Mr. Nishant Kanodia</h3>
+                <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '2rem' }}>
+                  As a Chartered Accountant with a focus on operational modernization, Nishant has
+                  revolutionized Nikan’s manufacturing footprint. He leading the charge in new product category development.
+                </p>
+                <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'inherit' }}>
+                  <a href="#" style={{ color: 'var(--gold)' }}><LinkedInIcon size={22} /></a>
+                  <a href="mailto:exports@tirupaticolorpens.com" style={{ color: 'var(--gold)' }}><Mail size={22} /></a>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
       </section>
 
       {/* ── CERTIFICATIONS ───────────────── */}
@@ -401,7 +401,7 @@ export default function AboutUs() {
             <span className="label">Credentials</span>
             <h2 className="section-title" style={{ marginTop: '0.8rem' }}>Backed by Certification,<br /><em>Driven by Standards</em></h2>
             <p className="section-desc" style={{ marginTop: '1rem' }}>
-              Our quality credentials are independently verified and government-recognised — giving buyers 
+              Our quality credentials are independently verified and government-recognised — giving buyers
               and partners the confidence to choose Nikan.
             </p>
           </Reveal>
@@ -415,7 +415,7 @@ export default function AboutUs() {
                 <div className="cert-title">ISO 9001:2015</div>
                 <div className="cert-issuer">Issued by ROHS Certification Pvt. Ltd.</div>
                 <p className="cert-desc">
-                  Our Quality Management System has been assessed and found to conform to ISO 9001:2015 
+                  Our Quality Management System has been assessed and found to conform to ISO 9001:2015
                   for the manufacturing and marketing of fibre tip pens, markers, ball point pens and direct fill pens.
                 </p>
               </div>
@@ -429,7 +429,7 @@ export default function AboutUs() {
                 <div className="cert-title">One Star Export House</div>
                 <div className="cert-issuer">Govt. of India — Ministry of Commerce &amp; Industry</div>
                 <p className="cert-desc">
-                  Recognised by the Directorate General of Foreign Trade under the Foreign Trade Policy 2023, 
+                  Recognised by the Directorate General of Foreign Trade under the Foreign Trade Policy 2023,
                   in accordance with the Book of Procedures.
                 </p>
               </div>
@@ -445,7 +445,7 @@ export default function AboutUs() {
             <span className="label">Industrial Excellence</span>
             <h2 className="section-title">A Legacy Written in <em>Precision</em></h2>
             <p className="section-desc" style={{ marginInline: 'auto' }}>
-              Our manufacturing facilities in West Bengal utilize fully automatic Japanese and German machinery 
+              Our manufacturing facilities in West Bengal utilize fully automatic Japanese and German machinery
               to ensure sub-micron precision across every nib and ink reservoir.
             </p>
           </div>
@@ -454,7 +454,7 @@ export default function AboutUs() {
           {[infra1, infra2, infra3, infra4, infra5, infra6].map((img, i) => (
             <Reveal key={i} delay={i * 0.1}>
               <div className="gallery-item-wrap" style={{ borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: '1px solid var(--border-dim)', aspectRatio: '4/3', filter: 'grayscale(10%) contrast(1.05)' }}>
-                <img src={img} alt={`Infrastructure ${i+1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={img} alt={`Infrastructure ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
             </Reveal>
           ))}
