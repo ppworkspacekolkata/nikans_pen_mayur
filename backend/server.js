@@ -29,6 +29,16 @@ app.use('/api/media', require('./routes/mediaRoutes'));
 app.use('/api/hero-settings', require('./routes/heroSettingsRoutes'));
 app.use('/api/video-posts', require('./routes/videoRoutes'));
 
+// Debug Ping Route
+app.get('/api/ping', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    env: process.env.NODE_ENV,
+    hasMongo: !!process.env.MONGO_URI,
+    time: new Date().toISOString()
+  });
+});
+
 // Serve Static Files (for uploads)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
