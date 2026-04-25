@@ -278,20 +278,22 @@ export default function Home() {
                 >
                   {heroSettings?.description || "NIKAN, a global-facing brand of Tirupati Colour Pens Pvt. Ltd. (est. 2008), specializes in the manufacturing of writing and coloring instruments for international importers and bulk distributors."}
                 </motion.p>
+                {heroSettings?.description2 && (
+                  <motion.p
+                    variants={fadeUp}
+                    style={{
+                      fontSize: '1rem',
+                      color: '#64748b',
+                      maxWidth: '650px',
+                      marginBottom: '3rem',
+                      lineHeight: '1.8',
+                      fontWeight: '500'
+                    }}
+                  >
+                    {heroSettings.description2}
+                  </motion.p>
+                )}
 
-                <motion.p
-                  variants={fadeUp}
-                  style={{
-                    fontSize: '1rem',
-                    color: '#64748b',
-                    maxWidth: '650px',
-                    marginBottom: '3rem',
-                    lineHeight: '1.8',
-                    fontWeight: '500'
-                  }}
-                >
-                  Backed by ISO 9001:2015 certified processes, BIS-certified product categories, and automated assembly line production, we deliver consistent quality at scale. With integrated manufacturing of key components and a strong focus on precision and reliability, NIKAN is built to be a dependable partner for global supply.
-                </motion.p>
 
                 <motion.div variants={fadeUp} style={{ display: 'flex', alignItems: 'center', gap: '3rem' }}>
                   <Link to="/products" className="btn-primary" style={{

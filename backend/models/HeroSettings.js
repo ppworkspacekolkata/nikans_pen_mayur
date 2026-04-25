@@ -4,6 +4,7 @@ const heroSettingsSchema = new mongoose.Schema({
   title: { type: String, default: 'Mastering the Art of' },
   subtitle: { type: String, default: 'Precision Writing' },
   description: { type: String, default: 'NIKAN, a global-facing brand of Tirupati Colour Pens Pvt. Ltd...' },
+  description2: { type: String, default: '' },
   
   // 3 Stats
   stats: [

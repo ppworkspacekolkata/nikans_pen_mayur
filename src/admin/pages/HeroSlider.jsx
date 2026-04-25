@@ -20,6 +20,7 @@ const AdminHeroSettings = () => {
     title: '',
     subtitle: '',
     description: '',
+    description2: '',
     stats: [
       { label: '', value: '' },
       { label: '', value: '' },
@@ -58,6 +59,7 @@ const AdminHeroSettings = () => {
         title: data.title || '',
         subtitle: data.subtitle || '',
         description: data.description || '',
+        description2: data.description2 || '',
         stats: data.stats || [
           { label: 'Global Markets', value: '20' },
           { label: 'Precision SKUs', value: '100' },
@@ -108,6 +110,7 @@ const AdminHeroSettings = () => {
     fData.append('title', formData.title);
     fData.append('subtitle', formData.subtitle);
     fData.append('description', formData.description);
+    fData.append('description2', formData.description2);
     fData.append('stats', JSON.stringify(formData.stats));
     
     newImages.forEach(img => {
@@ -191,12 +194,21 @@ const AdminHeroSettings = () => {
                 />
               </div>
               <div style={formGroup}>
-                <label style={labelStyle}>DESCRIPTION PARAGRAPH</label>
+                <label style={labelStyle}>DESCRIPTION PARAGRAPH 1</label>
                 <textarea 
                   style={{ ...inputStyle, height: '100px', resize: 'none' }} 
                   value={formData.description} 
                   onChange={e => setFormData({ ...formData, description: e.target.value })}
-                  placeholder="Full description text..."
+                  placeholder="First paragraph of description..."
+                />
+              </div>
+              <div style={formGroup}>
+                <label style={labelStyle}>DESCRIPTION PARAGRAPH 2 (OPTIONAL)</label>
+                <textarea 
+                  style={{ ...inputStyle, height: '100px', resize: 'none' }} 
+                  value={formData.description2} 
+                  onChange={e => setFormData({ ...formData, description2: e.target.value })}
+                  placeholder="Second paragraph of description..."
                 />
               </div>
             </div>
@@ -281,6 +293,7 @@ const AdminHeroSettings = () => {
                     <span style={{ color: 'var(--gold)', fontStyle: 'italic' }}>{formData.subtitle || "Precision Writing"}</span>
                   </h1>
                   <p style={mockHeroDesc}>{formData.description || "NIKAN, a global-facing brand..."}</p>
+                  {formData.description2 && <p style={mockHeroDesc}>{formData.description2}</p>}
                   
                   <div style={{ display: 'flex', gap: '15px', marginTop: '20px' }}>
                     <div style={{ padding: '10px 20px', background: 'var(--gold)', borderRadius: '20px', fontSize: '0.6rem', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '5px', color: '#000' }}>EXPLORE <ArrowRight size={10} /></div>

@@ -62,11 +62,12 @@ exports.updateSettings = async (req, res) => {
     let settings = await HeroSettings.findOne();
     if (!settings) settings = new HeroSettings();
 
-    const { title, subtitle, description, stats } = req.body;
+    const { title, subtitle, description, description2, stats } = req.body;
     
     if (title) settings.title = title;
     if (subtitle) settings.subtitle = subtitle;
     if (description) settings.description = description;
+    if (description2 !== undefined) settings.description2 = description2;
     
     if (stats) {
       settings.stats = typeof stats === 'string' ? JSON.parse(stats) : stats;
