@@ -19,6 +19,34 @@ app.use(cors({
 }));
 app.options('*', cors());
 
+// --- Database Connection Utility ---
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/nikan_pen';
+let cachedDb = null;
+
+async function connectToDatabase() {
+  if (cachedDb && mongoose.connection.readyState === 1) return cachedDb;
+  try {
+    const db = await mongoose.connect(MONGO_URI);
+    cachedDb = db;
+    return db;
+  } catch (err) {
+    throw err;
+  }
+}
+
+// Ensure DB is connected for every /api request
+app.use('/api', async (req, res, next) => {
+  try {
+    await connectToDatabase();
+    next();
+  } catch (err) {
+    res.status(500).json({ 
+      error: 'Database Connection Error', 
+      details: err.message 
+    });
+  }
+});
+
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/categories', require('./routes/categoryRoutes'));
@@ -75,16 +103,9 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-// Database Connection
-const PORT = process.env.PORT || 5001;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/nikan_pen';
-
-console.log('Connecting to MongoDB...');
-mongoose.connect(MONGO_URI)
-  .then(() => console.log('✅ MongoDB Connected'))
-  .catch(err => console.error('❌ MongoDB Connection Error:', err));
 
 if (require.main === module) {
+  const PORT = process.env.PORT || 5001;
   app.listen(PORT, () => {
     console.log(`🚀 Server is running on http://localhost:${PORT}`);
   });
