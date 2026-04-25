@@ -1,6 +1,5 @@
-// Nikan Pen Global API Configuration
-// Hardcoding for local dev to ensure no connection issues
-const API_BASE_URL = 'http://localhost:5001';
+// Dynamic API URL detection — works on your PC, other PCs on network, and live server
+const API_BASE_URL = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? `http://${window.location.hostname}:5001` : '');
 
 export const API_ENDPOINTS = {
   PRODUCTS: `${API_BASE_URL}/api/products`,
