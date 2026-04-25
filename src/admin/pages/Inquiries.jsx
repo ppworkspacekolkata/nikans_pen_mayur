@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { 
   Mail, MessageSquare, Phone, User, 
   Trash2, Send, CheckCircle, Clock, 
-  MoreVertical, Search, Bell, X, 
-  Calendar, ExternalLink, ShieldCheck, MailPlus, Loader2
+  Search, Bell, X, 
+  Calendar, ExternalLink, ShieldCheck, MailPlus, Loader2,
+  Building
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { API_ENDPOINTS } from '../../config/api';
@@ -22,7 +23,8 @@ const AdminInquiries = () => {
     try {
       setLoading(true);
       const res = await fetch(API_ENDPOINTS.ENQUIRIES);
-      setInquiries(await res.json());
+      const data = await res.json();
+      setInquiries(Array.isArray(data) ? data : []);
     } catch (err) { console.error(err); }
     finally { setLoading(false); }
   };
@@ -66,7 +68,8 @@ const AdminInquiries = () => {
 
   const filtered = inquiries.filter(i => 
     i.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    i.email.toLowerCase().includes(searchTerm.toLowerCase())
+    i.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (i.company && i.company.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   return (
@@ -78,7 +81,7 @@ const AdminInquiries = () => {
         </div>
         <div style={searchWrap}>
           <Search size={18} color="#94a3b8" />
-          <input style={searchIn} placeholder="Search by name or email..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+          <input style={searchIn} placeholder="Search by name, email or company..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
         </div>
       </header>
 
@@ -106,9 +109,9 @@ const AdminInquiries = () => {
           <table style={tableStyle}>
             <thead>
               <tr style={tHead}>
-                <th style={th}>CUSTOMER</th>
-                <th style={th}>SUBJECT</th>
-                <th style={th}>PRODUCT CONTEXT</th>
+                <th style={th}>CUSTOMER & COMPANY</th>
+                <th style={th}>ENQUIRY TYPE</th>
+                <th style={th}>DATE</th>
                 <th style={th}>STATUS</th>
                 <th style={{ ...th, textAlign: 'right' }}>ACTION</th>
               </tr>
@@ -121,18 +124,15 @@ const AdminInquiries = () => {
                       <div style={pAvatar}>{inq.name.charAt(0)}</div>
                       <div>
                         <div style={pName}>{inq.name}</div>
-                        <div style={pEmail}>{inq.email}</div>
+                        <div style={pEmail}>{inq.company ? `@ ${inq.company}` : inq.email}</div>
                       </div>
                     </div>
                   </td>
-                  <td style={td}><div style={pSubject}>{inq.subject || 'No Subject'}</div></td>
+                  <td style={td}><div style={pSubject}>{inq.subject || 'General Enquiry'}</div></td>
                   <td style={td}>
-                    {inq.product ? (
-                      <div style={prodRef}>
-                        <img src={`${API_ENDPOINTS.BASE}${inq.product.mainImage}`} style={pThumb} />
-                        <div><div style={{ fontWeight: '800', fontSize: '0.75rem' }}>{inq.product.name}</div><div style={{ fontSize: '0.65rem', color: '#d4af37' }}>SKU: {inq.product.skuCode}</div></div>
-                      </div>
-                    ) : <span style={{ color: '#cbd5e1', fontSize: '0.8rem' }}>Global enquiry</span>}
+                    <div style={{ fontSize: '0.8rem', color: '#64748b' }}>
+                      {new Date(inq.createdAt).toLocaleDateString()}
+                    </div>
                   </td>
                   <td style={td}>
                     <span style={{ ...badge, ...statusColor[inq.status] }}>{inq.status}</span>
@@ -169,9 +169,9 @@ const AdminInquiries = () => {
                   <div style={infoCard}>
                      <div style={infoGrid}>
                        <div style={infoBox}><div style={infoLbl}>FULL NAME</div><div style={infoVal}>{selectedInq.name}</div></div>
+                       <div style={infoBox}><div style={infoLbl}>COMPANY</div><div style={infoVal}>{selectedInq.company || 'N/A'}</div></div>
                        <div style={infoBox}><div style={infoLbl}>PHONE</div><div style={infoVal}>{selectedInq.phone}</div></div>
                        <div style={infoBox}><div style={infoLbl}>EMAIL</div><div style={pEmail}>{selectedInq.email}</div></div>
-                       <div style={infoBox}><div style={infoLbl}>DATE</div><div style={infoVal}>{new Date(selectedInq.createdAt).toLocaleDateString()}</div></div>
                      </div>
                   </div>
 
@@ -240,8 +240,6 @@ const pAvatar = { width: '40px', height: '40px', background: '#1a1f2e', color: '
 const pName = { fontWeight: '800', color: '#1e293b', fontSize: '0.95rem' };
 const pEmail = { fontSize: '0.75rem', color: '#6366f1', fontWeight: '700' };
 const pSubject = { fontWeight: '600', color: '#64748b', fontSize: '0.85rem' };
-const prodRef = { display: 'flex', alignItems: 'center', gap: '10px' };
-const pThumb = { width: '40px', height: '40px', borderRadius: '8px', objectFit: 'cover' };
 const badge = { padding: '5px 12px', borderRadius: '50px', fontSize: '0.65rem', fontWeight: '900' };
 const actionBtn = { background: '#f8fafc', border: '1px solid #edf2f7', padding: '8px', borderRadius: '10px', cursor: 'pointer', color: '#64748b' };
 
@@ -251,7 +249,6 @@ const statusColor = {
   Responded: { background: '#ecfdf5', color: '#10b981' }
 };
 
-// DRAWER STYLES
 const modalOverlay = { position: 'fixed', inset: 0, zIndex: 1000 };
 const modalBlur = { position: 'fixed', inset: 0, background: 'rgba(26, 31, 46, 0.4)', backdropFilter: 'blur(8px)' };
 const sideDrawer = { position: 'absolute', top: 0, right: 0, height: '100%', width: '500px', background: '#fff', boxShadow: '-20px 0 60px rgba(0,0,0,0.1)', zIndex: 101, display: 'flex', flexDirection: 'column' };

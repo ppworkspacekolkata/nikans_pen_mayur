@@ -90,15 +90,39 @@ export default function ContactUs() {
                   </div>
                 </div>
               </Reveal>
+
+              <Reveal delay={0.12}>
+                <div className="map-container-premium" style={{ 
+                  width: '100%', 
+                  height: '300px', 
+                  borderRadius: '16px', 
+                  overflow: 'hidden', 
+                  border: '1px solid var(--border-dim)',
+                  boxShadow: 'var(--shadow-md)',
+                  margin: '0.5rem 0'
+                }}>
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3688.6732805919937!2d88.2366107760383!3d22.40367103913909!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02635a30daffd5%3A0x7fd88c1686912bfd!2sTirupati%20Colour%20Pens%20Pvt.%20Ltd.!5e0!3m2!1sen!2sin!4v1777100828549!5m2!1sen!2sin" 
+                    width="100%" 
+                    height="100%" 
+                    style={{ border: 0 }} 
+                    allowFullScreen="" 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+              </Reveal>
+
               <Reveal delay={0.15}>
                 <div className="contact-detail-card-new" style={{ display: 'flex', gap: '1.2rem' }}>
                   <div className="contact-icon" style={{ color: 'var(--gold)', marginTop: '4px' }}><Mail size={24}/></div>
                   <div>
-                    <div className="label-gold" style={{ fontSize: '0.65rem', marginBottom: '0.5rem' }}>Email Enquiries</div>
-                    <a href="mailto:exports@tirupaticolorpens.com" style={{ fontSize: '1.05rem', color: 'var(--text-primary)', fontWeight: '700', wordBreak: 'break-all' }}>exports@tirupaticolorpens.com</a>
+                    <div className="label-gold" style={{ fontSize: '0.65rem', marginBottom: '0.2rem', display: 'block' }}>Email Enquiries</div>
+                    <a href="mailto:exports@tirupaticolorpens.com" style={{ fontSize: '1.05rem', color: 'var(--text-primary)', fontWeight: '700', wordBreak: 'break-all', display: 'block' }}>exports@tirupaticolorpens.com</a>
                   </div>
                 </div>
               </Reveal>
+
               <Reveal delay={0.2}>
                 <div className="contact-detail-card-new" style={{ display: 'flex', gap: '1.2rem' }}>
                   <div className="contact-icon" style={{ color: 'var(--gold)', marginTop: '4px' }}><Phone size={24}/></div>
