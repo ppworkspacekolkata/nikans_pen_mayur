@@ -52,7 +52,14 @@ if (process.env.NODE_ENV === 'production') {
       res.sendFile(path.join(__dirname, '../dist/index.html'));
     }
   });
-} else {
+}
+
+// Global Ping (no prefix)
+app.get('/ping', (req, res) => {
+  res.json({ status: 'ok', msg: 'Global ping works' });
+});
+
+if (process.env.NODE_ENV !== 'production') {
   // Basic Route for development
   app.get('/', (req, res) => {
     res.send('Nikan Pen API is running...');
