@@ -206,21 +206,6 @@ export default function Media() {
                 </motion.div>
               ))}
 
-              {/* Keep existing static videos as fallback if needed, or remove them */}
-              {!videoPosts.length && (
-                <>
-                  <div className="video-container glass-card-pro" style={{ overflow: 'hidden', aspectRatio: '16/9', background: '#000', borderRadius: '24px' }}>
-                    <video controls width="100%" height="100%" style={{ objectFit: 'cover' }} poster="/team/sunil_chairman.png">
-                      <source src="/team_media/video.mp4" type="video/mp4" />
-                    </video>
-                  </div>
-                  <div className="video-container glass-card-pro" style={{ overflow: 'hidden', aspectRatio: '16/9', background: '#000', borderRadius: '24px' }}>
-                    <video controls width="100%" height="100%" style={{ objectFit: 'cover' }}>
-                      <source src="/team_media/video 1.mp4" type="video/mp4" />
-                    </video>
-                  </div>
-                </>
-              )}
             </div>
           </Reveal>
         </div>
