@@ -53,7 +53,7 @@ function Navbar() {
         <div style={navInner}>
           {/* LOGO */}
           <Link to="/" className="nav-logo-wrap">
-            <img src={logo} alt="Nikan Logo" style={{ height: '50px', width: 'auto' }} />
+            <img src={logo} alt="Nikan Logo" style={{ height: '65px', width: 'auto', transition: 'height 0.4s ease' }} />
           </Link>
 
           {/* MAIN LINKS */}
@@ -217,7 +217,7 @@ function Navbar() {
           .nav-burger { display: block !important; }
         }
         @media (max-width: 768px) {
-          .nav-logo-wrap img { height: 40px !important; }
+          .nav-logo-wrap img { height: 48px !important; }
         }
       `}} />
     </>

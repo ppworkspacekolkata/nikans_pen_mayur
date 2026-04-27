@@ -216,9 +216,9 @@ export default function Home() {
       }}>
         <div className="container hero-container" style={{
           maxWidth: '1500px',
+          width: '100%',
           margin: '0 auto',
           padding: '0 2rem',
-          alignItems: 'center',
           position: 'relative',
           zIndex: 1
         }}>
@@ -248,10 +248,12 @@ export default function Home() {
                     marginBottom: '2rem',
                     color: '#1a1f2e',
                     fontWeight: '900',
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word'
                   }}
                 >
                   {heroSettings?.title || "Mastering the Art of"}{" "}
-                  <span style={{
+                  <span className="hero-subtitle-span" style={{
                     color: 'var(--gold)',
                     fontWeight: '900'
                   }}>
@@ -261,6 +263,7 @@ export default function Home() {
 
                 <motion.p
                   variants={fadeUp}
+                  className="hero-description"
                   style={{
                     fontSize: '1rem',
                     color: '#64748b',
@@ -275,6 +278,7 @@ export default function Home() {
                 {heroSettings?.description2 && (
                   <motion.p
                     variants={fadeUp}
+                    className="hero-description"
                     style={{
                       fontSize: '1rem',
                       color: '#64748b',
@@ -289,8 +293,8 @@ export default function Home() {
                 )}
 
 
-                <motion.div variants={fadeUp} style={{ display: 'flex', alignItems: 'center', gap: '3rem' }}>
-                  <Link to="/products" className="btn-primary" style={{
+                <motion.div variants={fadeUp} className="hero-actions-row" style={{ display: 'flex', alignItems: 'center', gap: '3rem', flexWrap: 'wrap' }}>
+                  <Link to="/products" className="btn-primary hero-btn-main" style={{
                     padding: '16px 40px',
                     borderRadius: '50px',
                     fontSize: '0.95rem',
@@ -305,7 +309,7 @@ export default function Home() {
                   }}>
                     EXPLORE PRODUCTS <ArrowRight size={18} />
                   </Link>
-                  <Link to="/contact" style={{
+                  <Link to="/contact" className="hero-btn-secondary" style={{
                     textDecoration: 'none',
                     color: '#1a1f2e',
                     fontWeight: '700',

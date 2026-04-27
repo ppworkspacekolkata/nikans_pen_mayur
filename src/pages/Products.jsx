@@ -210,7 +210,7 @@ export default function Products() {
                       <div className="product-spec" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem' }}><span style={{ color: 'var(--text-muted)' }}>Pack</span><span style={{ fontWeight: '700' }}>{p.primaryPack}</span></div>
                     </div>
 
-                    <div className="btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: '0.75rem', padding: '12px' }}>
+                    <div className="btn-primary view-specs-btn" style={{ width: '100%', justifyContent: 'center', fontSize: '0.75rem', padding: '12px' }}>
                       View Enterprise Specs <ArrowRight size={14} style={{ marginLeft: '8px' }}/>
                     </div>
                   </div>

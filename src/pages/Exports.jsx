@@ -103,7 +103,7 @@ export default function Exports() {
            </div>
         </Reveal>
         
-        <div className="exports-regions-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+        <div className="exports-regions-grid">
           {REGIONS.map((r, i) => (
             <Reveal key={r.region} delay={i * 0.1}>
               <div className="region-card glass-card-pro" style={{ padding: '3rem', borderTop: `4px solid ${r.accent}` }}>

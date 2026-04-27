@@ -1580,3 +1580,30 @@ info-col { padding: 2rem 1.2rem !important; }
   width: 14px !important;
   height: 14px !important;
 }
+
+/* --- FINAL CERTIFICATIONS FIX --------------- */
+@media (max-width: 1024px) {
+  .certs-layout { 
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3rem !important; 
+    padding: 0 1rem !important;
+    width: 100% !important;
+  }
+  .cert-card { 
+    width: 100% !important;
+    padding: 1.5rem !important; 
+    margin-bottom: 2rem !important;
+  }
+  .certs-cards {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 2rem !important;
+  }
+  .about-certs-section .section-title {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+  }
+}
+

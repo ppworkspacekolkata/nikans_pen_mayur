@@ -14,6 +14,7 @@ import infra4 from '../assets/photos/img408.jpg';
 import infra5 from '../assets/photos/img1644.jpg';
 import infra6 from '../assets/photos/img740.jpg';
 import legacyPen from '../assets/legacy-pen-art.png';
+import logo from '../assets/logo.png';
 
 // Inline SVGs for Brand Icons
 const LinkedInIcon = ({ size = 18 }) => (
@@ -136,7 +137,7 @@ export default function AboutUs() {
       <section className="about-legacy-section">
         <div className="legacy-header">
           <div className="legacy-logo-box">
-            <div className="nav-logo" style={{ fontSize: '1.4rem' }}>ni<span>k</span>an <span className="nav-reg">®</span></div>
+            <img src={logo} alt="Nikan Logo" style={{ height: '65px', width: 'auto', objectFit: 'contain' }} />
           </div>
           <h2 className="legacy-header-title">About the Company</h2>
         </div>
@@ -203,33 +204,65 @@ export default function AboutUs() {
         <div className="legacy-footer-line" />
       </section>
 
-      <section className="about-timeline-section" style={{ padding: '7rem 0', background: 'var(--bg)' }}>
-        <div className="section-header" style={{ padding: '0 6rem 4rem' }}>
-          <span className="label">Our Journey</span>
-          <h2 className="section-title">A Legacy of<br /><em>Constant Growth</em></h2>
+      <section className="about-timeline-section" style={{ padding: '8rem 0', background: 'var(--bg)', overflow: 'hidden' }}>
+        <div className="section-header timeline-header-centered" style={{ textAlign: 'center', marginBottom: '6rem' }}>
+          <Reveal>
+            <span className="label">Our Journey</span>
+            <h2 className="section-title">A Legacy of<br /><em>Constant Growth</em></h2>
+          </Reveal>
         </div>
 
-        <div className="timeline" style={{ position: 'relative', overflow: 'hidden' }}>
-          <div className="timeline-line-bg" style={{ position: 'absolute', left: '110px', top: 0, bottom: 0, width: '1px', background: 'var(--border-dim)' }} />
-          <AnimatedPath scrollYProgress={scrollYProgress} />
+        <div className="timeline-container-pro" style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 2rem', position: 'relative' }}>
+          {/* Vertical Line Background */}
+          <div className="timeline-line-main" style={{ 
+            position: 'absolute', 
+            left: '50%', 
+            transform: 'translateX(-50%)', 
+            top: 0, 
+            bottom: 0, 
+            width: '2px', 
+            background: 'var(--border-dim)',
+            zIndex: 1
+          }} />
+          
+          {/* Animated Line Overlay */}
+          <motion.div 
+            style={{ 
+              position: 'absolute', 
+              left: '50%', 
+              transform: 'translateX(-50%)', 
+              top: 0, 
+              width: '2px', 
+              background: 'var(--gold)',
+              height: '100%',
+              scaleY: scrollYProgress,
+              transformOrigin: 'top',
+              zIndex: 2,
+              boxShadow: '0 0 15px var(--gold)'
+            }} 
+          />
 
-          {TIMELINE.map((item, i) => (
-            <Reveal key={item.year} delay={i * 0.1}>
-              <div className="timeline-item">
-                <div className="timeline-year">{item.year}</div>
-                <div className="timeline-dot" />
-                <div className="timeline-text">{item.text}</div>
-              </div>
-            </Reveal>
-          ))}
+          <div className="timeline-items-wrap">
+            {TIMELINE.map((item, i) => (
+              <Reveal key={item.year} delay={i * 0.1}>
+                <div className={`timeline-item-pro ${i % 2 === 0 ? 'left' : 'right'}`}>
+                  <div className="timeline-content-card">
+                    <span className="timeline-year-tag">{item.year}</span>
+                    <p className="timeline-text-pro">{item.text}</p>
+                  </div>
+                  <div className="timeline-dot-pro" />
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ── MISSION, VISION AND VALUES ────────── */}
       <section className="brochure-section" style={{ background: 'var(--bg-secondary)', padding: '8rem 0' }}>
         <div className="brochure-inner" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-          <div className="brochure-header" style={{ marginBottom: '6rem', background: 'var(--bg-dark-pro)', borderTop: '4px solid var(--gold)', padding: '2rem 3rem', boxShadow: 'var(--shadow-3d)' }}>
-            <div className="nav-logo" style={{ fontSize: '1.4rem', color: '#fff' }}>ni<span>k</span>an <span className="nav-reg" style={{ color: 'rgba(255,255,255,0.4)' }}>®</span></div>
+          <div className="brochure-header" style={{ marginBottom: '6rem', background: 'var(--bg-dark-pro)', borderTop: '4px solid var(--gold)', padding: '2rem 3rem', boxShadow: 'var(--shadow-3d)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '2rem', flexWrap: 'wrap' }}>
+            <img src={logo} alt="Nikan Logo" style={{ height: '60px', width: 'auto', objectFit: 'contain' }} />
             <h2 className="brochure-header-title" style={{ color: '#fff', margin: 0 }}>Mission, Vision & Values</h2>
           </div>
 

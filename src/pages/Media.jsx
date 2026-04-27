@@ -72,10 +72,10 @@ export default function Media() {
       </section>
 
       {/* ── GALLERY ALBUMS SECTION ─────────── */}
-      <section className="section" style={{ padding: '8rem 0', background: '#fcfcfc' }}>
-        <div className="container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 2rem' }}>
+      <section className="section" style={{ padding: '6rem 0', background: '#fcfcfc' }}>
+        <div className="container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 1.5rem' }}>
           <Reveal>
-            <div className="section-header" style={{ textAlign: 'center', marginBottom: '5rem' }}>
+            <div className="section-header" style={{ textAlign: 'center', marginBottom: '4rem' }}>
               <span className="label">Visual Journey</span>
               <h2 className="section-title">Media <em>Galleries</em></h2>
               <p className="section-subtitle" style={{ maxWidth: '600px', margin: '1rem auto' }}>
@@ -88,8 +88,8 @@ export default function Media() {
             ) : (
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(380px, 1fr))',
-                gap: '2.5rem'
+                gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                gap: '2rem'
               }}>
                 {mediaList.map((album, idx) => (
                   <motion.div
@@ -106,7 +106,7 @@ export default function Media() {
                       border: '1px solid #f1f5f9'
                     }}
                   >
-                    <div style={{ height: '260px', position: 'relative', overflow: 'hidden' }}>
+                    <div style={{ height: '240px', position: 'relative', overflow: 'hidden' }}>
                       <img
                         src={getImageUrl(album.thumbnail)}
                         alt={album.title}
@@ -120,9 +120,9 @@ export default function Media() {
                         </span>
                       </div>
                     </div>
-                    <div style={{ padding: '2rem' }}>
-                      <h3 style={{ fontSize: '1.4rem', fontWeight: '800', color: '#1a1f2e', margin: '0 0 10px 0' }}>{album.title}</h3>
-                      <p style={{ color: '#64748b', fontSize: '0.95rem', lineHeight: '1.6', marginBottom: '2rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    <div style={{ padding: '1.5rem' }}>
+                      <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#1a1f2e', margin: '0 0 10px 0' }}>{album.title}</h3>
+                      <p style={{ color: '#64748b', fontSize: '0.9rem', lineHeight: '1.6', marginBottom: '1.5rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                         {album.description}
                       </p>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -134,8 +134,8 @@ export default function Media() {
                             <Film size={14} /> {album.gallery.filter(i => i.fileType === 'video').length}
                           </span>
                         </div>
-                        <div style={{ color: 'var(--gold)', fontWeight: '800', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          VIEW ALBUM <ArrowRight size={16} />
+                        <div style={{ color: 'var(--gold)', fontWeight: '800', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          VIEW <ArrowRight size={14} />
                         </div>
                       </div>
                     </div>
@@ -148,10 +148,10 @@ export default function Media() {
       </section>
 
       {/* ── CORPORATE VIDEOS ───────────────── */}
-      <section className="section media-video-section" style={{ background: '#fff', padding: '8rem 0' }}>
-        <div className="container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 2rem' }}>
+      <section className="section media-video-section" style={{ background: '#fff', padding: '6rem 0' }}>
+        <div className="container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 1.5rem' }}>
           <Reveal>
-            <div className="section-header" style={{ textAlign: 'center', marginBottom: '5rem' }}>
+            <div className="section-header" style={{ textAlign: 'center', marginBottom: '4rem' }}>
               <span className="label">Corporate Showcase</span>
               <h2 className="section-title">Films & <em>Storytelling</em></h2>
               <p className="section-subtitle" style={{ maxWidth: '600px', margin: '1rem auto' }}>
@@ -161,8 +161,8 @@ export default function Media() {
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(450px, 1fr))',
-              gap: '3rem'
+              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+              gap: '2.5rem'
             }}>
               {videoPosts.map((video, idx) => (
                 <motion.div
@@ -197,9 +197,9 @@ export default function Media() {
                       Your browser does not support the video tag.
                     </video>
                   </div>
-                  <div style={{ padding: '2rem' }}>
-                    <h3 style={{ fontSize: '1.4rem', fontWeight: '800', color: '#1a1f2e', marginBottom: '12px' }}>{video.title}</h3>
-                    <p style={{ color: '#64748b', fontSize: '0.95rem', lineHeight: '1.6', margin: 0 }}>
+                  <div style={{ padding: '1.5rem' }}>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#1a1f2e', marginBottom: '10px' }}>{video.title}</h3>
+                    <p style={{ color: '#64748b', fontSize: '0.9rem', lineHeight: '1.6', margin: 0 }}>
                       {video.description}
                     </p>
                   </div>
@@ -227,17 +227,17 @@ export default function Media() {
       </section>
 
       {/* ── MEDIA CONTACT ─────────────── */}
-      <section className="section media-contact-section" style={{ background: 'var(--bg-secondary)', padding: '8rem 0' }}>
+      <section className="section media-contact-section" style={{ background: 'var(--bg-secondary)', padding: '6rem 1rem' }}>
         <Reveal>
-          <div className="media-contact-card">
-            <Newspaper size={48} style={{ color: 'var(--gold)', marginBottom: '2rem' }} />
-            <h3 className="media-contact-title">Media & Export Enquiries</h3>
-            <p className="media-contact-desc">
+          <div className="media-contact-card" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', background: '#fff', padding: '3.5rem 1.5rem', borderRadius: '32px', boxShadow: '0 20px 50px rgba(0,0,0,0.05)' }}>
+            <Newspaper size={48} style={{ color: 'var(--gold)', marginBottom: '1.5rem' }} />
+            <h3 className="media-contact-title" style={{ fontSize: 'clamp(1.5rem, 5vw, 2.2rem)', marginBottom: '1rem' }}>Media & Export Enquiries</h3>
+            <p className="media-contact-desc" style={{ color: '#64748b', marginBottom: '2.5rem', lineHeight: '1.7' }}>
               For press enquiries, export opportunities, or access to brand materials,
               please contact our communications team directly.
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-              <a href="mailto:exports@tirupaticolorpens.com" className="btn-primary" style={{ boxShadow: 'var(--shadow-gold)', width: 'fit-content' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', alignItems: 'center' }}>
+              <a href="mailto:exports@tirupaticolorpens.com" className="btn-primary media-contact-btn" style={{ boxShadow: 'var(--shadow-gold)', width: 'fit-content', padding: '15px 25px', fontSize: 'clamp(0.7rem, 3vw, 0.9rem)', wordBreak: 'break-all' }}>
                 exports@tirupaticolorpens.com <ArrowRight size={18} />
               </a>
               <p style={{ fontWeight: '600', color: 'var(--text-primary)', fontSize: '1.1rem' }}>
