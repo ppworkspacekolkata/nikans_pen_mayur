@@ -520,12 +520,7 @@ export default function Home() {
         </AnimatedSection>
 
         <div className="container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 2rem' }}>
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', 
-            gap: '2.5rem',
-            rowGap: '4rem' 
-          }}>
+          <div className="products-grid">
             {recentProducts.map((p, i) => (
               <AnimatedSection key={p._id}>
                 <Link to={`/product/${p.slug}`} className="product-card-link" style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
