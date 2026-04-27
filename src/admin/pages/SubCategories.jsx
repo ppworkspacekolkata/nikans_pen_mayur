@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   Plus, Search, Edit2, Trash2, 
   ListTree, CheckCircle, XCircle,
-  X, AlertCircle, ChevronRight, Loader2, Package
+  X, AlertCircle, ChevronRight, Loader2, Package, Image as ImageIcon, Upload
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import API_BASE_URL, { API_ENDPOINTS, getImageUrl } from '../../config/api';
@@ -22,8 +22,10 @@ const AdminSubCategories = () => {
   const [formData, setFormData] = useState({
     name: '',
     category: '',
-    isActive: true
+    isActive: true,
+    image: null
   });
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => { fetchData(); }, []);
 
@@ -48,11 +50,18 @@ const AdminSubCategories = () => {
     const method = editingSub ? 'PUT' : 'POST';
     const url = editingSub ? `${API_ENDPOINTS.SUB_CATEGORIES}/${editingSub._id}` : API_ENDPOINTS.SUB_CATEGORIES;
 
+    const data = new FormData();
+    data.append('name', formData.name);
+    data.append('category', formData.category);
+    data.append('isActive', formData.isActive);
+    if (formData.image) {
+      data.append('image', formData.image);
+    }
+
     try {
       const res = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: data
       });
       if (res.ok) {
         setIsModalOpen(false);
@@ -73,12 +82,32 @@ const AdminSubCategories = () => {
   const openModal = (sub = null) => {
     if (sub) {
       setEditingSub(sub);
-      setFormData({ name: sub.name, category: sub.category?._id || sub.category, isActive: sub.isActive });
+      setFormData({ 
+        name: sub.name, 
+        category: sub.category?._id || sub.category, 
+        isActive: sub.isActive,
+        image: null 
+      });
+      setImagePreview(sub.image ? getImageUrl(sub.image) : null);
     } else {
       setEditingSub(null);
-      setFormData({ name: '', category: categories[0]?._id || '', isActive: true });
+      setFormData({ 
+        name: '', 
+        category: categories[0]?._id || '', 
+        isActive: true,
+        image: null 
+      });
+      setImagePreview(null);
     }
     setIsModalOpen(true);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({ ...formData, image: file });
+      setImagePreview(URL.createObjectURL(file));
+    }
   };
 
   const filtered = subCategories.filter(s => 
@@ -126,8 +155,21 @@ const AdminSubCategories = () => {
               {filtered.map(sub => (
                 <tr key={sub._id} style={{ ...tRow, cursor: 'pointer' }} onClick={() => { setSelectedSub(sub); setIsProductsModalOpen(true); }}>
                   <td style={tTd}>
-                    <div style={{ fontWeight: '700', color: '#1e293b' }}>{sub.name}</div>
-                    <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>/{sub.slug}</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                      <div style={{ width: '45px', height: '45px', borderRadius: '10px', background: '#f1f5f9', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
+                        {sub.image ? (
+                          <img src={getImageUrl(sub.image)} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="" />
+                        ) : (
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#cbd5e1' }}>
+                            <ImageIcon size={20} />
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <div style={{ fontWeight: '700', color: '#1e293b' }}>{sub.name}</div>
+                        <div style={{ fontSize: '0.75rem', color: '#94a3b8' }}>/{sub.slug}</div>
+                      </div>
+                    </div>
                   </td>
                   <td style={tTd}>
                     <span style={catBadge}>{sub.category?.name || 'Uncategorized'}</span>
@@ -207,6 +249,29 @@ const AdminSubCategories = () => {
                   <label style={fLabel}>SUB-CATEGORY NAME</label>
                   <input required className="m-input" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
                 </div>
+
+                <div style={fGroup}>
+                  <label style={fLabel}>THUMBNAIL IMAGE</label>
+                  <div style={imageUploadArea}>
+                    <input 
+                      type="file" 
+                      id="subImage" 
+                      hidden 
+                      onChange={handleImageChange}
+                      accept="image/*"
+                    />
+                    <label htmlFor="subImage" style={uploadLabel}>
+                      {imagePreview ? (
+                        <img src={imagePreview} style={previewImg} alt="Preview" />
+                      ) : (
+                        <div style={uploadPlaceholder}>
+                          <Upload size={24} color="#94a3b8" />
+                          <span>Click to upload image</span>
+                        </div>
+                      )}
+                    </label>
+                  </div>
+                </div>
                 
                 <div style={{ display: 'flex', gap: '15px', marginTop: '30px' }}>
                   <button type="button" onClick={() => setIsModalOpen(false)} style={cancelBtn}>CANCEL</button>
@@ -255,5 +320,30 @@ const fGroup = { marginBottom: '20px', display: 'flex', flexDirection: 'column',
 const fLabel = { fontSize: '0.75rem', fontWeight: '900', color: '#94a3b8' };
 const cancelBtn = { flex: 1, padding: '15px', borderRadius: '15px', border: '1px solid #e2e8f0', background: '#fff', fontWeight: '800', cursor: 'pointer' };
 const saveBtn = { flex: 1, padding: '15px', borderRadius: '15px', border: 'none', background: '#1a1f2e', color: '#fff', fontWeight: '800', cursor: 'pointer' };
+
+const imageUploadArea = { marginTop: '5px' };
+const uploadLabel = { 
+  display: 'block', 
+  width: '100%', 
+  height: '120px', 
+  border: '2px dashed #edf2f7', 
+  borderRadius: '15px', 
+  cursor: 'pointer', 
+  overflow: 'hidden',
+  transition: '0.3s',
+  position: 'relative'
+};
+const uploadPlaceholder = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100%',
+  gap: '8px',
+  color: '#94a3b8',
+  fontSize: '0.8rem',
+  fontWeight: '600'
+};
+const previewImg = { width: '100%', height: '100%', objectFit: 'contain', background: '#f8fafc' };
 
 export default AdminSubCategories;

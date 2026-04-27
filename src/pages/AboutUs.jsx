@@ -471,28 +471,6 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* ── INDUSTRIAL GALLERY ─────────── */}
-      <section className="section about-gallery-section" style={{ padding: '8rem 0', background: 'var(--bg)' }}>
-        <Reveal>
-          <div className="section-header" style={{ textAlign: 'center', marginBottom: '6rem' }}>
-            <span className="label">Industrial Excellence</span>
-            <h2 className="section-title">A Legacy Written in <em>Precision</em></h2>
-            <p className="section-desc" style={{ marginInline: 'auto' }}>
-              Our manufacturing facilities in West Bengal utilize fully automatic Japanese and German machinery
-              to ensure sub-micron precision across every nib and ink reservoir.
-            </p>
-          </div>
-        </Reveal>
-        <div className="about-gallery-grid">
-          {[infra1, infra2, infra3, infra4, infra5, infra6].map((img, i) => (
-            <Reveal key={i} delay={i * 0.1}>
-              <div className="gallery-item-wrap" style={{ borderRadius: 'var(--radius-lg)', overflow: 'hidden', border: '1px solid var(--border-dim)', aspectRatio: '4/3', filter: 'grayscale(10%) contrast(1.05)' }}>
-                <img src={img} alt={`Infrastructure ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
 
       <Footer />
     </div>

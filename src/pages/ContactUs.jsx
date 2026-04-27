@@ -5,8 +5,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const fadeUp = {
-  hidden:  { opacity: 0, y: 28 },
-  visible: (d = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.65, delay: d, ease: [0.22,1,0.36,1] } }),
+  hidden: { opacity: 0, y: 28 },
+  visible: (d = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.65, delay: d, ease: [0.22, 1, 0.36, 1] } }),
 };
 
 function Reveal({ children, delay = 0 }) {
@@ -30,7 +30,7 @@ const ENQUIRY_TYPES = [
 ];
 
 export default function ContactUs() {
-  const [form, setForm] = useState({ name:'', company:'', email:'', phone:'', type:'', message:'' });
+  const [form, setForm] = useState({ name: '', company: '', email: '', phone: '', type: '', message: '' });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -58,8 +58,8 @@ export default function ContactUs() {
             Let's Start a<br /><em>Conversation</em>
           </motion.h1>
           <motion.p className="page-hero-desc" variants={fadeUp} custom={0.2} initial="hidden" animate="visible">
-            Whether you're a distributor, retailer, institution, or journalist — we'd love to hear from you. 
-            Fill out the form and our team will respond within 1–2 business days.
+            Whether you're a distributor, retailer, institution, or journalist — we'd love to hear from you.
+            Fill out the form and our team will respond at the earliest.
           </motion.p>
         </div>
       </section>
@@ -79,7 +79,7 @@ export default function ContactUs() {
             <div className="contact-details-list" style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
               <Reveal delay={0.1}>
                 <div className="contact-detail-card-new" style={{ display: 'flex', gap: '1.2rem' }}>
-                  <div className="contact-icon" style={{ color: 'var(--gold)', marginTop: '4px' }}><MapPin size={24}/></div>
+                  <div className="contact-icon" style={{ color: 'var(--gold)', marginTop: '4px' }}><MapPin size={24} /></div>
                   <div>
                     <div className="label-gold" style={{ fontSize: '0.65rem', marginBottom: '0.5rem' }}>Registered Address</div>
                     <div style={{ fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: '1.8' }}>
@@ -92,22 +92,22 @@ export default function ContactUs() {
               </Reveal>
 
               <Reveal delay={0.12}>
-                <div className="map-container-premium" style={{ 
-                  width: '100%', 
-                  height: '300px', 
-                  borderRadius: '16px', 
-                  overflow: 'hidden', 
+                <div className="map-container-premium" style={{
+                  width: '100%',
+                  height: '300px',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
                   border: '1px solid var(--border-dim)',
                   boxShadow: 'var(--shadow-md)',
                   margin: '0.5rem 0'
                 }}>
-                  <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3688.6732805919937!2d88.2366107760383!3d22.40367103913909!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02635a30daffd5%3A0x7fd88c1686912bfd!2sTirupati%20Colour%20Pens%20Pvt.%20Ltd.!5e0!3m2!1sen!2sin!4v1777100828549!5m2!1sen!2sin" 
-                    width="100%" 
-                    height="100%" 
-                    style={{ border: 0 }} 
-                    allowFullScreen="" 
-                    loading="lazy" 
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3688.6732805919937!2d88.2366107760383!3d22.40367103913909!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a02635a30daffd5%3A0x7fd88c1686912bfd!2sTirupati%20Colour%20Pens%20Pvt.%20Ltd.!5e0!3m2!1sen!2sin!4v1777100828549!5m2!1sen!2sin"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                   ></iframe>
                 </div>
@@ -115,7 +115,7 @@ export default function ContactUs() {
 
               <Reveal delay={0.15}>
                 <div className="contact-detail-card-new" style={{ display: 'flex', gap: '1.2rem' }}>
-                  <div className="contact-icon" style={{ color: 'var(--gold)', marginTop: '4px' }}><Mail size={24}/></div>
+                  <div className="contact-icon" style={{ color: 'var(--gold)', marginTop: '4px' }}><Mail size={24} /></div>
                   <div>
                     <div className="label-gold" style={{ fontSize: '0.65rem', marginBottom: '0.2rem', display: 'block' }}>Email Enquiries</div>
                     <a href="mailto:exports@tirupaticolorpens.com" style={{ fontSize: '1.05rem', color: 'var(--text-primary)', fontWeight: '700', wordBreak: 'break-all', display: 'block' }}>exports@tirupaticolorpens.com</a>
@@ -125,7 +125,7 @@ export default function ContactUs() {
 
               <Reveal delay={0.2}>
                 <div className="contact-detail-card-new" style={{ display: 'flex', gap: '1.2rem' }}>
-                  <div className="contact-icon" style={{ color: 'var(--gold)', marginTop: '4px' }}><Phone size={24}/></div>
+                  <div className="contact-icon" style={{ color: 'var(--gold)', marginTop: '4px' }}><Phone size={24} /></div>
                   <div>
                     <div className="label-gold" style={{ fontSize: '0.65rem', marginBottom: '0.5rem' }}>Direct Line</div>
                     <div style={{ fontSize: '1.1rem', color: 'var(--text-primary)', fontWeight: '700' }}>+91 9830058822</div>
@@ -134,9 +134,9 @@ export default function ContactUs() {
               </Reveal>
               <Reveal delay={0.25}>
                 <div className="contact-trust-strip" style={{ marginTop: '2rem', paddingTop: '2rem', borderTop: '1px solid var(--border-dim)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.8rem', color: 'var(--text-muted)' }}><ShieldCheck size={18} style={{ color: 'var(--gold)' }}/> ISO 9001:2015 Operations</div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.8rem', color: 'var(--text-muted)' }}><Globe size={18} style={{ color: 'var(--gold)' }}/> One Star Export House</div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.8rem', color: 'var(--text-muted)' }}><Clock size={18} style={{ color: 'var(--gold)' }}/> Response: 24 Business Hours</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.8rem', color: 'var(--text-muted)' }}><ShieldCheck size={18} style={{ color: 'var(--gold)' }} /> ISO 9001:2015 Operations</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.8rem', color: 'var(--text-muted)' }}><Globe size={18} style={{ color: 'var(--gold)' }} /> One Star Export House</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.8rem', color: 'var(--text-muted)' }}><Clock size={18} style={{ color: 'var(--gold)' }} /> Response: 24 Business Hours</div>
                 </div>
               </Reveal>
             </div>
@@ -165,7 +165,7 @@ export default function ContactUs() {
                       <input id="company" name="company" className="premium-input" type="text" placeholder="Your organisation" value={form.company} onChange={handleChange} />
                     </div>
                   </div>
-                  
+
                   <div className="premium-form-row">
                     <div className="premium-input-group">
                       <label htmlFor="email" className="premium-label">Email Address *</label>
@@ -203,10 +203,10 @@ export default function ContactUs() {
                     {loading ? (
                       <span>Processing...</span>
                     ) : (
-                      <><Send size={18} style={{ marginRight: '10px' }}/> SUBMIT ENQUIRY</>
+                      <><Send size={18} style={{ marginRight: '10px' }} /> SUBMIT ENQUIRY</>
                     )}
                   </button>
-                  
+
                   <p className="form-disclaimer" style={{ marginTop: '1.5rem', fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', textAlign: 'center', letterSpacing: '0.05em' }}>
                     CONFIDENTIALITY GUARANTEED • GLOBAL EXPORT COMPLIANCE
                   </p>

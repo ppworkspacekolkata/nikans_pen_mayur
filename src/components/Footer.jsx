@@ -1,8 +1,10 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Phone, ArrowRight, Globe, Share2 } from 'lucide-react';
 import logo from '../assets/logo.png';
+import { API_ENDPOINTS } from '../config/api';
 
-const PRODUCTS_LINKS = ['Ball Point Pens', 'Washable Markers', 'Gel Pens', 'Sketch Pens', 'Gift Sets'];
+const DEFAULT_PRODUCTS = ['Ball Point Pens', 'Washable Markers', 'Gel Pens', 'Sketch Pens', 'Gift Sets'];
 const COMPANY_LINKS = [
   { label: 'Our Story', to: '/about' },
   { label: 'Manufacturing', to: '/about' },
@@ -18,6 +20,29 @@ const CONTACT_LINKS = [
 ];
 
 export default function Footer() {
+  const [links, setLinks] = useState([]);
+
+  useEffect(() => {
+    const fetchLinks = async () => {
+      try {
+        const [catRes, subRes] = await Promise.all([
+          fetch(API_ENDPOINTS.CATEGORIES),
+          fetch(API_ENDPOINTS.SUB_CATEGORIES)
+        ]);
+        const cats = await catRes.json();
+        const subs = await subRes.json();
+        
+        // Combine categories and subcategories for the footer, limit to 6
+        const combined = [...cats.map(c => c.name), ...subs.map(s => s.name)].slice(0, 6);
+        setLinks(combined.length > 0 ? combined : DEFAULT_PRODUCTS);
+      } catch (err) {
+        console.error("Footer Fetch Error:", err);
+        setLinks(DEFAULT_PRODUCTS);
+      }
+    };
+    fetchLinks();
+  }, []);
+
   return (
     <footer className="footer" style={{ background: 'var(--bg-dark-pro)', color: '#fff', paddingTop: '5rem', borderTop: '4px solid var(--gold)', overflow: 'hidden' }}>
       <div className="container" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 2rem' }}>
@@ -40,11 +65,11 @@ export default function Footer() {
           <div>
             <div className="footer-col-title">PRODUCTS</div>
             <ul className="footer-links" style={{ listStyle: 'none', padding: 0 }}>
-              {PRODUCTS_LINKS.map(l => (
+              {links.map(l => (
                 <li key={l} style={{ marginBottom: '1rem' }}>
-                  <a href="/products" className="footer-nav-link">
+                  <Link to="/products" className="footer-nav-link">
                     <ArrowRight size={14} style={{ color: 'var(--gold)' }} /> {l}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

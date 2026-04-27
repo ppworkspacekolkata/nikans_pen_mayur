@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ArrowUpRight, Download, ChevronDown, ChevronRight, Plus, Minus } from 'lucide-react';
 import ContactModal from './ContactModal';
-import { API_ENDPOINTS } from '../config/api';
+import { API_ENDPOINTS, getImageUrl } from '../config/api';
 
 import logo from '../assets/logo.png';
 
@@ -109,7 +109,14 @@ function Navbar() {
                                         to={`/products?subcategory=${sub._id}`} 
                                         style={subLinkStyle}
                                       >
-                                        <ChevronRight size={12} color="var(--gold)" /> {sub.name}
+                                        <div style={subIconWrap}>
+                                          {sub.image ? (
+                                            <img src={getImageUrl(sub.image)} style={subIconImg} alt="" />
+                                          ) : (
+                                            <ChevronRight size={10} color="var(--gold)" />
+                                          )}
+                                        </div>
+                                        {sub.name}
                                       </Link>
                                     ))}
                                   <Link to={`/products?category=${cat._id}`} style={viewAllLink}>
@@ -302,9 +309,26 @@ const subLinkStyle = {
   fontWeight: '600',
   display: 'flex',
   alignItems: 'center',
-  gap: '8px',
-  transition: '0.2s'
+  gap: '12px',
+  transition: '0.2s',
+  padding: '6px 0'
 };
+
+const subIconWrap = {
+  width: '32px',
+  height: '32px',
+  borderRadius: '6px',
+  background: '#fff',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  overflow: 'hidden',
+  border: '1px solid #f1f5f9',
+  flexShrink: 0,
+  boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
+};
+
+const subIconImg = { width: '100%', height: '100%', objectFit: 'contain' };
 
 const viewAllLink = {
   fontSize: '0.7rem',
