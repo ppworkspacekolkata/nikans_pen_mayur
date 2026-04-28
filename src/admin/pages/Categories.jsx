@@ -52,6 +52,17 @@ const AdminCategories = () => {
   const getProdCountBySub = (subId) => products.filter(p => (p.subCategory?._id || p.subCategory) === subId).length;
   const getProdCountByCat = (catId) => products.filter(p => (p.category?._id || p.category) === catId).length;
 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
+    }
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -60,20 +71,29 @@ const AdminCategories = () => {
     const method = editingItem ? 'PUT' : 'POST';
     const url = editingItem ? `${API_BASE_URL}/api/${type}/${editingItem._id}` : `${API_BASE_URL}/api/${type}`;
     
-    const payload = { ...formData };
-    if (type === 'subcategories' && !payload.category) {
-      payload.category = selectedCategory?._id;
+    const formDataPayload = new FormData();
+    Object.keys(formData).forEach(key => {
+      formDataPayload.append(key, formData[key]);
+    });
+    
+    if (type === 'subcategories' && !formData.category) {
+      formDataPayload.append('category', selectedCategory?._id);
+    }
+
+    if (selectedFile) {
+      formDataPayload.append('image', selectedFile);
     }
 
     try {
       const res = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: formDataPayload
       });
       if (res.ok) {
         setIsModalOpen(false);
         setEditingItem(null);
+        setSelectedFile(null);
+        setPreviewUrl(null);
         setFormData({ name: '', description: '', isActive: true, category: '' });
         fetchData();
       }
@@ -98,6 +118,8 @@ const AdminCategories = () => {
       isActive: item.isActive,
       category: item.category?._id || item.category || ''
     });
+    setPreviewUrl(item.image ? getImageUrl(item.image) : null);
+    setSelectedFile(null);
     setIsModalOpen(true);
   };
 
@@ -263,6 +285,16 @@ const AdminCategories = () => {
                   <div style={fGrp}>
                     <label style={fLabel}>NAME *</label>
                     <input required className="m-input" placeholder="e.g. Ball Pens" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} />
+                  </div>
+                  <div style={fGrp}>
+                    <label style={fLabel}>IMAGE</label>
+                    <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                       {previewUrl && <img src={previewUrl} style={{ width: '60px', height: '60px', borderRadius: '10px', objectFit: 'cover', border: '2px solid #eee' }} />}
+                       <label style={{ flex: 1, height: '60px', border: '2px dashed #edf2f7', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '0.8rem', color: '#94a3b8' }}>
+                          <Upload size={18} style={{ marginRight: '10px' }} /> {selectedFile ? selectedFile.name : 'Choose Image'}
+                          <input type="file" hidden onChange={handleFileChange} accept="image/*" />
+                       </label>
+                    </div>
                   </div>
                   <div style={fGrp}>
                     <label style={fLabel}>DESCRIPTION</label>

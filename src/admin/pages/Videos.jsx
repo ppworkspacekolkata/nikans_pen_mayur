@@ -61,27 +61,69 @@ const AdminVideos = () => {
     }
   };
 
+  const uploadToCloudinary = async (file, resourceType = 'auto') => {
+    try {
+      // 1. Get signature from backend
+      const sigRes = await fetch(`${API_ENDPOINTS.VIDEO_POSTS}/signature`);
+      const { signature, timestamp, cloud_name, api_key } = await sigRes.json();
+
+      // 2. Upload to Cloudinary
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('signature', signature);
+      formData.append('timestamp', timestamp);
+      formData.append('api_key', api_key);
+      formData.append('folder', 'nikan_videos');
+
+      const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/${resourceType}/upload`, {
+        method: 'POST',
+        body: formData
+      });
+
+      const uploadData = await uploadRes.json();
+      if (!uploadRes.ok) throw new Error(uploadData.error?.message || 'Upload failed');
+      return uploadData.secure_url;
+    } catch (err) {
+      console.error('Cloudinary Upload Error:', err);
+      throw err;
+    }
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
-    const data = new FormData();
-    data.append('title', formData.title);
-    data.append('description', formData.description);
-    data.append('isActive', formData.isActive);
-
-    if (videoFile && !videoFile.isExisting) {
-      data.append('video', videoFile.file);
-    }
-    if (thumbnail && !thumbnail.isExisting) {
-      data.append('thumbnail', thumbnail.file);
-    }
-
-    const method = editingVideo ? 'PUT' : 'POST';
-    const url = editingVideo ? `${API_ENDPOINTS.VIDEO_POSTS}/${editingVideo._id}` : API_ENDPOINTS.VIDEO_POSTS;
-
     try {
-      const res = await fetch(url, { method, body: data });
+      let finalVideoUrl = videoFile?.url;
+      let finalThumbUrl = thumbnail?.url;
+
+      // Upload video if it's new
+      if (videoFile && !videoFile.isExisting) {
+        finalVideoUrl = await uploadToCloudinary(videoFile.file, 'video');
+      }
+
+      // Upload thumbnail if it's new
+      if (thumbnail && !thumbnail.isExisting) {
+        finalThumbUrl = await uploadToCloudinary(thumbnail.file, 'image');
+      }
+
+      const payload = {
+        title: formData.title,
+        description: formData.description,
+        isActive: formData.isActive,
+        videoUrl: finalVideoUrl,
+        thumbnail: finalThumbUrl
+      };
+
+      const method = editingVideo ? 'PUT' : 'POST';
+      const url = editingVideo ? `${API_ENDPOINTS.VIDEO_POSTS}/${editingVideo._id}` : API_ENDPOINTS.VIDEO_POSTS;
+
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
       const result = await res.json();
       
       if (res.ok) {
@@ -94,7 +136,7 @@ const AdminVideos = () => {
       }
     } catch (err) {
       console.error(err);
-      alert('Error connecting to server. Please check your connection.');
+      alert(`Error: ${err.message || 'Error connecting to server'}`);
     } finally {
       setSubmitting(false);
     }

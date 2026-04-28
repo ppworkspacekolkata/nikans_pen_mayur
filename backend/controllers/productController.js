@@ -76,9 +76,11 @@ const getFilePath = (f) => f.path.startsWith('http') ? f.path : `/uploads/produc
 exports.createProduct = async (req, res) => {
   try {
     const files = req.files || {};
-    const imagesPaths = files.images ? files.images.map(getFilePath) : [];
-    const pkgPaths = files.packagingImages ? files.packagingImages.map(getFilePath) : [];
-    const videoPaths = files.videos ? files.videos.map(getFilePath) : [];
+    
+    // Support both direct URL arrays (from body) and Multer files
+    const imagesPaths = Array.isArray(req.body.images) ? req.body.images : (files.images ? files.images.map(getFilePath) : []);
+    const pkgPaths = Array.isArray(req.body.packagingImages) ? req.body.packagingImages : (files.packagingImages ? files.packagingImages.map(getFilePath) : []);
+    const videoPaths = Array.isArray(req.body.videos) ? req.body.videos : (files.videos ? files.videos.map(getFilePath) : []);
 
     const mainImage = imagesPaths[req.body.mainImageIdx || 0] || (imagesPaths.length > 0 ? imagesPaths[0] : null);
 
@@ -104,22 +106,29 @@ exports.updateProduct = async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).json({ message: 'Product not found' });
 
-    const files = req.files;
+    const files = req.files || {};
     
-    // Existing paths sent as JSON strings from frontend
-    let existingImages = req.body.existingImages ? JSON.parse(req.body.existingImages) : [];
-    let existingPkgImages = req.body.existingPackagingImages ? JSON.parse(req.body.existingPackagingImages) : [];
-    let existingVideos = req.body.existingVideos ? JSON.parse(req.body.existingVideos) : [];
+    let allImages, allPkg, allVids;
 
-    // New paths
-    const newImages = files.images ? files.images.map(getFilePath) : [];
-    const newPkg = files.packagingImages ? files.packagingImages.map(getFilePath) : [];
-    const newVideos = files.videos ? files.videos.map(getFilePath) : [];
+    // If body contains arrays, it means frontend already handled the merge/upload
+    if (Array.isArray(req.body.images)) {
+      allImages = req.body.images;
+      allPkg = req.body.packagingImages || [];
+      allVids = req.body.videos || [];
+    } else {
+      // Traditional FormData handling
+      let existingImages = req.body.existingImages ? JSON.parse(req.body.existingImages) : [];
+      let existingPkgImages = req.body.existingPackagingImages ? JSON.parse(req.body.existingPackagingImages) : [];
+      let existingVideos = req.body.existingVideos ? JSON.parse(req.body.existingVideos) : [];
 
-    // Merge
-    const allImages = [...existingImages, ...newImages];
-    const allPkg = [...existingPkgImages, ...newPkg];
-    const allVids = [...existingVideos, ...newVideos];
+      const newImages = files.images ? files.images.map(getFilePath) : [];
+      const newPkg = files.packagingImages ? files.packagingImages.map(getFilePath) : [];
+      const newVideos = files.videos ? files.videos.map(getFilePath) : [];
+
+      allImages = [...existingImages, ...newImages];
+      allPkg = [...existingPkgImages, ...newPkg];
+      allVids = [...existingVideos, ...newVideos];
+    }
 
     const mainImage = allImages[req.body.mainImageIdx || 0] || (allImages.length > 0 ? allImages[0] : null);
 

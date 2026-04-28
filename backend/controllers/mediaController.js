@@ -68,14 +68,22 @@ const getFilePath = (f) => f.path.startsWith('http') ? f.path : `/uploads/media/
 exports.createMedia = async (req, res) => {
   try {
     const files = req.files || {};
-    const thumbnailPath = files.thumbnail ? getFilePath(files.thumbnail[0]) : null;
+    // Prioritize URL from body (direct frontend upload)
+    const thumbnailPath = req.body.thumbnail || (files.thumbnail ? getFilePath(files.thumbnail[0]) : null);
     
-    const galleryFiles = files.galleryFiles || [];
-    const gallery = galleryFiles.map(f => ({
-      url: getFilePath(f),
-      fileType: f.mimetype.startsWith('video') ? 'video' : 'image',
-      caption: ''
-    }));
+    let gallery = [];
+    if (req.body.gallery && Array.isArray(req.body.gallery)) {
+      // Direct frontend upload gallery
+      gallery = req.body.gallery;
+    } else {
+      // Traditional Multer upload gallery
+      const galleryFiles = files.galleryFiles || [];
+      gallery = galleryFiles.map(f => ({
+        url: getFilePath(f),
+        fileType: f.mimetype.startsWith('video') ? 'video' : 'image',
+        caption: ''
+      }));
+    }
 
     const mediaData = {
       ...req.body,
@@ -98,24 +106,29 @@ exports.updateMedia = async (req, res) => {
     if (!media) return res.status(404).json({ message: 'Media not found' });
 
     const files = req.files || {};
-    let thumbnail = media.thumbnail;
+    let thumbnail = req.body.thumbnail || media.thumbnail;
     if (files.thumbnail) {
       thumbnail = getFilePath(files.thumbnail[0]);
     }
 
-    let gallery = req.body.existingGallery ? JSON.parse(req.body.existingGallery) : media.gallery;
-    
-    const newGalleryFiles = files.galleryFiles || [];
-    const newItems = newGalleryFiles.map(f => ({
-      url: getFilePath(f),
-      fileType: f.mimetype.startsWith('video') ? 'video' : 'image',
-      caption: ''
-    }));
+    let gallery = [];
+    if (req.body.gallery && Array.isArray(req.body.gallery)) {
+      gallery = req.body.gallery;
+    } else {
+      let existingGallery = req.body.existingGallery ? JSON.parse(req.body.existingGallery) : media.gallery;
+      const newGalleryFiles = files.galleryFiles || [];
+      const newItems = newGalleryFiles.map(f => ({
+        url: getFilePath(f),
+        fileType: f.mimetype.startsWith('video') ? 'video' : 'image',
+        caption: ''
+      }));
+      gallery = [...existingGallery, ...newItems];
+    }
 
     const updateData = {
       ...req.body,
       thumbnail,
-      gallery: [...gallery, ...newItems]
+      gallery
     };
 
     const updated = await Media.findByIdAndUpdate(req.params.id, updateData, { new: true });

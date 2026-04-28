@@ -60,8 +60,9 @@ exports.getAllVideos = async (req, res) => {
 exports.createVideo = async (req, res) => {
   try {
     const files = req.files || {};
-    const videoUrl = files.video ? getFilePath(files.video[0]) : null;
-    const thumbnail = files.thumbnail ? getFilePath(files.thumbnail[0]) : null;
+    // Prioritize URL from body (direct frontend upload) over Multer file
+    const videoUrl = req.body.videoUrl || (files.video ? getFilePath(files.video[0]) : null);
+    const thumbnail = req.body.thumbnail || (files.thumbnail ? getFilePath(files.thumbnail[0]) : null);
 
     if (!videoUrl) return res.status(400).json({ message: 'Video file is required' });
 
@@ -85,8 +86,8 @@ exports.updateVideo = async (req, res) => {
     if (!video) return res.status(404).json({ message: 'Video not found' });
 
     const files = req.files || {};
-    let videoUrl = video.videoUrl;
-    let thumbnail = video.thumbnail;
+    let videoUrl = req.body.videoUrl || video.videoUrl;
+    let thumbnail = req.body.thumbnail || video.thumbnail;
 
     if (files.video) videoUrl = getFilePath(files.video[0]);
     if (files.thumbnail) thumbnail = getFilePath(files.thumbnail[0]);
@@ -112,6 +113,24 @@ exports.deleteVideo = async (req, res) => {
     // Note: In production, you'd also delete files from Cloudinary/Disk here
     await VideoPost.findByIdAndDelete(req.params.id);
     res.json({ message: 'Video deleted' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getCloudinarySignature = (req, res) => {
+  try {
+    const timestamp = Math.round(new Date().getTime() / 1000);
+    const signature = cloudinary.utils.api_sign_request(
+      { timestamp, folder: 'nikan_videos' },
+      process.env.CLOUDINARY_API_SECRET
+    );
+    res.json({
+      signature,
+      timestamp,
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

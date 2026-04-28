@@ -3,19 +3,43 @@ const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
 
-// Configure Multer for Hero Images
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/hero/');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  }
-});
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-const upload = multer({ storage: storage }).single('image');
+// Configure Cloudinary
+if (process.env.CLOUDINARY_CLOUD_NAME) {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+  });
+}
 
-exports.upload = upload;
+// Storage Configuration
+let storage;
+if (process.env.CLOUDINARY_CLOUD_NAME) {
+  storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: 'nikan_hero',
+      allowedFormats: ['jpg', 'png', 'jpeg', 'webp'],
+    },
+  });
+} else {
+  storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      const isProd = process.env.NODE_ENV === 'production';
+      const uploadPath = path.join(isProd ? '/tmp' : __dirname, isProd ? '' : '..', 'uploads', 'hero');
+      if (!fs.existsSync(uploadPath)) fs.mkdirSync(uploadPath, { recursive: true });
+      cb(null, uploadPath);
+    },
+    filename: (req, file, cb) => {
+      cb(null, `${Date.now()}-${file.originalname}`);
+    }
+  });
+}
+
+exports.upload = multer({ storage: storage }).single('image');
 
 exports.getAllSliders = async (req, res) => {
   try {
@@ -26,10 +50,12 @@ exports.getAllSliders = async (req, res) => {
   }
 };
 
+const getFilePath = (f) => f.path.startsWith('http') ? f.path : `/uploads/hero/${f.filename}`;
+
 exports.createSlider = async (req, res) => {
   try {
     const { title, subtitle, order } = req.body;
-    const image = req.file ? `/uploads/hero/${req.file.filename}` : '';
+    const image = req.file ? getFilePath(req.file) : '';
     
     const slider = new HeroSlider({
       image,
@@ -53,10 +79,12 @@ exports.updateSlider = async (req, res) => {
     const { title, subtitle, order, isActive } = req.body;
     
     if (req.file) {
-      // Remove old image
-      const oldPath = path.join(__dirname, '..', slider.image);
-      if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
-      slider.image = `/uploads/hero/${req.file.filename}`;
+      // Note: In production with Cloudinary, unlinking local files is not needed
+      if (!slider.image.startsWith('http')) {
+        const oldPath = path.join(__dirname, '..', slider.image);
+        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+      }
+      slider.image = getFilePath(req.file);
     }
 
     if (title) slider.title = title;

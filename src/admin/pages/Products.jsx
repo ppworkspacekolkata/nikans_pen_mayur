@@ -67,28 +67,94 @@ const AdminProducts = () => {
     if (target === 'video') setVideos(prev => [...prev, ...mapped]);
   };
 
+  const uploadToCloudinary = async (file, resourceType = 'auto') => {
+    try {
+      const sigRes = await fetch(`${API_ENDPOINTS.VIDEO_POSTS}/signature`);
+      const { signature, timestamp, cloud_name, api_key } = await sigRes.json();
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('signature', signature);
+      formData.append('timestamp', timestamp);
+      formData.append('api_key', api_key);
+      formData.append('folder', 'nikan_products');
+
+      const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/${resourceType}/upload`, {
+        method: 'POST',
+        body: formData
+      });
+
+      const uploadData = await uploadRes.json();
+      if (!uploadRes.ok) throw new Error(uploadData.error?.message || 'Upload failed');
+      return uploadData.secure_url;
+    } catch (err) {
+      console.error('Cloudinary Upload Error:', err);
+      throw err;
+    }
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    const data = new FormData();
-    Object.keys(formData).forEach(key => data.append(key, formData[key]));
-    productImages.filter(img => !img.isExisting).forEach(img => data.append('images', img.file));
-    packagingImages.filter(img => !img.isExisting).forEach(img => data.append('packagingImages', img.file));
-    videos.filter(vid => !vid.isExisting).forEach(vid => data.append('videos', vid.file));
-    const existingImgs = productImages.filter(img => img.isExisting).map(img => img.path);
-    const existingPkg = packagingImages.filter(img => img.isExisting).map(img => img.path);
-    const existingVids = videos.filter(vid => vid.isExisting).map(vid => vid.path);
-    data.append('existingImages', JSON.stringify(existingImgs));
-    data.append('existingPackagingImages', JSON.stringify(existingPkg));
-    data.append('existingVideos', JSON.stringify(existingVids));
-    data.append('mainImageIdx', mainImageIdx);
-    const method = editingProduct ? 'PUT' : 'POST';
-    const url = editingProduct ? `${API_ENDPOINTS.PRODUCTS}/${editingProduct._id}` : API_ENDPOINTS.PRODUCTS;
+
     try {
-      const res = await fetch(url, { method, body: data });
-      if (res.ok) { setIsModalOpen(false); setEditingProduct(null); resetForm(); fetchData(); }
-    } catch (err) { console.error(err); }
-    finally { setSubmitting(false); }
+      // 1. Upload new product images
+      const uploadedProductImages = await Promise.all(
+        productImages.map(async (img) => {
+          if (img.isExisting) return img.path;
+          return await uploadToCloudinary(img.file, 'image');
+        })
+      );
+
+      // 2. Upload new packaging images
+      const uploadedPackagingImages = await Promise.all(
+        packagingImages.map(async (img) => {
+          if (img.isExisting) return img.path;
+          return await uploadToCloudinary(img.file, 'image');
+        })
+      );
+
+      // 3. Upload new videos
+      const uploadedVideos = await Promise.all(
+        videos.map(async (vid) => {
+          if (vid.isExisting) return vid.path;
+          return await uploadToCloudinary(vid.file, 'video');
+        })
+      );
+
+      const payload = {
+        ...formData,
+        images: uploadedProductImages,
+        packagingImages: uploadedPackagingImages,
+        videos: uploadedVideos,
+        mainImageIdx: mainImageIdx
+      };
+
+      const method = editingProduct ? 'PUT' : 'POST';
+      const url = editingProduct ? `${API_ENDPOINTS.PRODUCTS}/${editingProduct._id}` : API_ENDPOINTS.PRODUCTS;
+
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        setIsModalOpen(false);
+        setEditingProduct(null);
+        resetForm();
+        fetchData();
+        alert('Product saved successfully!');
+      } else {
+        const result = await res.json();
+        alert(`Failed to save: ${result.message || 'Unknown error'}`);
+      }
+    } catch (err) {
+      console.error(err);
+      alert(`Error: ${err.message || 'Error connecting to server'}`);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const resetForm = () => {

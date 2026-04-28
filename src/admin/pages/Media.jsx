@@ -57,44 +57,85 @@ const AdminMedia = () => {
     }
   };
 
+  const uploadToCloudinary = async (file, resourceType = 'auto') => {
+    try {
+      const sigRes = await fetch(`${API_ENDPOINTS.VIDEO_POSTS}/signature`);
+      const { signature, timestamp, cloud_name, api_key } = await sigRes.json();
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('signature', signature);
+      formData.append('timestamp', timestamp);
+      formData.append('api_key', api_key);
+      formData.append('folder', 'nikan_media');
+
+      const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${cloud_name}/${resourceType}/upload`, {
+        method: 'POST',
+        body: formData
+      });
+
+      const uploadData = await uploadRes.json();
+      if (!uploadRes.ok) throw new Error(uploadData.error?.message || 'Upload failed');
+      return uploadData.secure_url;
+    } catch (err) {
+      console.error('Cloudinary Upload Error:', err);
+      throw err;
+    }
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
     setSubmitting(true);
 
-    const data = new FormData();
-    data.append('title', formData.title);
-    data.append('description', formData.description);
-    data.append('type', formData.type);
-    data.append('isActive', formData.isActive);
-
-    if (thumbnail && !thumbnail.isExisting) {
-      data.append('thumbnail', thumbnail.file);
-    }
-
-    galleryItems.filter(item => !item.isExisting).forEach(item => {
-      data.append('galleryFiles', item.file);
-    });
-
-    const existingGallery = galleryItems.filter(item => item.isExisting).map(item => ({
-      url: item.url,
-      fileType: item.fileType,
-      caption: item.caption
-    }));
-    data.append('existingGallery', JSON.stringify(existingGallery));
-
-    const method = editingMedia ? 'PUT' : 'POST';
-    const url = editingMedia ? `${API_ENDPOINTS.MEDIA}/${editingMedia._id}` : API_ENDPOINTS.MEDIA;
-
     try {
-      const res = await fetch(url, { method, body: data });
+      let finalThumbnail = thumbnail?.url;
+      if (thumbnail && !thumbnail.isExisting) {
+        finalThumbnail = await uploadToCloudinary(thumbnail.file, 'image');
+      }
+
+      const uploadedGallery = await Promise.all(
+        galleryItems.map(async (item) => {
+          if (item.isExisting) return item;
+          const url = await uploadToCloudinary(item.file, item.fileType);
+          return { ...item, url, isExisting: true };
+        })
+      );
+
+      const payload = {
+        title: formData.title,
+        description: formData.description,
+        type: formData.type,
+        isActive: formData.isActive,
+        thumbnail: finalThumbnail,
+        gallery: uploadedGallery.map(item => ({
+          url: item.url,
+          fileType: item.fileType,
+          caption: item.caption || ''
+        }))
+      };
+
+      const method = editingMedia ? 'PUT' : 'POST';
+      const url = editingMedia ? `${API_ENDPOINTS.MEDIA}/${editingMedia._id}` : API_ENDPOINTS.MEDIA;
+
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
       if (res.ok) {
         setIsModalOpen(false);
         setEditingMedia(null);
         resetForm();
         fetchData();
+        alert('Media album saved successfully!');
+      } else {
+        const result = await res.json();
+        alert(`Failed to save: ${result.message || 'Unknown error'}`);
       }
     } catch (err) {
       console.error(err);
+      alert(`Error: ${err.message || 'Error connecting to server'}`);
     } finally {
       setSubmitting(false);
     }
